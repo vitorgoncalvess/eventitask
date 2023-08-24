@@ -1,6 +1,7 @@
-import React from "react";
+import React from 'react';
+import Task from './Task';
 
-const colors = ["bg-[#ff5555]"];
+const colors = ['bg-[#ff5555]', 'bg-[#55ff55]'];
 
 interface Section {
   _id: string;
@@ -20,9 +21,13 @@ const Section = ({ sec }: { sec: Section }) => {
           {sec.tasks.filter((item) => item.name).length})
         </h1>
       </div>
-      {sec.tasks.map((task) => (
-        <span key={task.name}>{task.name}</span>
-      ))}
+      <ul className="mt-4 flex flex-col gap-4">
+        {sec.tasks
+          .filter((item) => item.name)
+          .map((task) => (
+            <Task key={task.name} task={task} />
+          ))}
+      </ul>
     </div>
   );
 };

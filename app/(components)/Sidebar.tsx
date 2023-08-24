@@ -1,27 +1,27 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import Logo from "./Logo";
-import { useQuery } from "react-query";
-import axiosInstance from "../(axios)/config";
-import Image from "next/image";
-import boardIcon from "@/public/board.png";
-import boardIconPurple from "@/public/tablet_purple.png";
-import boardIconWhite from "@/public/tablet_white.png";
-import { useRouter } from "next/navigation";
+import React, { useState } from 'react';
+import Logo from './Logo';
+import { useQuery } from 'react-query';
+import axiosInstance from '../(axios)/config';
+import Image from 'next/image';
+import boardIcon from '@/public/board.png';
+import boardIconPurple from '@/public/tablet_purple.png';
+import boardIconWhite from '@/public/tablet_white.png';
+import { useRouter } from 'next/navigation';
 
 const Sidebar = () => {
   const [boards, setBoards] = useState([]);
   const { isLoading } = useQuery(
-    "boards",
+    'boards',
     () => {
-      return axiosInstance.get("/boards");
+      return axiosInstance.get('/boards');
     },
     {
       onSuccess(response) {
         setBoards(response.data.boards);
       },
-    }
+    },
   );
 
   const router = useRouter();

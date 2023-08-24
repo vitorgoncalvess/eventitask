@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import axiosInstance from "@/app/(axios)/config";
-import Sidebar from "../../(components)/Sidebar";
-import { useState } from "react";
-import { useQuery } from "react-query";
-import Header from "@/app/(components)/Header";
-import Section from "@/app/(components)/Section";
+import axiosInstance from '@/app/(axios)/config';
+import Sidebar from '../../(components)/Sidebar';
+import { useState } from 'react';
+import { useQuery } from 'react-query';
+import Header from '@/app/(components)/Header';
+import Section from '@/app/(components)/Section';
 
 interface Board {
   _id: string;
@@ -23,7 +23,7 @@ const Page = ({ params }: { params: { board: string } }) => {
   const [board, setBoard] = useState<Board>();
 
   const { isLoading, refetch } = useQuery(
-    "board",
+    'board',
     () => {
       return axiosInstance.get(`/boards/${params.board}`);
     },
@@ -32,7 +32,8 @@ const Page = ({ params }: { params: { board: string } }) => {
         setBoard(response.data);
       },
       refetchOnMount: true,
-    }
+      refetchOnWindowFocus: false,
+    },
   );
 
   return (
@@ -41,7 +42,12 @@ const Page = ({ params }: { params: { board: string } }) => {
       {isLoading && <>Carregando...</>}
       {board && (
         <div className="flex flex-col min-w-full">
-          <Header id={board._id} name={board.name} />
+          <Header
+            secs={board?.sections}
+            refetch={refetch}
+            id={board._id}
+            name={board.name}
+          />
           <div className="pl-72">
             <section className="w-full flex p-8 gap-8">
               {board?.sections?.map((sec) => (

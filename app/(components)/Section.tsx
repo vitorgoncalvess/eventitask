@@ -17,8 +17,8 @@ const Section = ({ sec }: { sec: Section }) => {
       <div className="flex items-center gap-2">
         <div className={`h-4 w-4 rounded-full bg-[${sec.color}]`}></div>
         <h1 className="text-text tracking-widest text-[14px]">
-          {sec.name.toUpperCase()} (
-          {sec.tasks.filter((item) => item.name).length})
+          {sec?.name?.toUpperCase()} (
+          {sec?.tasks?.filter((item) => item.name).length})
         </h1>
       </div>
       <ul className="mt-4 flex flex-col gap-4">

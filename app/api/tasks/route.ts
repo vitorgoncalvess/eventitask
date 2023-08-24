@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import { mongo } from 'mongoose';
 
 export async function POST(req: Request) {
-  const { title, desc, status } = await req.json();
+  const { title, desc, status, subtarefas } = await req.json();
   try {
     const client = await clientPromise;
     const db = client.db('eventitask');
@@ -13,6 +13,15 @@ export async function POST(req: Request) {
       description: desc,
       ref_id: new mongo.ObjectId(status),
     });
+
+    if (subtarefas)
+      await db.collection('task').insertMany(
+        subtarefas.map((item: any) => ({
+          name: item,
+          description: null,
+          ref_id: task.insertedId,
+        })),
+      );
 
     return NextResponse.json(task, { status: 201 });
   } catch (err) {

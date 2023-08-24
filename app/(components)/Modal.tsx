@@ -22,8 +22,8 @@ const Modal = ({
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   const [status, setStatus] = useState('');
-
-  console.log(secs);
+  const [subtarefas, setSubtarefas] = useState<string[]>([]);
+  const [tarefa, setTarefa] = useState('');
 
   function handleOut(e: any) {
     if (e.currentTarget === e.target) {
@@ -33,22 +33,26 @@ const Modal = ({
 
   function handleSub(e: FormEvent) {
     e.preventDefault();
+    setSubtarefas([...subtarefas, tarefa]);
+    setTarefa('');
   }
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    axiosInstance.post('/tasks', { title, desc, status }).then((response) => {
-      if (response.status === 201) {
-        refetch();
-        setShow(false);
-      }
-    });
+    axiosInstance
+      .post('/tasks', { title, desc, status, subtarefas })
+      .then((response) => {
+        if (response.status === 201) {
+          refetch();
+          setShow(false);
+        }
+      });
   }
 
   return (
     <div
       onClick={handleOut}
-      className="absolute min-h-screen left-0 right-0 flex justify-center items-center bg-[rgb(0,0,0,0.3)] z-50 p-20"
+      className="absolute min-h-screen top-0 bottom-0 left-0 right-0 flex flex-col py-20 items-center bg-[rgb(0,0,0,0.3)] z-50"
     >
       <div className="bg-primary p-6 w-[420px] rounded-md flex flex-col items-start gap-4">
         <h1 className="text-lg font-semibold">Adicionar Nova Tarefa</h1>
@@ -66,10 +70,25 @@ const Modal = ({
             label="Descrição"
             placeholder="e.g. Sempre é bom dar um break no trabalho e tomar um cafe"
           />
-          <InputModal
-            label="Subtarefa"
-            placeholder="e.g. Colocar 3 colheres de açucar"
-          />
+          <label htmlFor="">Subtarefas</label>
+          {subtarefas.length > 0 ? (
+            <>
+              {subtarefas.map((item) => (
+                <InputModal setSubtarefas={setSubtarefas} defaultValue={item} />
+              ))}
+              <InputModal
+                placeholder="e.g Colocar 3 colheres de açucar"
+                value={tarefa}
+                setValue={setTarefa}
+              />
+            </>
+          ) : (
+            <InputModal
+              placeholder="e.g Colocar 3 colheres de açucar"
+              value={tarefa}
+              setValue={setTarefa}
+            />
+          )}
           <Button
             onClick={handleSub}
             size="p"

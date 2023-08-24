@@ -37,7 +37,7 @@ const Page = ({ params }: { params: { board: string } }) => {
   );
 
   return (
-    <div className="relative flex min-h-screen">
+    <div className="relative flex min-h-[150vh]">
       <Sidebar />
       {isLoading && <>Carregando...</>}
       {board && (

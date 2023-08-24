@@ -28,7 +28,7 @@ const Page = ({ params }: { params: { board: string } }) => {
       return axiosInstance.get(`/boards/${params.board}`);
     },
     {
-      onSuccess(response) {
+      onSuccess(response: any) {
         setBoard(response.data);
       },
       refetchOnMount: true,

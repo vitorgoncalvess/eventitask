@@ -25,7 +25,7 @@ const Section = ({ sec }: { sec: Section }) => {
         {sec.tasks
           .filter((item) => item.name)
           .map((task) => (
-            <Task key={task.name} task={task} />
+            <Task key={task.name} task={task} sec={sec} />
           ))}
       </ul>
     </div>

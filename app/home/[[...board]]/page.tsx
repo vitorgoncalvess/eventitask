@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useQuery } from 'react-query';
 import Header from '@/app/(components)/Header';
 import Section from '@/app/(components)/Section';
+import { createContext } from 'react';
 
 interface Board {
   _id: string;
@@ -19,8 +20,14 @@ interface Board {
   }[];
 }
 
+export const BoardContext = createContext<Board>({
+  _id: '',
+  name: '',
+  sections: [],
+});
+
 const Page = ({ params }: { params: { board: string } }) => {
-  const [board, setBoard] = useState<Board>();
+  const [board, setBoard] = useState<any>();
 
   const { isLoading, refetch } = useQuery(
     'board',
@@ -37,27 +44,29 @@ const Page = ({ params }: { params: { board: string } }) => {
   );
 
   return (
-    <div className="relative flex min-h-[150vh]">
-      <Sidebar />
-      {isLoading && <>Carregando...</>}
-      {board && (
-        <div className="flex flex-col min-w-full">
-          <Header
-            secs={board?.sections}
-            refetch={refetch}
-            id={board._id}
-            name={board.name}
-          />
-          <div className="pl-72">
-            <section className="w-full flex p-8 gap-8">
-              {board?.sections?.map((sec) => (
-                <Section key={sec._id} sec={sec} />
-              ))}
-            </section>
+    <BoardContext.Provider value={board}>
+      <div className="relative flex min-h-[150vh]">
+        <Sidebar />
+        {isLoading && <>Carregando...</>}
+        {board && (
+          <div className="flex flex-col min-w-full">
+            <Header
+              secs={board?.sections}
+              refetch={refetch}
+              id={board._id}
+              name={board.name}
+            />
+            <div className="pl-72">
+              <section className="w-full flex p-8 gap-8">
+                {board?.sections?.map((sec: any) => (
+                  <Section key={sec._id} sec={sec} />
+                ))}
+              </section>
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </BoardContext.Provider>
   );
 };
 

@@ -1,11 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { BoardContext } from '../home/[[...board]]/page';
-import ModalHeader from './ModalHeader';
-import Image from 'next/image';
-import edit from '@/public/edit_square.png';
-import calendar from '@/public/calendar_month.png';
-import Tasks from './Tasks';
-import Responsaveis from './Responsaveis';
+import React, { useContext, useEffect, useState } from "react";
+import { BoardContext } from "../home/[[...board]]/page";
+import ModalHeader from "./ModalHeader";
+import Image from "next/image";
+import edit from "@/public/edit_square.png";
+import relogio from "@/public/clock.png";
+import calendar from "@/public/calendar_month.png";
+import Tasks from "./Tasks";
+import Responsaveis from "./Responsaveis";
 
 interface Task {
   _id: string;
@@ -98,11 +99,21 @@ const ModalTask = ({
                 </div>
               </div>
             </header>
-            <div className="flex items-center justify-between">
-              <div className="[&>span]:py-0.5 [&>span]:px-3 [&>span]:rounded-md flex items-center gap-2">
-                <span className="bg-red-400">1</span>
-                <span className="bg-emerald-400">Desejável</span>
-                <span className="bg-blue-400">00:00</span>
+            <div className="flex items-center justify-between mt-4">
+              <div className="[&>span]:h-6 [&>span]:rounded-md flex items-center gap-2">
+                <span className="bg-red-400 px-2 flex items-center justify-center">
+                  1
+                </span>
+                <span className="bg-emerald-500 px-2">Desejável</span>
+                <span className="bg-blue-400 flex items-center gap-2 h-full">
+                  <div className="border-r-[1.5px] h-full w-6 flex items-center justify-center">
+                    <Image className="h-4 w-4" src={relogio} alt="tempo" />
+                  </div>
+                  <span>00:00</span>
+                  <div className="h-full w-6 border-l-[1.5px] cursor-pointer">
+                    <span className="font-semibold ml-2">{">"}</span>
+                  </div>
+                </span>
               </div>
               <Responsaveis task={task} />
             </div>

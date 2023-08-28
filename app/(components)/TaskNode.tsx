@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import axiosInstance from '../(axios)/config';
+import React, { useEffect, useState } from "react";
+import axiosInstance from "../(axios)/config";
 
 interface Task {
   _id: string;
@@ -48,10 +48,10 @@ const TaskNode = ({
         <div
           className={`absolute ${
             subtasks.length > 1
-              ? 'h-[calc(100%-10px)]'
+              ? "h-[calc(100%-10px)]"
               : subtasks.length > 0
-              ? 'h-[14px]'
-              : ''
+              ? "h-[14px]"
+              : ""
           } w-1 bg-zinc-400 rounded-bl-lg`}
         ></div>
         {subtasks?.map((item) => (

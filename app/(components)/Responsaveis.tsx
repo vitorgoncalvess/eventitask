@@ -14,7 +14,7 @@ const Responsaveis = ({ task }: { task: { responsibleUsers: [] } }) => {
   const [show, setShow] = useState(false);
 
   return (
-    <div className="flex items-center justify-end relative gap-2 mt-4">
+    <div className="flex items-center justify-end relative gap-2 ">
       <span className="text-zinc-400 text-sm">Responsaveis</span>
       <div className="flex items-center gap-2">
         {task.responsibleUsers.map((user: any) => (

@@ -57,7 +57,7 @@ const Page = ({ params }: { params: { board: string } }) => {
               name={board.name}
             />
             <div className="pl-72">
-              <section className="w-full flex p-8 gap-8">
+              <section className="w-full flex p-8 gap-4">
                 {board?.sections?.map((sec: any) => (
                   <Section key={sec._id} sec={sec} />
                 ))}

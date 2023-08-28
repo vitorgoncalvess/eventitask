@@ -5,6 +5,7 @@ import Image from 'next/image';
 import edit from '@/public/edit_square.png';
 import calendar from '@/public/calendar_month.png';
 import Tasks from './Tasks';
+import Responsaveis from './Responsaveis';
 
 interface Task {
   _id: string;
@@ -12,6 +13,7 @@ interface Task {
   description: string;
   ref_id: string;
   subtasks: Task[];
+  resp: [];
 }
 
 const ModalTask = ({
@@ -26,6 +28,7 @@ const ModalTask = ({
   const { name } = useContext(BoardContext);
   const [at, setAt] = useState(task);
   const [bread, setBread] = useState<Task[]>([]);
+  const [resp, setResp] = useState(false);
   const [text, setText] = useState(at.description);
 
   function handleOut(e: any) {
@@ -55,17 +58,17 @@ const ModalTask = ({
         />
         <div className="flex items-center h-[90%] justify-center">
           <div className="w-8/12 overflow-auto h-full flex flex-col p-6">
-            <header className="flex items-center justify-between">
+            <header className="flex items-start justify-between">
               <div className="flex flex-col gap-2">
                 <ul className="flex items-center gap-2 text-xs font-medium">
                   <li>front end</li>
                   <li>back end</li>
                   <li>qualidade</li>
                 </ul>
-                <div className="flex items-end gap-2">
+                <div className="relative flex items-end gap-2">
                   <h1 className="text-5xl font-semibold w-96">{at.name}</h1>
                   <Image
-                    className="h-6 w-6 mb-1.5 cursor-pointer"
+                    className="absolute -top-2 -left-4 cursor-pointer"
                     src={edit}
                     alt="Editar"
                   />
@@ -93,6 +96,7 @@ const ModalTask = ({
                     alt="Data estimada"
                   />
                 </div>
+                <Responsaveis task={task} />
               </div>
             </header>
             <textarea

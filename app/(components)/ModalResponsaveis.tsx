@@ -9,14 +9,10 @@ interface User {
 }
 
 const ModalResponsaveis = ({
-  users,
   setShow,
-  setUsers,
   task,
 }: {
-  users: User[];
   setShow: Function;
-  setUsers: Function;
   task: any;
 }) => {
   const [responsaveis, setResponsaveis] = useState<User[]>([]);
@@ -34,9 +30,8 @@ const ModalResponsaveis = ({
   );
 
   function handleResp(resp: User) {
-    if (!users.some((user) => user._id === resp._id)) {
+    if (!task.responsibleUsers.some((user: any) => user._id === resp._id)) {
       axiosInstance.post(`/tasks/${task._id}/${resp._id}/resp`).then(() => {
-        setUsers((users: User[]) => [...users, resp]);
         setShow(false);
       });
     }
@@ -47,7 +42,9 @@ const ModalResponsaveis = ({
       {responsaveis.map((resp) => (
         <li
           onClick={() => handleResp(resp)}
-          data-already={users.some((user) => user._id === resp._id)}
+          data-already={task.responsibleUsers.some(
+            (user: any) => user._id === resp._id,
+          )}
           className="w-full cursor-pointer flex justify-end border-b-[1px] border-primary p-2 data-[already=true]:opacity-50 data-[already=true]:cursor-default"
           key={resp._id}
         >

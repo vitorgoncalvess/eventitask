@@ -14,6 +14,7 @@ interface Task {
   ref_id: string;
   subtasks: Task[];
   resp: [];
+  responsibleUsers: [];
 }
 
 const ModalTask = ({
@@ -28,7 +29,6 @@ const ModalTask = ({
   const { name } = useContext(BoardContext);
   const [at, setAt] = useState(task);
   const [bread, setBread] = useState<Task[]>([]);
-  const [resp, setResp] = useState(false);
   const [text, setText] = useState(at.description);
 
   function handleOut(e: any) {
@@ -96,9 +96,16 @@ const ModalTask = ({
                     alt="Data estimada"
                   />
                 </div>
-                <Responsaveis task={task} />
               </div>
             </header>
+            <div className="flex items-center justify-between">
+              <div className="[&>span]:py-0.5 [&>span]:px-3 [&>span]:rounded-md flex items-center gap-2">
+                <span className="bg-red-400">1</span>
+                <span className="bg-emerald-400">Desejável</span>
+                <span className="bg-blue-400">00:00</span>
+              </div>
+              <Responsaveis task={task} />
+            </div>
             <textarea
               className="bg-transparent outline-none border-2 border-[#3d3d49] rounded-md mt-8 p-4"
               name=""

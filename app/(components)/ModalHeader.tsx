@@ -1,14 +1,35 @@
 import React from 'react';
 
+interface Task {
+  _id: string;
+  name: string;
+  description: string;
+  ref_id: string;
+  subtasks: Task[];
+}
+
 const ModalHeader = ({
   setShow,
   name,
+  setAt,
   title,
+  bread,
+  setBread,
 }: {
   setShow: Function;
   name: string;
+  setAt: Function;
   title: string;
+  bread: Task[];
+  setBread: Function;
 }) => {
+  function handleChange(item: Task, act: number) {
+    if (act !== bread.length - 1) {
+      setBread(bread.filter((_, index) => index < act));
+      setAt(item);
+    }
+  }
+
   return (
     <div className="h-12 flex items-center justify-between border-b-2 rounded-t-md bg-[#272735] border-[#3d3d49] p-6">
       <div>
@@ -25,7 +46,16 @@ const ModalHeader = ({
           >
             {name}
           </li>
-          <li className="after:content-[''] cursor-default">{title}</li>
+          {bread.map((item, index) => (
+            <li
+              onClick={() => handleChange(item, index)}
+              className={`${
+                index === bread.length - 1 ? '' : "after:content-['>']"
+              } cursor-pointer`}
+            >
+              {item.name}
+            </li>
+          ))}
         </ul>
       </div>
       <ul className="flex items-center gap-3 [&>li]:cursor-pointer">

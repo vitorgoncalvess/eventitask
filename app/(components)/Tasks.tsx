@@ -9,10 +9,10 @@ interface Task {
   subtasks: Task[];
 }
 
-const Tasks = ({ task }: { task: Task }) => {
+const Tasks = ({ task, setAt }: { task: Task; setAt: Function }) => {
   return (
     <div className="h-64 bg-[#1B1B24] p-6 mt-8 rounded-md">
-      <TaskNode task={task} />
+      <TaskNode setAt={setAt} father task={task} />
     </div>
   );
 };

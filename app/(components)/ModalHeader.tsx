@@ -48,6 +48,7 @@ const ModalHeader = ({
           </li>
           {bread.map((item, index) => (
             <li
+              key={index}
               onClick={() => handleChange(item, index)}
               className={`${
                 index === bread.length - 1 ? '' : "after:content-['>']"

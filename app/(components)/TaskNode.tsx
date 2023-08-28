@@ -18,13 +18,13 @@ const TaskNode = ({
   setAt: Function;
   father?: boolean;
 }) => {
-  const [subtasks, setSubtasks] = useState([]);
+  const [subtasks, setSubtasks] = useState<Task[]>([]);
 
   useEffect(() => {
     axiosInstance.get(`/tasks/${task._id}/subtasks`).then((response) => {
       setSubtasks(response.data);
     });
-  }, []);
+  }, [task._id]);
 
   function handleChange() {
     if (!father) {
@@ -55,7 +55,7 @@ const TaskNode = ({
           } w-1 bg-zinc-400 rounded-bl-lg`}
         ></div>
         {subtasks?.map((item) => (
-          <TaskNode setAt={setAt} task={item} />
+          <TaskNode key={item._id} setAt={setAt} task={item} />
         ))}
       </ul>
     </div>

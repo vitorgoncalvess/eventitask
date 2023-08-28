@@ -35,7 +35,7 @@ const ModalTask = ({
   }
 
   useEffect(() => {
-    setBread([...bread, at]);
+    setBread((bread) => [...bread, at]);
     setText(at.description);
   }, [at]);
 

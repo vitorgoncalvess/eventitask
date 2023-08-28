@@ -73,8 +73,12 @@ const Modal = ({
           <label htmlFor="">Subtarefas</label>
           {subtarefas.length > 0 ? (
             <>
-              {subtarefas.map((item) => (
-                <InputModal setSubtarefas={setSubtarefas} defaultValue={item} />
+              {subtarefas.map((item, index) => (
+                <InputModal
+                  key={index}
+                  setSubtarefas={setSubtarefas}
+                  defaultValue={item}
+                />
               ))}
               <InputModal
                 placeholder="e.g Colocar 3 colheres de açucar"
@@ -107,7 +111,9 @@ const Modal = ({
               Selecione
             </option>
             {secs.map((item) => (
-              <option value={item._id}>{item.name}</option>
+              <option key={item._id} value={item._id}>
+                {item.name}
+              </option>
             ))}
           </select>
           <Button size="p" background="base" rounded="full">

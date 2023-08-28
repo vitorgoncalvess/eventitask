@@ -12,6 +12,7 @@ export async function POST(req: Request) {
       name: title,
       description: desc,
       ref_id: new mongo.ObjectId(status),
+      resp: [],
     });
 
     if (subtarefas)

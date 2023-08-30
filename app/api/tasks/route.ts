@@ -1,28 +1,21 @@
-import clientPromise from '@/app/(lib)/mongodb';
-import { NextResponse } from 'next/server';
-import { mongo } from 'mongoose';
+import { NextResponse } from "next/server";
+import { query } from "@/app/(lib)/db";
 
 export async function POST(req: Request) {
   const { title, desc, status, subtarefas } = await req.json();
   try {
-    const client = await clientPromise;
-    const db = client.db('eventitask');
-
-    const task = await db.collection('task').insertOne({
-      name: title,
-      description: desc,
-      ref_id: new mongo.ObjectId(status),
-      resp: [],
-    });
+    const task = await query(
+      "INSERT INTO task (section_id, name, priority, fibonacci, description) VALUES (?,?,1,1,?)",
+      [status, title, desc]
+    );
 
     if (subtarefas)
-      await db.collection('task').insertMany(
-        subtarefas.map((item: any) => ({
-          name: item,
-          description: null,
-          ref_id: task.insertedId,
-        })),
-      );
+      subtarefas.map((item: any) => {
+        query("INSERT INTO task (name, task_id) VALUES (?,?)", [
+          item,
+          task.insertId,
+        ]);
+      });
 
     return NextResponse.json(task, { status: 201 });
   } catch (err) {

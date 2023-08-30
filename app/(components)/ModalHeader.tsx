@@ -1,25 +1,24 @@
-import React from 'react';
+import React from "react";
 
 interface Task {
-  _id: string;
+  id: string;
   name: string;
   description: string;
-  ref_id: string;
-  subtasks: Task[];
+  section_id: number;
+  task_id: number;
+  subtasks: number;
 }
 
 const ModalHeader = ({
   setShow,
   name,
   setAt,
-  title,
   bread,
   setBread,
 }: {
   setShow: Function;
   name: string;
   setAt: Function;
-  title: string;
   bread: Task[];
   setBread: Function;
 }) => {
@@ -51,7 +50,7 @@ const ModalHeader = ({
               key={index}
               onClick={() => handleChange(item, index)}
               className={`${
-                index === bread.length - 1 ? '' : "after:content-['>']"
+                index === bread.length - 1 ? "" : "after:content-['>']"
               } cursor-pointer`}
             >
               {item.name}

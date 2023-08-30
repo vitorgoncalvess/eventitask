@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { useQuery } from 'react-query';
-import axiosInstance from '../(axios)/config';
+import React, { useState } from "react";
+import { useQuery } from "react-query";
+import axiosInstance from "../(axios)/config";
 
 interface User {
-  _id: string;
+  id: string;
   name: string;
   email: string;
 }
@@ -16,22 +16,25 @@ const ModalResponsaveis = ({
   task: any;
 }) => {
   const [responsaveis, setResponsaveis] = useState<User[]>([]);
+  console.log(task.responsaveis);
+  console.log(responsaveis);
 
   useQuery(
-    'resp',
+    "resp",
     async () => {
-      return await axiosInstance.get('/usuarios');
+      return await axiosInstance.get("/usuarios");
     },
     {
       onSuccess(response) {
         setResponsaveis(response.data);
       },
-    },
+    }
   );
 
   function handleResp(resp: User) {
-    if (!task.responsibleUsers.some((user: any) => user._id === resp._id)) {
-      axiosInstance.post(`/tasks/${task._id}/${resp._id}/resp`).then(() => {
+    // eslint-disable-next-line
+    if (!task.responsaveis?.some((user: any) => user.id == resp.id)) {
+      axiosInstance.post(`/tasks/${task.id}/${resp.id}/resp`).then(() => {
         setShow(false);
       });
     }
@@ -39,14 +42,14 @@ const ModalResponsaveis = ({
 
   return (
     <ul className="absolute w-52 flex flex-col items-end bg-secondary top-12 rounded-md">
-      {responsaveis.map((resp) => (
+      {responsaveis?.map((resp) => (
         <li
           onClick={() => handleResp(resp)}
-          data-already={task.responsibleUsers.some(
-            (user: any) => user._id === resp._id,
+          data-already={task.responsaveis?.some(
+            (user: any) => user.id == resp.id // eslint-disable-line
           )}
           className="w-full cursor-pointer flex justify-end border-b-[1px] border-primary p-2 data-[already=true]:opacity-50 data-[already=true]:cursor-default"
-          key={resp._id}
+          key={resp.id}
         >
           {resp.name}
         </li>

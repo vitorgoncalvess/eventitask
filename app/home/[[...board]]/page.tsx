@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import axiosInstance from '@/app/(axios)/config';
-import Sidebar from '../../(components)/Sidebar';
-import { useState } from 'react';
-import { useQuery } from 'react-query';
-import Header from '@/app/(components)/Header';
-import Section from '@/app/(components)/Section';
-import { createContext } from 'react';
+import axiosInstance from "@/app/(axios)/config";
+import Sidebar from "../../(components)/Sidebar";
+import { useState } from "react";
+import { useQuery } from "react-query";
+import Header from "@/app/(components)/Header";
+import Section from "@/app/(components)/Section";
+import { createContext } from "react";
 
 interface Board {
   _id: string;
@@ -21,8 +21,8 @@ interface Board {
 }
 
 export const BoardContext = createContext<Board>({
-  _id: '',
-  name: '',
+  _id: "",
+  name: "",
   sections: [],
 });
 
@@ -30,7 +30,7 @@ const Page = ({ params }: { params: { board: string } }) => {
   const [board, setBoard] = useState<any>();
 
   const { isLoading, refetch } = useQuery(
-    'board',
+    "board",
     () => {
       return axiosInstance.get(`/boards/${params.board}`);
     },
@@ -40,11 +40,11 @@ const Page = ({ params }: { params: { board: string } }) => {
       },
       refetchOnMount: true,
       refetchOnWindowFocus: false,
-    },
+    }
   );
 
   return (
-    <BoardContext.Provider value={board}>
+    <BoardContext.Provider value={{ board, refetch } as any}>
       <div className="relative flex min-h-[150vh]">
         <Sidebar />
         {isLoading && <>Carregando...</>}

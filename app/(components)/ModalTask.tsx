@@ -7,15 +7,19 @@ import relogio from "@/public/clock.png";
 import calendar from "@/public/calendar_month.png";
 import Tasks from "./Tasks";
 import Responsaveis from "./Responsaveis";
+import axiosInstance from "../(axios)/config";
+import Select from "./Select";
 
 interface Task {
-  _id: string;
+  id: string;
   name: string;
   description: string;
-  ref_id: string;
-  subtasks: Task[];
-  resp: [];
-  responsibleUsers: [];
+  section_id: number;
+  task_id: number;
+  fibonacci: number;
+  priority: number;
+  subtasks: number;
+  responsaveis: [];
 }
 
 const ModalTask = ({
@@ -27,14 +31,47 @@ const ModalTask = ({
   task: Task;
   sec?: any;
 }) => {
-  const { name } = useContext(BoardContext);
+  const { board, refetch } = useContext(BoardContext) as any;
   const [at, setAt] = useState(task);
   const [bread, setBread] = useState<Task[]>([]);
   const [text, setText] = useState(at.description);
+  const [fibo, setFibo] = useState(at.fibonacci || 0);
+  const [prio, setPrio] = useState(at.priority || 0);
+  const fib = [1, 2, 3, 5, 8, 13, 21, 34];
+  const pri = ["Desejável", "Importante", "Essencial"];
 
   function handleOut(e: any) {
     if (e.currentTarget === e.target) {
       setShow(false);
+    }
+  }
+
+  function handlePos(
+    state: number,
+    name: string,
+    arr: any[],
+    setState: Function
+  ) {
+    if (state === arr.length - 1) {
+      setState(0);
+      axiosInstance
+        .post(`/tasks/${at.id}/state`, {
+          state: name,
+          value: 0,
+        })
+        .then(() => {
+          refetch();
+        });
+    } else {
+      setState((state: number) => state + 1);
+      axiosInstance
+        .post(`/tasks/${at.id}/state`, {
+          state: name,
+          value: state + 1,
+        })
+        .then(() => {
+          refetch();
+        });
     }
   }
 
@@ -54,8 +91,7 @@ const ModalTask = ({
           bread={bread}
           setBread={setBread}
           setShow={setShow}
-          name={name}
-          title={at.name}
+          name={board.name}
         />
         <div className="flex items-center h-[90%] justify-center">
           <div className="w-8/12 overflow-auto h-full flex flex-col p-6">
@@ -67,7 +103,7 @@ const ModalTask = ({
                   <li>qualidade</li>
                 </ul>
                 <div className="relative flex items-end gap-2">
-                  <h1 className="text-5xl font-semibold w-96">{at.name}</h1>
+                  <h1 className="text-5xl font-semibold">{at.name}</h1>
                   <Image
                     className="absolute -top-2 -left-4 cursor-pointer"
                     src={edit}
@@ -76,18 +112,7 @@ const ModalTask = ({
                 </div>
               </div>
               <div className="flex flex-col gap-2 items-end">
-                <div className="flex items-center cursor-pointer">
-                  <div
-                    className={`py-1.5 px-4 bg-[${sec?.color}] text-black font-medium rounded-l-md`}
-                  >
-                    <span className="opacity-70">{sec?.name}</span>
-                  </div>
-                  <span
-                    className={`py-1.5 px-4 bg-[${sec?.color}] text-black font-medium rounded-r-md border-l-2 border-[rgb(0,0,0,0.3)]`}
-                  >
-                    <span className="opacity-70">V</span>
-                  </span>
-                </div>
+                <Select />
                 <div className="flex items-end gap-2 opacity-70">
                   <span className="text-xs mb-0.5">Estimado</span>
                   <span className="text-sm">28/08/23</span>
@@ -100,13 +125,21 @@ const ModalTask = ({
               </div>
             </header>
             <div className="flex items-center justify-between mt-4">
-              <div className="[&>span]:h-6 [&>span]:rounded-md flex items-center gap-2">
-                <span className="bg-red-400 px-2 flex items-center justify-center">
-                  1
+              <div className="[&>span]:h-6 [&>span]:rounded-sm [&>span]:cursor-pointer select-none flex items-center gap-2">
+                <span
+                  onClick={() => handlePos(fibo, "fibonacci", fib, setFibo)}
+                  className="bg-red-400 px-2 flex items-center justify-center"
+                >
+                  {fib[fibo]}
                 </span>
-                <span className="bg-emerald-500 px-2">Desejável</span>
+                <span
+                  onClick={() => handlePos(prio, "priority", pri, setPrio)}
+                  className="bg-emerald-500 px-2"
+                >
+                  {pri[prio]}
+                </span>
                 <span className="bg-blue-400 flex items-center gap-2 h-full">
-                  <div className="border-r-[1.5px] h-full w-6 flex items-center justify-center">
+                  <div className="border-r-[1.5px] h-full w-8 flex items-center justify-center">
                     <Image className="h-4 w-4" src={relogio} alt="tempo" />
                   </div>
                   <span>00:00</span>

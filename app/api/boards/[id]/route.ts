@@ -1,176 +1,77 @@
+import { query } from "@/app/(lib)/db";
 import clientPromise from "@/app/(lib)/mongodb";
 import { mongo } from "mongoose";
 import { NextResponse } from "next/server";
 
+interface Board {
+  name: string;
+  sections: {
+    id: string;
+    name: string;
+    color: string;
+    tasks: Object[];
+  }[];
+}
+
 export async function GET(_: any, { params }: { params: { id: string } }) {
   try {
-    const client = await clientPromise;
-    const db = client.db("eventitask");
+    const result: any[] = await query(
+      "SELECT * FROM vw_sections_task_resp WHERE id = ?",
+      [params.id]
+    );
 
-    const board = await db
-      .collection("board")
-      .aggregate(
-        [
-          {
-            $match: {
-              _id: new mongo.ObjectId(params.id),
-            },
-          },
-          {
-            $lookup: {
-              from: "section",
-              localField: "_id",
-              foreignField: "board_id",
-              as: "sections",
-            },
-          },
-          {
-            $sort: {
-              "section.order": 1,
-            },
-          },
-          {
-            $unwind: {
-              path: "$sections",
-              preserveNullAndEmptyArrays: true,
-            },
-          },
-          {
-            $lookup: {
-              from: "task",
-              localField: "sections._id",
-              foreignField: "ref_id",
-              as: "sections.tasks",
-            },
-          },
-          {
-            $unwind: {
-              path: "$sections.tasks",
-              preserveNullAndEmptyArrays: true,
-            },
-          },
-          {
-            $lookup: {
-              from: "task",
-              localField: "sections.tasks._id",
-              foreignField: "ref_id",
-              as: "sections.tasks.subtasks",
-            },
-          },
-          {
-            $lookup: {
-              from: "task",
-              localField: "sections.tasks._id",
-              foreignField: "ref_id",
-              as: "sections.tasks.subtasks",
-            },
-          },
-          {
-            $lookup: {
-              from: "usuario",
-              localField: "sections.tasks.resp",
-              foreignField: "_id",
-              as: "sections.tasks.responsibleUsers",
-            },
-          },
-          {
-            $group: {
-              _id: {
-                boardId: "$_id",
-                sectionId: "$sections._id",
-                taskId: "$sections.tasks._id",
-              },
-              board: {
-                $first: "$$ROOT",
-              },
-              section: {
-                $first: "$sections",
-              },
-              task: {
-                $first: "$sections.tasks",
-              },
-            },
-          },
-          {
-            $group: {
-              _id: {
-                boardId: "$_id.boardId",
-                sectionId: "$_id.sectionId",
-              },
-              board: {
-                $first: "$board",
-              },
-              section: {
-                $first: "$section",
-              },
-              tasks: {
-                $push: "$task",
-              },
-            },
-          },
-          {
-            $group: {
-              _id: "$_id.boardId",
-              board: {
-                $first: "$board",
-              },
-              sections: {
-                $push: {
-                  _id: "$_id.sectionId",
-                  name: "$section.name",
-                  color: "$section.color",
-                  order: "$section.order",
-                  tasks: "$tasks",
-                },
-              },
-            },
-          },
-          {
-            $unwind: {
-              path: "$sections",
-              preserveNullAndEmptyArrays: true,
-            },
-          },
-          {
-            $sort: {
-              "sections.order": 1,
-            },
-          },
-          {
-            $group: {
-              _id: "$_id",
-              board: {
-                $first: "$board",
-              },
-              sections: {
-                $push: "$sections",
-              },
-            },
-          },
-          {
-            $addFields: {
-              "board.sections": "$sections",
-            },
-          },
-          {
-            $replaceRoot: {
-              newRoot: "$board",
-            },
-          },
-        ],
-        { maxTimeMS: 60000, allowDiskUse: true }
-      )
-      .toArray();
+    const _board: Board = {
+      name: result[0].name,
+      sections: [],
+    };
 
-    if (board.length === 0) {
-      return NextResponse.json(
-        { message: "Board inexistente" },
-        { status: 204 }
+    result.forEach((sec) => {
+      const resp = sec.responsaveis?.split(",");
+      const ids = sec.responsaveis_id?.split(",");
+      const has = _board.sections.findIndex(
+        (pred: any) => pred.section_id === sec.section_id
       );
-    }
+      if (has != -1) {
+        if (sec.task_id) {
+          _board.sections[has].tasks.push({
+            id: sec.task_id,
+            name: sec.task_name,
+            description: sec.description,
+            priority: sec.priority,
+            fibonacci: sec.fibonacci,
+            subtasks: sec.subtask_id,
+            responsaveis: resp?.map((item: string, index: number) => ({
+              id: ids[index],
+              img: item,
+            })),
+          });
+        }
+      } else {
+        _board.sections.push({
+          id: sec.section_id,
+          name: sec.section_name,
+          color: sec.color,
+          tasks: sec.task_id && [
+            {
+              id: sec.task_id,
+              name: sec.task_name,
+              description: sec.description,
+              priority: sec.priority,
+              fibonacci: sec.fibonacci,
+              subtasks: sec.subtask_id,
+              responsaveis: resp?.map((item: string, index: number) => ({
+                id: ids[index],
+                img: item,
+              })),
+            },
+          ],
+        });
+      }
+    });
 
-    return NextResponse.json(board[0]);
+    return NextResponse.json(_board);
   } catch (err) {
+    console.log(err);
     return NextResponse.json({ err });
   }
 }

@@ -1,10 +1,10 @@
-import React, { FormEvent, useState } from 'react';
-import InputModal from './InputModal';
-import Button from './Button';
-import axiosInstance from '../(axios)/config';
+import React, { FormEvent, useState } from "react";
+import InputModal from "./InputModal";
+import Button from "./Button";
+import axiosInstance from "../(axios)/config";
 
 interface Section {
-  _id: string;
+  id: string;
   name: string;
   color: string;
   order: number;
@@ -19,11 +19,11 @@ const Modal = ({
   secs: Section[];
   refetch: Function;
 }) => {
-  const [title, setTitle] = useState('');
-  const [desc, setDesc] = useState('');
-  const [status, setStatus] = useState('');
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
+  const [status, setStatus] = useState("");
   const [subtarefas, setSubtarefas] = useState<string[]>([]);
-  const [tarefa, setTarefa] = useState('');
+  const [tarefa, setTarefa] = useState("");
 
   function handleOut(e: any) {
     if (e.currentTarget === e.target) {
@@ -34,13 +34,13 @@ const Modal = ({
   function handleSub(e: FormEvent) {
     e.preventDefault();
     setSubtarefas([...subtarefas, tarefa]);
-    setTarefa('');
+    setTarefa("");
   }
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     axiosInstance
-      .post('/tasks', { title, desc, status, subtarefas })
+      .post("/tasks", { title, desc, status, subtarefas })
       .then((response) => {
         if (response.status === 201) {
           refetch();
@@ -111,7 +111,7 @@ const Modal = ({
               Selecione
             </option>
             {secs.map((item) => (
-              <option key={item._id} value={item._id}>
+              <option key={item.id} value={item.id}>
                 {item.name}
               </option>
             ))}

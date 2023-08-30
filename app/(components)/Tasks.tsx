@@ -2,11 +2,12 @@ import React from "react";
 import TaskNode from "./TaskNode";
 
 interface Task {
-  _id: string;
+  id: string;
   name: string;
   description: string;
-  ref_id: string;
-  subtasks: Task[];
+  section_id: number;
+  task_id: number;
+  subtasks: number;
 }
 
 const Tasks = ({ task, setAt }: { task: Task; setAt: Function }) => {

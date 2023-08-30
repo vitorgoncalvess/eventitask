@@ -25,7 +25,7 @@ export default function Home() {
             if (boards.length === 0) {
               router.push("/home");
             } else {
-              router.push(`/home/${boards[0]._id}`);
+              router.push(`/home/${boards[0].id}`);
             }
           });
         }

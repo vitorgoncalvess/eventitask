@@ -1,27 +1,27 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import Logo from './Logo';
-import { useQuery } from 'react-query';
-import axiosInstance from '../(axios)/config';
-import Image from 'next/image';
-import boardIcon from '@/public/board.png';
-import boardIconPurple from '@/public/tablet_purple.png';
-import boardIconWhite from '@/public/tablet_white.png';
-import { useRouter } from 'next/navigation';
+import React, { useState } from "react";
+import Logo from "./Logo";
+import { useQuery } from "react-query";
+import axiosInstance from "../(axios)/config";
+import Image from "next/image";
+import boardIcon from "@/public/board.png";
+import boardIconPurple from "@/public/tablet_purple.png";
+import boardIconWhite from "@/public/tablet_white.png";
+import { useRouter } from "next/navigation";
 
 const Sidebar = () => {
   const [boards, setBoards] = useState([]);
-  const { isLoading } = useQuery(
-    'boards',
+  useQuery(
+    "boards",
     () => {
-      return axiosInstance.get('/boards');
+      return axiosInstance.get("/boards");
     },
     {
       onSuccess(response) {
         setBoards(response.data.boards);
       },
-    },
+    }
   );
 
   const router = useRouter();
@@ -39,15 +39,15 @@ const Sidebar = () => {
         <ul>
           {boards?.map((item: any) => (
             <li
-              data-selected={location.href.includes(item._id)}
+              data-selected={location.href.includes(item.id)}
               className="px-6 py-3 data-[selected=true]:bg-base data-[selected=false]:text-text w-11/12 rounded-r-full flex items-center gap-4 font-medium cursor-pointer"
-              key={item._id}
-              onClick={() => router.push(`/home/${item._id}`)}
+              key={item.id}
+              onClick={() => router.push(`/home/${item.id}`)}
             >
               <Image
                 className="h-4 w-4"
                 src={
-                  location.href.includes(item._id) ? boardIconWhite : boardIcon
+                  location.href.includes(item.id) ? boardIconWhite : boardIcon
                 }
                 alt="Board"
               />

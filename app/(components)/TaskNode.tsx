@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import axiosInstance from "../(axios)/config";
 
 interface Task {
-  _id: string;
+  id: string;
   name: string;
   description: string;
-  ref_id: string;
-  subtasks: Task[];
+  section_id: number;
+  task_id: number;
+  subtasks: number;
 }
 
 const TaskNode = ({
@@ -21,10 +22,10 @@ const TaskNode = ({
   const [subtasks, setSubtasks] = useState<Task[]>([]);
 
   useEffect(() => {
-    axiosInstance.get(`/tasks/${task._id}/subtasks`).then((response) => {
+    axiosInstance.get(`/tasks/${task.id}/subtasks`).then((response) => {
       setSubtasks(response.data);
     });
-  }, [task._id]);
+  }, [task.id]);
 
   function handleChange() {
     if (!father) {
@@ -55,7 +56,7 @@ const TaskNode = ({
           } w-1 bg-zinc-400 rounded-bl-lg`}
         ></div>
         {subtasks?.map((item) => (
-          <TaskNode key={item._id} setAt={setAt} task={item} />
+          <TaskNode key={item.id} setAt={setAt} task={item} />
         ))}
       </ul>
     </div>

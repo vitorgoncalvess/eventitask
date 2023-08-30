@@ -13,7 +13,7 @@ const Input = ({
   type = "text",
   placeholder,
   value,
-  setValue
+  setValue,
 }: Props) => {
   return (
     <div className="flex flex-col w-full">

@@ -5,7 +5,7 @@ export async function POST(req: Request) {
   const { title, desc, status, subtarefas } = await req.json();
   try {
     const task = await query(
-      "INSERT INTO task (section_id, name, priority, fibonacci, description) VALUES (?,?,1,1,?)",
+      "INSERT INTO task (section_id, name, priority, fibonacci, description, status) VALUES (?,?,1,1,?,0)",
       [status, title, desc]
     );
 

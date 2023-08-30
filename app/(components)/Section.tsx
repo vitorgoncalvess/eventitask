@@ -1,7 +1,15 @@
 import React from "react";
 import Task from "./Task";
-
-const colors = ["bg-[#ff5555]", "bg-[#55ff55]"];
+const colors = [
+  "bg-red-400",
+  "bg-emerald-400",
+  "bg-lime-400",
+  "bg-yellow-400",
+  "bg-amber-400",
+  "bg-blue-400",
+  "bg-indigo-400",
+  "bg-purple-400",
+];
 
 interface Section {
   _id: string;
@@ -15,7 +23,7 @@ const Section = ({ sec }: { sec: Section }) => {
   return (
     <div>
       <div className="flex items-center gap-2">
-        <div className={`h-4 w-4 rounded-full bg-[${sec.color}]`}></div>
+        <div className={`h-4 w-4 rounded-full ${sec.color}`}></div>
         <h1 className="text-text tracking-widest text-[14px]">
           {sec?.name?.toUpperCase()} ({sec?.tasks?.length || 0})
         </h1>

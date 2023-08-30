@@ -7,7 +7,7 @@ const key = process.env.SECRET_KEY || "chave-secreta";
 
 export async function GET() {
   try {
-    const users = await query("SELECT id, name FROM usuario");
+    const users = await query("SELECT id, name, img FROM usuario");
     return NextResponse.json(users);
   } catch (err) {
     return NextResponse.json(err);

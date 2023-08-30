@@ -28,9 +28,9 @@ export async function GET(_: any, { params }: { params: { id: string } }) {
     result.forEach((sec) => {
       const resp = sec.responsaveis?.split(",");
       const ids = sec.responsaveis_id?.split(",");
-      const has = _board.sections.findIndex(
-        (pred: any) => pred.section_id === sec.section_id
-      );
+      const has = _board.sections.findIndex((pred: any) => {
+        return pred.id === sec.section_id;
+      });
       if (has != -1) {
         if (sec.task_id) {
           _board.sections[has].tasks.push({
@@ -40,6 +40,8 @@ export async function GET(_: any, { params }: { params: { id: string } }) {
             priority: sec.priority,
             fibonacci: sec.fibonacci,
             subtasks: sec.subtask_id,
+            status: sec.status,
+            time: sec.time,
             responsaveis: resp?.map((item: string, index: number) => ({
               id: ids[index],
               img: item,
@@ -59,6 +61,8 @@ export async function GET(_: any, { params }: { params: { id: string } }) {
               priority: sec.priority,
               fibonacci: sec.fibonacci,
               subtasks: sec.subtask_id,
+              status: sec.status,
+              time: sec.time,
               responsaveis: resp?.map((item: string, index: number) => ({
                 id: ids[index],
                 img: item,

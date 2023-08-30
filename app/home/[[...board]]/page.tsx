@@ -7,6 +7,7 @@ import { useQuery } from "react-query";
 import Header from "@/app/(components)/Header";
 import Section from "@/app/(components)/Section";
 import { createContext } from "react";
+import ModalSection from "@/app/(components)/ModalSection";
 
 interface Board {
   _id: string;
@@ -28,6 +29,7 @@ export const BoardContext = createContext<Board>({
 
 const Page = ({ params }: { params: { board: string } }) => {
   const [board, setBoard] = useState<any>();
+  const [show, setShow] = useState(false);
 
   const { isLoading, refetch } = useQuery(
     "board",
@@ -45,6 +47,7 @@ const Page = ({ params }: { params: { board: string } }) => {
 
   return (
     <BoardContext.Provider value={{ board, refetch } as any}>
+      {show && <ModalSection setShow={setShow} />}
       <div className="relative flex min-h-[150vh]">
         <Sidebar />
         {isLoading && <>Carregando...</>}
@@ -53,14 +56,21 @@ const Page = ({ params }: { params: { board: string } }) => {
             <Header
               secs={board?.sections}
               refetch={refetch}
-              id={board._id}
+              id={board.id}
               name={board.name}
             />
             <div className="pl-72">
               <section className="w-full flex p-8 gap-4">
                 {board?.sections?.map((sec: any) => (
-                  <Section key={sec._id} sec={sec} />
+                  <Section key={sec.id} sec={sec} />
                 ))}
+                <div
+                  onClick={() => setShow(true)}
+                  className="bg-primary cursor-pointer w-36 mt-9 rounded flex flex-col items-center justify-center text-5xl text-center opacity-50 hover:opacity-60"
+                >
+                  <span>+</span>
+                  <span className="text-2xl font-medium">Nova Seção</span>
+                </div>
               </section>
             </div>
           </div>

@@ -20,6 +20,7 @@ export default function Home() {
       .then((response) => {
         if (response.status === 200) {
           localStorage.setItem("token", response.data.token);
+          localStorage.setItem("id", response.data.id);
           axiosInstance.get("/boards").then((response: any) => {
             const { boards } = response.data;
             if (boards.length === 0) {

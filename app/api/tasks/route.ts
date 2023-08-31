@@ -11,7 +11,7 @@ export async function POST(req: Request) {
 
     if (subtarefas)
       subtarefas.map((item: any) => {
-        query("INSERT INTO task (name, task_id) VALUES (?,?)", [
+        query("INSERT INTO task (name, task_id, priority, fibonacci, description, status) VALUES (?,?,0,0,'',0)", [
           item,
           task.insertId,
         ]);

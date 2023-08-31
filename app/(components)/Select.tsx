@@ -1,16 +1,18 @@
-import React, { useContext, useState } from "react";
+import React, { useState, useEffect } from "react";
 import axiosInstance from "../(axios)/config";
-import { BoardContext } from "../home/[[...board]]/page";
 
 const Select = ({ id, status }: { id: string; status: number }) => {
-  const { refetch }: any = useContext(BoardContext);
   const options = [
     { value: "Pendente", color: "bg-yellow-400" },
     { value: "Em Desenvolvimento", color: "bg-blue-400" },
     { value: "Concluido", color: "bg-emerald-400" },
   ];
-  const [state, setState] = useState(status || 0);
+  const [state, setState] = useState(0);
   const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    setState(status);
+  }, [status]);
 
   function handleClick(status: number) {
     setState(status);

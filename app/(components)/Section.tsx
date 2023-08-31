@@ -22,7 +22,7 @@ interface Section {
 
 const Section = ({ sec }: { sec: Section }) => {
   const [show, setShow] = useState(false);
-  const [complete, setComplete] = useState(false);
+  const [complete, setComplete] = useState(true);
   return (
     <div>
       {show && <Modal setShow={setShow} secs={sec} />}

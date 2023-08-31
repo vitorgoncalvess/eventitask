@@ -34,7 +34,7 @@ const Sidebar = () => {
           <Logo size="lg" />
         </div>
         <h3 className="p-6 font-medium tracking-widest text-text text-sm">
-          ALL BOARDS ({boards.length})
+          TODAS ÁREAS ({boards.length})
         </h3>
         <ul>
           {boards?.map((item: any) => (

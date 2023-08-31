@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 
-const CircleGraph = ({ data, max }: { data: number; max: number }) => {
+const CircleGraph = ({
+  data,
+  max,
+  single,
+}: {
+  data: number;
+  max: number;
+  single: boolean;
+}) => {
   const [graus, setGraus] = useState(0);
 
   const circleStyle = {
@@ -12,8 +20,10 @@ const CircleGraph = ({ data, max }: { data: number; max: number }) => {
   };
 
   useEffect(() => {
-    setGraus((data / max) * 360);
-  }, [data, max]);
+    const cal = (data / max) * 360;
+    setGraus(cal);
+    if (single && !max) setGraus(360);
+  }, [data, max, single]);
 
   return (
     <div className="h-full w-full border-2 rounded-full border-[#52bf6a] p-0.5">

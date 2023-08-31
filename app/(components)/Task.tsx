@@ -32,7 +32,8 @@ const Task = ({ task, sec }: { task: Task; sec: any }) => {
           <div className="h-8 w-8">
             <CircleGraph
               data={task.subtasks_status?.filter((item) => item === "2").length}
-              max={task.subtasks}
+              max={task.status === 2 ? task.subtasks : task.subtasks + 1}
+              single={!task.subtasks_status}
             />
           </div>
         </div>

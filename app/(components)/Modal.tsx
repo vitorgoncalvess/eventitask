@@ -49,7 +49,7 @@ const Modal = ({ setShow, secs }: { setShow: Function; secs: any }) => {
   return (
     <div
       onClick={handleOut}
-      className="absolute min-h-[110vh] top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center bg-[rgb(0,0,0,0.3)] z-50"
+      className="absolute min-h-[130vh] top-0 bottom-0 left-0 right-0 flex flex-col items-center py-20 bg-[rgb(0,0,0,0.3)] z-10"
     >
       <div className="bg-primary p-6 w-[420px] rounded-md flex flex-col items-start gap-4">
         <h1 className="text-lg font-semibold">Adicionar Nova Tarefa</h1>

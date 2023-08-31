@@ -1,23 +1,20 @@
-import { useQuery } from "react-query";
 import axiosInstance from "../(axios)/config";
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useEffect } from "react";
 import Image from "next/image";
 
 const Comments = ({ id }: { id: string }) => {
   const [comments, setComments] = useState<string[]>([]);
   const [message, setMessage] = useState("");
   const idUser = localStorage.getItem("id");
-  useQuery(
-    "task-comment",
-    async () => {
-      return await axiosInstance.get(`/tasks/${id}/comments`);
-    },
-    {
-      onSuccess(response) {
-        setComments(response.data);
-      },
-    }
-  );
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    axiosInstance.get(`/tasks/${id}/comments`).then((response) => {
+      setComments(response.data);
+      setLoading(false);
+    });
+  }, [id]);
 
   function handleSubmit(e?: FormEvent) {
     if (e) e.preventDefault();
@@ -48,29 +45,36 @@ const Comments = ({ id }: { id: string }) => {
         <button className="bg-base w-20 text-2xl rounded-md">{">"}</button>
       </form>
       <ul className="p-2 flex flex-col gap-2 overflow-auto">
-        {comments.map((comment: any) => (
-          <li
-            className="flex bg-secondary p-2 text-white gap-2 rounded-md"
-            key={comment.id}
-          >
-            <Image
-              className="h-9 w-9 rounded-full object-cover"
-              height={100}
-              width={100}
-              src={comment.img}
-              alt={comment.name}
-            />
-            <div className="relative w-[89%]">
-              <h1 className="text-sm opacity-50">{comment.name}</h1>
-              <span className="break-words opacity-80 w-full">
-                {comment.message}
-              </span>
-              <span className="absolute text-xs bottom-0 right-0 opacity-50">
-                {comment.time?.substring(0, 5)}
-              </span>
-            </div>
-          </li>
-        ))}
+        {loading
+          ? Array.from({ length: 7 }).map((_, index) => (
+              <li
+                key={index}
+                className="bg-secondary animate-pulse w-full h-24 rounded-md"
+              ></li>
+            ))
+          : comments.map((comment: any) => (
+              <li
+                className="flex bg-secondary p-2 text-white gap-2 rounded-md"
+                key={comment.id}
+              >
+                <Image
+                  className="h-9 w-9 rounded-full object-cover"
+                  height={100}
+                  width={100}
+                  src={comment.img}
+                  alt={comment.name}
+                />
+                <div className="relative w-[89%]">
+                  <h1 className="text-sm opacity-50">{comment.name}</h1>
+                  <span className="break-words opacity-80 w-full">
+                    {comment.message}
+                  </span>
+                  <span className="absolute text-xs bottom-0 right-0 opacity-50">
+                    {comment.time?.substring(0, 5)}
+                  </span>
+                </div>
+              </li>
+            ))}
       </ul>
     </div>
   );

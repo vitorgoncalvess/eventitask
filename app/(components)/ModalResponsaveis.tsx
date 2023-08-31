@@ -13,42 +13,39 @@ interface User {
 const ModalResponsaveis = ({
   setShow,
   task,
-  responsaveis,
-  setResponsaveis,
-  setResp,
   respo,
+  setRespo,
+  setLoading,
 }: {
   setShow: Function;
   task: any;
-  responsaveis: User[];
-  setResponsaveis: Function;
-  setResp?: Function;
-  respo?: User[];
+  respo: User[];
+  setRespo: Function;
+  setLoading: Function;
 }) => {
+  const [responsaveis, setResponsaveis] = useState<User[]>([]);
   useQuery(
     "resp",
     async () => {
+      setLoading(true);
       return await axiosInstance.get("/usuarios");
     },
     {
       onSuccess(response) {
+        setLoading(false);
         setResponsaveis(response.data);
       },
     }
   );
 
   function handleResp(resp: User) {
-    if (setResp) {
-      if (!respo?.some((user: any) => user.id == resp.id)) {
-        setResp((respon: User[]) => [...respon, resp]);
+    if (!respo?.some((user: any) => user.id == resp.id)) {
+      setLoading(true);
+      axiosInstance.post(`/tasks/${task.id}/${resp.id}/resp`).then(() => {
+        setRespo((responsaveis: User[]) => [...responsaveis, resp]);
         setShow(false);
-      }
-    } else {
-      if (!task.responsaveis?.some((user: any) => user.id == resp.id)) {
-        axiosInstance.post(`/tasks/${task.id}/${resp.id}/resp`).then(() => {
-          setShow(false);
-        });
-      }
+        setLoading(false);
+      });
     }
   }
 
@@ -57,14 +54,8 @@ const ModalResponsaveis = ({
       {responsaveis?.map((resp) => (
         <li
           onClick={() => handleResp(resp)}
-          data-already={
-            task?.responsaveis?.some(
-              (user: any) => user.id == resp.id // eslint-disable-line
-            ) || respo?.some((user: any) => user.id == resp.id)
-          }
-          className={`${
-            respo ? "w-full" : "w-64 justify-center"
-          } cursor-pointer flex items-center gap-2 border-b-[1px] border-primary p-2 data-[already=true]:opacity-50 data-[already=true]:cursor-default`}
+          data-already={respo?.some((user: any) => user.id == resp.id)}
+          className={`w-64 justify-center cursor-pointer flex items-center gap-2 border-b-[1px] border-primary p-2 data-[already=true]:opacity-50 data-[already=true]:cursor-default`}
           key={resp.id}
         >
           <Image
@@ -80,5 +71,4 @@ const ModalResponsaveis = ({
     </ul>
   );
 };
-
 export default ModalResponsaveis;

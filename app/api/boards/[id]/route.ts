@@ -41,7 +41,16 @@ export async function GET(_: any, { params }: { params: { id: string } }) {
             fibonacci: sec.fibonacci,
             subtasks: sec.subtask_id,
             status: sec.status,
+            subtasks_status:
+              sec.subtasks_status && sec.subtasks_status.split(","),
             time: sec.time,
+            data_estimada:
+              sec.data_estimada &&
+              sec.data_estimada
+                .toLocaleDateString()
+                .split("/")
+                .reverse()
+                .join("-"),
             responsaveis: resp?.map((item: string, index: number) => ({
               id: ids[index],
               img: item,
@@ -61,8 +70,17 @@ export async function GET(_: any, { params }: { params: { id: string } }) {
               priority: sec.priority,
               fibonacci: sec.fibonacci,
               subtasks: sec.subtask_id,
+              subtasks_status:
+                sec.subtasks_status && sec.subtasks_status.split(","),
               status: sec.status,
               time: sec.time,
+              data_estimada:
+                sec.data_estimada &&
+                sec.data_estimada
+                  .toLocaleDateString()
+                  .split("/")
+                  .reverse()
+                  .join("-"),
               responsaveis: resp?.map((item: string, index: number) => ({
                 id: ids[index],
                 img: item,

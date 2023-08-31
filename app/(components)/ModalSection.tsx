@@ -3,6 +3,7 @@ import InputModal from "./InputModal";
 import Button from "./Button";
 import axiosInstance from "../(axios)/config";
 import { BoardContext } from "../home/[[...board]]/page";
+import Loading from "./Loading";
 const colors = [
   "bg-red-400",
   "bg-emerald-400",
@@ -20,6 +21,7 @@ const ModalSection = ({ setShow }: { setShow: Function }) => {
   const [tarefas, setTarefas] = useState<string[]>([]);
   const [tarefa, setTarefa] = useState("");
   const [selected, setSelected] = useState(0);
+  const [loading, setLoading] = useState(false);
   const id = location.pathname.split("/")[2];
 
   function handleOut(e: any) {
@@ -39,6 +41,7 @@ const ModalSection = ({ setShow }: { setShow: Function }) => {
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     if (name) {
+      setLoading(true);
       axiosInstance
         .post("/sections", { id, name, color: colors[selected], tarefas })
         .then(() => {
@@ -51,7 +54,7 @@ const ModalSection = ({ setShow }: { setShow: Function }) => {
   return (
     <div
       onClick={handleOut}
-      className="absolute min-h-[150vh] top-0 bottom-0 left-0 right-0 flex flex-col py-20 items-center bg-[rgb(0,0,0,0.3)] z-50"
+      className="absolute min-h-[100vh] top-0 bottom-0 left-0 right-0 flex flex-col py-20 items-center bg-[rgb(0,0,0,0.3)] z-50"
     >
       <div className="bg-primary p-6 w-[420px] rounded-md flex flex-col items-start gap-4">
         <h1 className="text-lg font-semibold">Criar Nova Seção</h1>
@@ -111,7 +114,7 @@ const ModalSection = ({ setShow }: { setShow: Function }) => {
             ))}
           </ul>
           <Button size="p" background="base" rounded="full">
-            Criar Seção
+            {loading ? <Loading color="white" /> : "Criar Seção"}
           </Button>
         </form>
       </div>

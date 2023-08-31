@@ -11,7 +11,7 @@ export async function POST(req: Request) {
 
     tarefas.forEach((task: string) => {
       query(
-        "INSERT INTO task (section_id, name, description, priority, fibonacci, status) VALUES (?,?,'',0,0,0)",
+        "INSERT INTO task (section_id, name, description, priority, fibonacci, status, time) VALUES (?,?,'',0,0,0,0)",
         [result.insertId, task]
       );
     });

@@ -6,15 +6,18 @@ import { FormEvent, useState } from "react";
 import axiosInstance from "./(axios)/config";
 import { useRouter } from "next/navigation";
 import Logo from "./(components)/Logo";
+import Loading from "./(components)/Loading";
 
 export default function Home() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
+    setLoading(true);
     axiosInstance
       .post("/usuarios", { email, senha })
       .then((response) => {
@@ -32,6 +35,7 @@ export default function Home() {
         }
       })
       .catch((err) => {
+        setLoading(false);
         console.log(err);
       });
   }
@@ -53,7 +57,7 @@ export default function Home() {
           />
           <div className="flex flex-row-reverse items-center justify-evenly">
             <Button background="base" size="auto">
-              Entrar
+              {loading ? <Loading color="white" /> : "Entrar"}
             </Button>
             <Button background="transparent" size="auto">
               Cadastrar

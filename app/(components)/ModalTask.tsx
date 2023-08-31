@@ -4,7 +4,6 @@ import ModalHeader from "./ModalHeader";
 import Image from "next/image";
 import edit from "@/public/edit_square.png";
 import relogio from "@/public/clock.png";
-import calendar from "@/public/calendar_month.png";
 import Tasks from "./Tasks";
 import Responsaveis from "./Responsaveis";
 import axiosInstance from "../(axios)/config";
@@ -31,6 +30,7 @@ const ModalTask = ({
   const [prio, setPrio] = useState(at.priority || 0);
   const [time, setTime] = useState(at.time);
   const [going, setGoing] = useState(false);
+  const [date, setDate] = useState<any>(at.data_estimada);
   const fib = [1, 2, 3, 5, 8, 13, 21, 34];
   const pri = ["Desejável", "Importante", "Essencial"];
 
@@ -101,6 +101,15 @@ const ModalTask = ({
       .padStart(2, "0")}:${segundos.toString().padStart(2, "0")}`;
   }
 
+  function handleDesc() {
+    axiosInstance.patch(`/tasks/${at.id}/description`, { text });
+  }
+
+  function handleDate({ target }: any) {
+    setDate(target.value);
+    axiosInstance.patch(`/tasks/${at.id}/date`, { date: target.value });
+  }
+
   return (
     <div
       onClick={handleOut}
@@ -136,19 +145,19 @@ const ModalTask = ({
               </div>
               <div className="flex flex-col gap-2 items-end">
                 <Select id={task.id} status={task.status} />
-                <div className="flex items-end gap-2 opacity-70">
-                  <span className="text-xs mb-0.5">Estimado</span>
-                  <span className="text-sm">28/08/23</span>
-                  <Image
-                    className="h-4 w-4 mb-0.5"
-                    src={calendar}
-                    alt="Data estimada"
+                <div className="flex items-center gap-2 opacity-70">
+                  <span className="text-sm">Data estimada:</span>
+                  <input
+                    value={date}
+                    onChange={handleDate}
+                    type="date"
+                    className="bg-transparent"
                   />
                 </div>
               </div>
             </header>
             <div className="flex items-center justify-between mt-4">
-              <div className="[&>span]:h-6 [&>span]:rounded-sm [&>span]:cursor-pointer select-none flex items-center gap-2">
+              <div className="[&>span]:h-6 [&>span]:rounded [&>span]:cursor-pointer select-none flex items-center gap-2">
                 <span
                   onClick={() => handlePos(fibo, "fibonacci", fib, setFibo)}
                   className="bg-red-400 px-2 flex items-center justify-center"
@@ -187,6 +196,7 @@ const ModalTask = ({
               rows={7}
               value={text}
               onChange={({ target }) => setText(target.value)}
+              onBlur={handleDesc}
             ></textarea>
             <Tasks key={at.name} setAt={setAt} task={at} />
           </div>

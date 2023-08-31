@@ -1,7 +1,11 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import ModalResponsaveis from "./ModalResponsaveis";
 import add from "@/public/add_circle.png";
+import cross from "@/public/cross.png";
+import Loading from "./Loading";
+import axiosInstance from "../(axios)/config";
+import { BoardContext } from "../home/[[...board]]/page";
 
 interface User {
   id: string;
@@ -12,56 +16,63 @@ interface User {
 
 const Responsaveis = ({
   task,
-  setResp,
-  resp,
 }: {
-  task?: { responsaveis: [] };
-  setResp?: Function;
+  task?: { id: string; responsaveis: [] };
   resp?: User[];
 }) => {
-  const [responsaveis, setResponsaveis] = useState<User[]>([]);
+  const [respo, setRespo] = useState<User[]>(task?.responsaveis || []);
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  function handleExclude(id: string) {
+    setLoading(true);
+    axiosInstance.delete(`/tasks/${task?.id}/${id}/resp`).then(() => {
+      setRespo(respo.filter((resp) => resp.id !== id));
+      setLoading(false);
+    });
+  }
 
   return (
     <div className="flex items-center justify-end relative gap-2 ">
       <span className="text-zinc-400 text-sm">Responsaveis</span>
       <div className="flex items-center gap-2">
-        {task?.responsaveis
-          ? task.responsaveis.map((user: any) => (
-              <Image
-                className="h-10 w-10 rounded-full object-cover cursor-pointer"
-                width={100}
-                height={100}
-                key={user.id}
-                src={user.img}
-                alt="User"
-              />
-            ))
-          : resp?.map((user: any) => (
-              <Image
-                className="h-10 w-10 rounded-full object-cover cursor-pointer"
-                width={100}
-                height={100}
-                key={user.id}
-                src={user.img}
-                alt="User"
-              />
-            ))}
+        {respo.map((user: any) => (
+          <div key={user.id} className="relative group">
+            <Image
+              className="h-10 w-10 rounded-full object-cover cursor-pointer"
+              width={100}
+              height={100}
+              src={user.img}
+              alt="User"
+            />
+            <Image
+              onClick={() => handleExclude(user.id)}
+              className="hidden h-4 w-4 group-hover:block absolute top-0 right-0 cursor-pointer"
+              src={cross}
+              alt="excluir"
+            />
+          </div>
+        ))}
       </div>
-      <Image
-        onClick={() => setShow(!show)}
-        className="cursor-pointer"
-        src={add}
-        alt="Participante"
-      />
+      <div>
+        {loading ? (
+          <Loading color="white" />
+        ) : (
+          <Image
+            onClick={() => setShow(!show)}
+            className="cursor-pointer"
+            src={add}
+            alt="Participante"
+          />
+        )}
+      </div>
       {show && (
         <ModalResponsaveis
           setShow={setShow}
           task={task}
-          responsaveis={responsaveis}
-          setResponsaveis={setResponsaveis}
-          setResp={setResp}
-          respo={resp}
+          respo={respo}
+          setRespo={setRespo}
+          setLoading={setLoading}
         />
       )}
     </div>

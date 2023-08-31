@@ -5,18 +5,18 @@ import { BoardContext } from "../home/[[...board]]/page";
 const Select = ({ id, status }: { id: string; status: number }) => {
   const { refetch }: any = useContext(BoardContext);
   const options = [
-    { value: "Pendente", color: "bg-blue-400" },
-    { value: "Em Desenvolvimento", color: "bg-emerald-400" },
-    { value: "Concluido", color: "bg-yellow-400" },
+    { value: "Pendente", color: "bg-yellow-400" },
+    { value: "Em Desenvolvimento", color: "bg-blue-400" },
+    { value: "Concluido", color: "bg-emerald-400" },
   ];
   const [state, setState] = useState(status || 0);
   const [show, setShow] = useState(false);
 
   function handleClick(status: number) {
-    axiosInstance.patch(`/tasks/${id}/status`, { status }).then(() => {
-      setState(status);
-      setShow(false);
-      refetch();
+    setState(status);
+    setShow(false);
+    axiosInstance.patch(`/tasks/${id}/status`, { status }).catch(() => {
+      setState((state) => state);
     });
   }
 

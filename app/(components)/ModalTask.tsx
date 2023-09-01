@@ -1,18 +1,18 @@
-import React, { useContext, useEffect, useState } from "react";
-import { BoardContext } from "../home/[[...board]]/page";
-import ModalHeader from "./ModalHeader";
-import Image from "next/image";
-import relogio from "@/public/clock.png";
-import Tasks from "./Tasks";
-import Responsaveis from "./Responsaveis";
-import axiosInstance from "../(axios)/config";
-import Select from "./Select";
-import { Task } from "../(utils)/interfaces";
-import Comments from "./Comments";
-import pause from "@/public/video-pause-button.png";
-import play from "@/public/play-button-arrowhead.png";
-import ModalDeletar from "./ModalDeletar";
-import Tags from "./Tags";
+import React, { useContext, useEffect, useState } from 'react';
+import { BoardContext } from '../home/[[...board]]/page';
+import ModalHeader from './ModalHeader';
+import Image from 'next/image';
+import relogio from '@/public/clock.png';
+import Tasks from './Tasks';
+import Responsaveis from './Responsaveis';
+import axiosInstance from '../(axios)/config';
+import Select from './Select';
+import { Task } from '../(utils)/interfaces';
+import Comments from './Comments';
+import pause from '@/public/video-pause-button.png';
+import play from '@/public/play-button-arrowhead.png';
+import ModalDeletar from './ModalDeletar';
+import Tags from './Tags';
 
 const ModalTask = ({
   setShow,
@@ -33,7 +33,7 @@ const ModalTask = ({
   const [going, setGoing] = useState(false);
   const [date, setDate] = useState<any>(at.data_estimada);
   const fib = [1, 2, 3, 5, 8, 13, 21, 34];
-  const pri = ["Desejável", "Importante", "Essencial"];
+  const pri = ['Desejável', 'Importante', 'Essencial'];
 
   function handleOut(e: any) {
     if (e.currentTarget === e.target) {
@@ -62,7 +62,7 @@ const ModalTask = ({
     state: number,
     name: string,
     arr: any[],
-    setState: Function
+    setState: Function,
   ) {
     if (state === arr.length - 1) {
       setState(0);
@@ -97,9 +97,9 @@ const ModalTask = ({
     segundos %= 3600;
     const minutos = Math.floor(segundos / 60);
     segundos %= 60;
-    return `${horas.toString().padStart(2, "0")}:${minutos
+    return `${horas.toString().padStart(2, '0')}:${minutos
       .toString()
-      .padStart(2, "0")}:${segundos.toString().padStart(2, "0")}`;
+      .padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
   }
 
   function handleDesc() {
@@ -116,7 +116,7 @@ const ModalTask = ({
       onClick={handleOut}
       className="min-h-screen bg-[rgb(0,0,0,0.3)] fixed top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center p-10 z-10"
     >
-      <div className="relative h-[90vh] bg-primary w-full rounded-md flex flex-col">
+      <div className="relative bg-primary w-full rounded-md flex flex-col">
         <ModalHeader
           setAt={setAt}
           bread={bread}
@@ -126,8 +126,8 @@ const ModalTask = ({
           time={time}
           id={at.id}
         />
-        <div className="flex items-center h-[90%] justify-center">
-          <div className="w-8/12 overflow-auto h-full flex flex-col p-6">
+        <div className="flex items-center h-full justify-center">
+          <div className="w-8/12 overflow-auto h-[86vh] flex flex-col p-6">
             <header className="flex items-start justify-between">
               <div className="flex flex-col gap-2">
                 <Tags id={at.id} tag={at.tags} />
@@ -151,13 +151,13 @@ const ModalTask = ({
             <div className="flex items-center justify-between mt-4">
               <div className="[&>span]:h-6 [&>span]:rounded [&>span]:cursor-pointer select-none flex items-center gap-2">
                 <span
-                  onClick={() => handlePos(fibo, "fibonacci", fib, setFibo)}
+                  onClick={() => handlePos(fibo, 'fibonacci', fib, setFibo)}
                   className="bg-red-400 px-2 flex items-center justify-center"
                 >
                   {fib[fibo]}
                 </span>
                 <span
-                  onClick={() => handlePos(prio, "priority", pri, setPrio)}
+                  onClick={() => handlePos(prio, 'priority', pri, setPrio)}
                   className="bg-emerald-500 px-2"
                 >
                   {pri[prio]}

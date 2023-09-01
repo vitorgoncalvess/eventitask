@@ -5,6 +5,7 @@ export interface Task {
   section_id: number;
   task_id: number;
   subtasks: number;
+  tags: any[];
   subtasks_status: string[];
   fibonacci: number;
   priority: number;

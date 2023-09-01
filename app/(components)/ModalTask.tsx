@@ -12,6 +12,7 @@ import Comments from "./Comments";
 import pause from "@/public/video-pause-button.png";
 import play from "@/public/play-button-arrowhead.png";
 import ModalDeletar from "./ModalDeletar";
+import Tags from "./Tags";
 
 const ModalTask = ({
   setShow,
@@ -129,11 +130,7 @@ const ModalTask = ({
           <div className="w-8/12 overflow-auto h-full flex flex-col p-6">
             <header className="flex items-start justify-between">
               <div className="flex flex-col gap-2">
-                <ul className="flex items-center gap-2 text-xs font-medium">
-                  <li>front end</li>
-                  <li>back end</li>
-                  <li>qualidade</li>
-                </ul>
+                <Tags id={at.id} tag={at.tags} />
                 <div className="relative flex items-end gap-2">
                   <h1 className="text-5xl font-semibold">{at.name}</h1>
                 </div>

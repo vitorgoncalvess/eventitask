@@ -19,4 +19,5 @@
 body {
   color: rgb(var(--foreground-rgb));
   background: #21212d;
+  font-family: "Poppins", "monospace";
 }

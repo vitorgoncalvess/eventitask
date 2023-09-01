@@ -1,6 +1,4 @@
 import { query } from "@/app/(lib)/db";
-import clientPromise from "@/app/(lib)/mongodb";
-import { mongo } from "mongoose";
 import { NextResponse } from "next/server";
 
 interface Board {
@@ -41,6 +39,7 @@ export async function GET(_: any, { params }: { params: { id: string } }) {
             fibonacci: sec.fibonacci,
             subtasks: sec.subtask_id,
             status: sec.status,
+            tags: sec.tags && sec.tags.split(","),
             subtasks_status:
               sec.subtasks_status && sec.subtasks_status.split(","),
             time: sec.time,
@@ -70,6 +69,7 @@ export async function GET(_: any, { params }: { params: { id: string } }) {
               priority: sec.priority,
               fibonacci: sec.fibonacci,
               subtasks: sec.subtask_id,
+              tags: sec.tags && sec.tags.split(","),
               subtasks_status:
                 sec.subtasks_status && sec.subtasks_status.split(","),
               status: sec.status,

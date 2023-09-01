@@ -1,15 +1,14 @@
-'use client';
+"use client";
 
-import './globals.css';
-import type { Metadata } from 'next';
-import { Poppins } from 'next/font/google';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import "./globals.css";
+import { Poppins } from "next/font/google";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const queryClient = new QueryClient();
 
 const inter = Poppins({
-  weight: ['400', '500', '600', '700', '800'],
-  subsets: ['latin'],
+  weight: ["400", "500", "600", "700"],
+  subsets: ["latin"],
 });
 
 export default function RootLayout({

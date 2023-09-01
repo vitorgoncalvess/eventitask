@@ -1,9 +1,9 @@
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
-import tagIcon from "@/public/tag.png";
-import add from "@/public/add_circle.png";
-import axiosInstance from "../(axios)/config";
-import colors from "../(utils)/colors";
+import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
+import tagIcon from '@/public/tag.png';
+import add from '@/public/add_circle.png';
+import axiosInstance from '../(axios)/config';
+import colors from '../(utils)/colors';
 
 interface Tag {
   id: string;
@@ -18,7 +18,7 @@ const Tags = ({ id, tag }: { id: string; tag: Tag[] }) => {
   useEffect(() => {
     const fetchData = async () => {
       const [tagsDB, hasTags] = await Promise.all([
-        axiosInstance.get("/tags"),
+        axiosInstance.get('/tags'),
         axiosInstance.get(`/tasks/${id}/tags`),
       ]);
       setTags(tagsDB.data);
@@ -39,7 +39,7 @@ const Tags = ({ id, tag }: { id: string; tag: Tag[] }) => {
   return (
     <div className="relative flex ">
       <ul className="flex items-center gap-2 text-xs font-medium">
-        {has.map((tag) => (
+        {has?.map((tag) => (
           <li
             className={`${
               colors[Number(tag.id) % colors.length]
@@ -66,7 +66,7 @@ const Tags = ({ id, tag }: { id: string; tag: Tag[] }) => {
               className={`${
                 colors[Number(tag.id) % colors.length]
               } py-1 px-2 rounded-md cursor-pointer ${
-                has.find((t) => t.id === tag.id) && "opacity-50 cursor-default"
+                has.find((t) => t.id === tag.id) && 'opacity-50 cursor-default'
               }`}
               key={tag.id}
             >

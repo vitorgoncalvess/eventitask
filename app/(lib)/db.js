@@ -1,10 +1,10 @@
-import mysql from "mysql2";
+import mysql from 'mysql2';
 const db = mysql.createPool({
-  host: "localhost",
-  port: "3306",
-  database: "eventitask",
-  user: "aluno",
-  password: "sptech",
+  host: 'localhost',
+  port: '3306',
+  database: 'eventitask',
+  user: 'root',
+  password: '1991',
 });
 
 export const query = (sql, params) => {

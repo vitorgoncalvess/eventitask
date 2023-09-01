@@ -10,27 +10,23 @@ interface Tag {
   name: string;
 }
 
-const Tags = ({ id, tag }: { id: string; tag: Tag[] }) => {
+const Tags = ({ id, tag }: { id: string; tag: string[] }) => {
   const [tags, setTags] = useState<Tag[]>([]);
-  const [has, setHas] = useState<Tag[]>(tags || []);
+  const [has, setHas] = useState<string[]>(tag || []);
   const [show, setShow] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const [tagsDB, hasTags] = await Promise.all([
-        axiosInstance.get("/tags"),
-        axiosInstance.get(`/tasks/${id}/tags`),
-      ]);
+      const [tagsDB] = await Promise.all([axiosInstance.get("/tags")]);
       setTags(tagsDB.data);
-      setHas(hasTags.data);
     };
     fetchData();
   }, [id]);
 
   function handleAdd(tag: Tag) {
-    if (!has?.find((t) => t.id === tag.id)) {
+    if (!has?.find((t) => t === tag.name)) {
       axiosInstance.patch(`/tasks/${id}/tags`, { id: tag.id }).then(() => {
-        setHas([...has, tag]);
+        setHas([...has, tag.name]);
         setShow(false);
       });
     }
@@ -39,14 +35,14 @@ const Tags = ({ id, tag }: { id: string; tag: Tag[] }) => {
   return (
     <div className="relative flex ">
       <ul className="flex items-center gap-2 text-xs font-medium">
-        {has.map((tag) => (
+        {has.map((tag, index) => (
           <li
             className={`${
-              colors[Number(tag.id) % colors.length]
+              colors[(Number(index) % colors.length) + 1]
             } py-1 px-2 rounded-md opacity-80`}
-            key={tag.id}
+            key={index}
           >
-            {tag.name}
+            {tag}
           </li>
         ))}
         <div onClick={() => setShow(!show)} className="relative cursor-pointer">
@@ -66,7 +62,7 @@ const Tags = ({ id, tag }: { id: string; tag: Tag[] }) => {
               className={`${
                 colors[Number(tag.id) % colors.length]
               } py-1 px-2 rounded-md cursor-pointer ${
-                has.find((t) => t.id === tag.id) && "opacity-50 cursor-default"
+                has.find((t) => t === tag.name) && "opacity-50 cursor-default"
               }`}
               key={tag.id}
             >

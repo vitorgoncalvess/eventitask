@@ -19,7 +19,7 @@ export async function PATCH(
 ) {
   const { id } = await req.json();
   try {
-    await query('INSERT INTO tags_task VALUES (?,?)', [id, params.id]);
+    await query('INSERT INTO tag_task VALUES (?,?)', [id, params.id]);
     return NextResponse.json({ message: 'tag adicionada' });
   } catch (err) {
     return NextResponse.json(err);

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { useQuery } from "react-query";
-import axiosInstance from "../(axios)/config";
-import Image from "next/image";
+import React, { useState } from 'react';
+import { useQuery } from 'react-query';
+import axiosInstance from '../(axios)/config';
+import Image from 'next/image';
 
 interface User {
   id: string;
@@ -25,17 +25,17 @@ const ModalResponsaveis = ({
 }) => {
   const [responsaveis, setResponsaveis] = useState<User[]>([]);
   useQuery(
-    "resp",
+    'resp',
     async () => {
       setLoading(true);
-      return await axiosInstance.get("/usuarios");
+      return await axiosInstance.get('/usuarios');
     },
     {
       onSuccess(response) {
         setLoading(false);
         setResponsaveis(response.data);
       },
-    }
+    },
   );
 
   function handleResp(resp: User) {

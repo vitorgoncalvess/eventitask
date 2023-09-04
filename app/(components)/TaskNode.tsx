@@ -1,18 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../(axios)/config';
 import TaskNodeTable from './TaskNodeTable';
-
-interface Task {
-  id: string;
-  name: string;
-  description: string;
-  section_id: number;
-  task_id: number;
-  subtasks: number;
-  data_estimada: string;
-  tags: string;
-  status: number;
-}
+import { Task } from '../(utils)/interfaces';
 
 const TaskNode = ({
   task,

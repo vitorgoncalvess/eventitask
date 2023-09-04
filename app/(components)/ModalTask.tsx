@@ -190,7 +190,7 @@ const ModalTask = ({
               onChange={({ target }) => setText(target.value)}
               onBlur={handleDesc}
             ></textarea>
-            <Tasks setAt={setAt} task={at} table />
+            <Tasks setAt={setAt} task={at} />
             <h1 className="text-lg opacity-90 mt-8">Configurações</h1>
             <div className="flex items-center gap-2 text-sm opacity-80 mt-4">
               <span>Mudar o nome da tarefa?</span>

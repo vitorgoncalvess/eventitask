@@ -6,6 +6,7 @@ export interface Task {
   task_id: number;
   subtasks: number;
   tags: any[];
+  tags_id: any[];
   subtasks_status: string[];
   fibonacci: number;
   priority: number;

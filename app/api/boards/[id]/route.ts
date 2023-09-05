@@ -39,9 +39,11 @@ export async function GET(_: any, { params }: { params: { id: string } }) {
             fibonacci: sec.fibonacci,
             subtasks: sec.subtask_id,
             status: sec.status,
-            tags: sec.tags && sec.tags.split(','),
-            subtasks_status:
-              sec.subtasks_status && sec.subtasks_status.split(','),
+            tags: sec.tags ? sec.tags.split(',') : [],
+            tags_id: sec.tags_id ? sec.tags_id.split(',') : [],
+            subtasks_status: sec.subtasks_status
+              ? sec.subtasks_status.split(',')
+              : [],
             time: sec.time,
             data_estimada:
               sec.data_estimada &&
@@ -69,9 +71,11 @@ export async function GET(_: any, { params }: { params: { id: string } }) {
               priority: sec.priority,
               fibonacci: sec.fibonacci,
               subtasks: sec.subtask_id,
-              tags: sec.tags && sec.tags.split(','),
-              subtasks_status:
-                sec.subtasks_status && sec.subtasks_status.split(','),
+              tags: sec.tags ? sec.tags.split(',') : [],
+              tags_id: sec.tags_id ? sec.tags_id.split(',') : [],
+              subtasks_status: sec.subtasks_status
+                ? sec.subtasks_status.split(',')
+                : [],
               status: sec.status,
               time: sec.time,
               data_estimada:

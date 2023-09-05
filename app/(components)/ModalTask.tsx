@@ -13,6 +13,8 @@ import pause from '@/public/video-pause-button.png';
 import play from '@/public/play-button-arrowhead.png';
 import ModalDeletar from './ModalDeletar';
 import Tags from './Tags';
+import Button from './Button';
+import Modal from './Modal';
 
 const ModalTask = ({
   setShow,
@@ -32,6 +34,9 @@ const ModalTask = ({
   const [del, setDel] = useState(false);
   const [going, setGoing] = useState(false);
   const [date, setDate] = useState<any>(at.data_estimada);
+  const [modal, setModal] = useState(false);
+  const [id, setId] = useState(0);
+  const [tagIds, setTagIds] = useState(at.tags_id);
   const fib = [1, 2, 3, 5, 8, 13, 21, 34];
   const pri = ['Desejável', 'Importante', 'Essencial'];
 
@@ -130,7 +135,13 @@ const ModalTask = ({
           <div className="w-8/12 overflow-auto h-[86vh] flex flex-col p-6">
             <header className="flex items-start justify-between">
               <div className="flex flex-col gap-2">
-                <Tags id={at.id} tag={at.tags} />
+                <Tags
+                  id={at.id}
+                  tag={at.tags}
+                  ids={tagIds}
+                  setIds={setTagIds}
+                  setAt={setAt}
+                />
                 <div className="relative flex items-end gap-2">
                   <h1 className="text-5xl font-semibold">{at.name}</h1>
                 </div>
@@ -190,7 +201,13 @@ const ModalTask = ({
               onChange={({ target }) => setText(target.value)}
               onBlur={handleDesc}
             ></textarea>
-            <Tasks setAt={setAt} task={at} />
+            <Tasks key={id} setAt={setAt} task={at} />
+            <div className="mt-6">
+              {modal && <Modal setShow={setModal} task={at.id} setId={setId} />}
+              <Button onClick={() => setModal(true)} background="base" size="p">
+                Adicionar Tarefa
+              </Button>
+            </div>
             <h1 className="text-lg opacity-90 mt-8">Configurações</h1>
             <div className="flex items-center gap-2 text-sm opacity-80 mt-4">
               <span>Mudar o nome da tarefa?</span>

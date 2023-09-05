@@ -1,17 +1,17 @@
-import React, { useState } from "react";
-import ModalTask from "./ModalTask";
-import Image from "next/image";
-import calendar from "@/public/calendar_month.png";
-import { Task } from "@/app/(utils)/interfaces";
-import CircleGraph from "./CircleGraph";
-import colors from "../(utils)/colors";
+import React, { useState } from 'react';
+import ModalTask from './ModalTask';
+import Image from 'next/image';
+import calendar from '@/public/calendar_month.png';
+import { Task } from '@/app/(utils)/interfaces';
+import CircleGraph from './CircleGraph';
+import colors from '../(utils)/colors';
 
 const Task = ({ task, sec }: { task: Task; sec: any }) => {
   const [show, setShow] = useState(false);
   const options = [
-    { value: "Pendente", color: "bg-yellow-400" },
-    { value: "Em Desenvolvimento", color: "bg-blue-400" },
-    { value: "Concluido", color: "bg-emerald-400" },
+    { value: 'Pendente', color: 'bg-yellow-400' },
+    { value: 'Em Desenvolvimento', color: 'bg-blue-400' },
+    { value: 'Concluido', color: 'bg-emerald-400' },
   ];
 
   function formatDate(date: string) {
@@ -32,7 +32,7 @@ const Task = ({ task, sec }: { task: Task; sec: any }) => {
           </h1>
           <div className="h-8 w-8">
             <CircleGraph
-              data={task.subtasks_status?.filter((item) => item === "2").length}
+              data={task.subtasks_status?.filter((item) => item === '2').length}
               max={task.status === 2 ? task.subtasks : task.subtasks + 1}
               single={!task.subtasks_status}
             />
@@ -50,7 +50,7 @@ const Task = ({ task, sec }: { task: Task; sec: any }) => {
             {task?.tags?.map((tag: string, index: number) => (
               <li
                 className={`${
-                  colors[(index % colors.length) + 1]
+                  colors[(task.tags_id[index] % colors.length) + 1]
                 } rounded-md py-0.5 px-1 opacity-80 text-[8px] text-white`}
                 key={index}
               >
@@ -77,7 +77,7 @@ const Task = ({ task, sec }: { task: Task; sec: any }) => {
                       />
                     </li>
                   ))
-              : "..."}
+              : '...'}
           </ul>
           <div className="flex items--center gap-1">
             <Image src={calendar} alt="Data Estimada" />

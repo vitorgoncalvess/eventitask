@@ -67,16 +67,19 @@ const TaskNodeTable = ({ task, setAt }: any) => {
           </span>
         </div>
         <ul className="flex items-center gap-2 text-xs">
-          {task.tags?.split(',').map((tag, index) => (
-            <li
-              className={`${
-                colors[(index % colors.length) + 1]
-              } rounded-md px-2 text-[rgb(0,0,0,0.5)]`}
-              key={tag}
-            >
-              {tag}
-            </li>
-          ))}
+          {task.tags.map(
+            (tag, index) =>
+              index < 2 && (
+                <li
+                  className={`${
+                    colors[(task.tags_id[index] % colors.length) + 1]
+                  } rounded-md px-2 text-[rgb(0,0,0,0.5)]`}
+                  key={tag}
+                >
+                  {tag}
+                </li>
+              ),
+          )}
         </ul>
         <div className="flex items-center justify-center">
           <button

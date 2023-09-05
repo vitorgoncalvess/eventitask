@@ -1,8 +1,9 @@
-import React, { FormEvent, useState, useContext } from "react";
-import InputModal from "./InputModal";
-import Button from "./Button";
-import axiosInstance from "../(axios)/config";
-import { BoardContext } from "../home/[[...board]]/page";
+import React, { FormEvent, useState, useContext } from 'react';
+import InputModal from './InputModal';
+import Button from './Button';
+import axiosInstance from '../(axios)/config';
+import { BoardContext } from '../home/[[...board]]/page';
+import { revalidateTag } from 'next/cache';
 
 interface Section {
   id: string;
@@ -12,12 +13,22 @@ interface Section {
   tasks: any[];
 }
 
-const Modal = ({ setShow, secs }: { setShow: Function; secs: any }) => {
-  const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
-  const [status, setStatus] = useState("");
+const Modal = ({
+  setShow,
+  secs,
+  task,
+  setId,
+}: {
+  setShow: Function;
+  secs?: any;
+  task?: any;
+  setId?: Function;
+}) => {
+  const [title, setTitle] = useState('');
+  const [desc, setDesc] = useState('');
+  const [status, setStatus] = useState('');
   const [subtarefas, setSubtarefas] = useState<string[]>([]);
-  const [tarefa, setTarefa] = useState("");
+  const [tarefa, setTarefa] = useState('');
 
   const { refetch }: any = useContext(BoardContext);
 
@@ -30,20 +41,36 @@ const Modal = ({ setShow, secs }: { setShow: Function; secs: any }) => {
   function handleSub(e: FormEvent) {
     e.preventDefault();
     setSubtarefas([...subtarefas, tarefa]);
-    setTarefa("");
+    setTarefa('');
   }
 
   function handleSubmit(e: FormEvent) {
-    let body;
-    if (secs[0]) body = { title, desc, status, subtarefas };
-    else body = { title, desc, status: secs.id, subtarefas };
     e.preventDefault();
-    axiosInstance.post("/tasks", body).then((response) => {
-      if (response.status === 201) {
-        refetch();
-        setShow(false);
-      }
-    });
+    let body: Object;
+    if (task) {
+      axiosInstance
+        .post(`/tasks/${task}/subtasks`, {
+          title,
+          desc,
+          task,
+          subtarefas,
+        })
+        .then((response) => {
+          if (response.status === 201) {
+            setShow(false);
+            setId(Math.random());
+          }
+        });
+    } else {
+      if (secs[0]) body = { title, desc, status, subtarefas };
+      else body = { title, desc, status: secs.id, subtarefas };
+      axiosInstance.post('/tasks', body).then((response) => {
+        if (response.status === 201) {
+          refetch();
+          setShow(false);
+        }
+      });
+    }
   }
 
   return (
@@ -67,57 +94,65 @@ const Modal = ({ setShow, secs }: { setShow: Function; secs: any }) => {
             label="Descrição"
             placeholder="e.g. Sempre é bom dar um break no trabalho e tomar um cafe"
           />
-          <label htmlFor="">Subtarefas</label>
-          {subtarefas.length > 0 ? (
+          {!task && (
             <>
-              {subtarefas.map((item, index) => (
+              <label htmlFor="">Subtarefas</label>
+              {subtarefas.length > 0 ? (
+                <>
+                  {subtarefas.map((item, index) => (
+                    <InputModal
+                      key={index}
+                      setSubtarefas={setSubtarefas}
+                      defaultValue={item}
+                    />
+                  ))}
+                  <InputModal
+                    placeholder="e.g Colocar 3 colheres de açucar"
+                    value={tarefa}
+                    setValue={setTarefa}
+                  />
+                </>
+              ) : (
                 <InputModal
-                  key={index}
-                  setSubtarefas={setSubtarefas}
-                  defaultValue={item}
+                  placeholder="e.g Colocar 3 colheres de açucar"
+                  value={tarefa}
+                  setValue={setTarefa}
                 />
-              ))}
-              <InputModal
-                placeholder="e.g Colocar 3 colheres de açucar"
-                value={tarefa}
-                setValue={setTarefa}
-              />
+              )}
+              <Button
+                onClick={handleSub}
+                size="p"
+                background="base_inv"
+                rounded="full"
+              >
+                + Adicionar Mais Subtarefas
+              </Button>
             </>
-          ) : (
-            <InputModal
-              placeholder="e.g Colocar 3 colheres de açucar"
-              value={tarefa}
-              setValue={setTarefa}
-            />
           )}
-          <Button
-            onClick={handleSub}
-            size="p"
-            background="base_inv"
-            rounded="full"
-          >
-            + Adicionar Mais Subtarefas
-          </Button>
-          <label htmlFor="">Seção</label>
-          {secs[0] ? (
-            <select
-              className="bg-transparent border-[1px] border-[#353541] rounded-md h-9 flex items-center px-2"
-              defaultValue="Selecione"
-              onChange={(e) => setStatus(e.target.value)}
-            >
-              <option disabled value="Selecione">
-                Selecione
-              </option>
-              {secs.map((item: Section) => (
-                <option key={item.id} value={item.id}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
-          ) : (
-            <div className={`${secs.color} text-black p-2 rounded-md`}>
-              <span className="opacity-70">{secs.name}</span>
-            </div>
+          {!task && (
+            <>
+              <label htmlFor="">Seção</label>
+              {secs && secs[0] ? (
+                <select
+                  className="bg-transparent border-[1px] border-[#353541] rounded-md h-9 flex items-center px-2"
+                  defaultValue="Selecione"
+                  onChange={(e) => setStatus(e.target.value)}
+                >
+                  <option disabled value="Selecione">
+                    Selecione
+                  </option>
+                  {secs.map((item: Section) => (
+                    <option key={item.id} value={item.id}>
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <div className={`${secs.color} text-black p-2 rounded-md`}>
+                  <span className="opacity-70">{secs.name}</span>
+                </div>
+              )}
+            </>
           )}
           <Button size="p" background="base" rounded="full">
             Criar Tarefa

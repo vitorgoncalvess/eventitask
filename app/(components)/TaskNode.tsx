@@ -17,9 +17,12 @@ const TaskNode = ({
   const [subtasks, setSubtasks] = useState<Task[]>([]);
 
   useEffect(() => {
-    axiosInstance.get(`/tasks/${task.id}/subtasks`).then((response) => {
-      setSubtasks(response.data);
-    });
+    const fetchData = async () => {
+      const response = await fetch(`/api/tasks/${task.id}/subtasks`);
+      const data = await response.json();
+      setSubtasks(data);
+    };
+    fetchData();
   }, [task.id]);
 
   function handleChange() {

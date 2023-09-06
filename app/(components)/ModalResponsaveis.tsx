@@ -50,7 +50,7 @@ const ModalResponsaveis = ({
   }
 
   return (
-    <ul className="absolute flex flex-col items-end bg-secondary top-8 rounded-md">
+    <ul className="absolute flex flex-col items-end bg-secondary top-8 rounded-md z-10">
       {responsaveis?.map((resp) => (
         <li
           onClick={() => handleResp(resp)}

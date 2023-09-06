@@ -1,12 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "**",
-      },
-    ],
+    domains: ["avatars.githubusercontent.com", "i.kym-cdn.com"],
   },
   typescript: {
     ignoreBuildErrors: true,

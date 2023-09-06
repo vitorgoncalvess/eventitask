@@ -1,20 +1,20 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { BoardContext } from '../home/[[...board]]/page';
-import ModalHeader from './ModalHeader';
-import Image from 'next/image';
-import relogio from '@/public/clock.png';
-import Tasks from './Tasks';
-import Responsaveis from './Responsaveis';
-import axiosInstance from '../(axios)/config';
-import Select from './Select';
-import { Task } from '../(utils)/interfaces';
-import Comments from './Comments';
-import pause from '@/public/video-pause-button.png';
-import play from '@/public/play-button-arrowhead.png';
-import ModalDeletar from './ModalDeletar';
-import Tags from './Tags';
-import Button from './Button';
-import Modal from './Modal';
+import React, { useContext, useEffect, useState } from "react";
+import { BoardContext } from "../home/[[...board]]/page";
+import ModalHeader from "./ModalHeader";
+import Image from "next/image";
+import relogio from "@/public/clock.png";
+import Tasks from "./Tasks";
+import Responsaveis from "./Responsaveis";
+import axiosInstance from "../(axios)/config";
+import Select from "./Select";
+import { Task } from "../(utils)/interfaces";
+import Comments from "./Comments";
+import pause from "@/public/video-pause-button.png";
+import play from "@/public/play-button-arrowhead.png";
+import ModalDeletar from "./ModalDeletar";
+import Tags from "./Tags";
+import Button from "./Button";
+import Modal from "./Modal";
 
 const ModalTask = ({
   setShow,
@@ -38,7 +38,7 @@ const ModalTask = ({
   const [id, setId] = useState(0);
   const [tagIds, setTagIds] = useState(at.tags_id);
   const fib = [1, 2, 3, 5, 8, 13, 21, 34];
-  const pri = ['Desejável', 'Importante', 'Essencial'];
+  const pri = ["Desejável", "Importante", "Essencial"];
 
   function handleOut(e: any) {
     if (e.currentTarget === e.target) {
@@ -102,9 +102,9 @@ const ModalTask = ({
     segundos %= 3600;
     const minutos = Math.floor(segundos / 60);
     segundos %= 60;
-    return `${horas.toString().padStart(2, '0')}:${minutos
+    return `${horas.toString().padStart(2, "0")}:${minutos
       .toString()
-      .padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+      .padStart(2, "0")}:${segundos.toString().padStart(2, "0")}`;
   }
 
   function handleDesc() {
@@ -162,13 +162,13 @@ const ModalTask = ({
             <div className="flex items-center justify-between mt-4">
               <div className="[&>span]:h-6 [&>span]:rounded [&>span]:cursor-pointer select-none flex items-center gap-2">
                 <span
-                  onClick={() => handlePos(fibo, 'fibonacci', fib, setFibo)}
+                  onClick={() => handlePos(fibo, "fibonacci", fib, setFibo)}
                   className="bg-red-400 px-2 flex items-center justify-center"
                 >
                   {fib[fibo]}
                 </span>
                 <span
-                  onClick={() => handlePos(prio, 'priority', pri, setPrio)}
+                  onClick={() => handlePos(prio, "priority", pri, setPrio)}
                   className="bg-emerald-500 px-2"
                 >
                   {pri[prio]}
@@ -193,10 +193,11 @@ const ModalTask = ({
               <Responsaveis task={task} />
             </div>
             <textarea
-              className="bg-transparent outline-none border-2 border-[#3d3d49] rounded-md mt-8 p-4"
+              className="bg-transparent outline-none border-2 border-[#3d3d49] rounded-md mt-8 p-4 resize-none"
               name=""
               id=""
               rows={7}
+              cols={8}
               value={text}
               onChange={({ target }) => setText(target.value)}
               onBlur={handleDesc}

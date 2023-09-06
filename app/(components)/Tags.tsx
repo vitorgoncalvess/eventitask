@@ -1,9 +1,9 @@
-import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
-import tagIcon from '@/public/tag.png';
-import add from '@/public/add_circle.png';
-import axiosInstance from '../(axios)/config';
-import colors from '../(utils)/colors';
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
+import tagIcon from "@/public/tag.png";
+import add from "@/public/add_circle.png";
+import axiosInstance from "../(axios)/config";
+import colors from "../(utils)/colors";
 
 interface Tag {
   id: string;
@@ -17,7 +17,7 @@ const Tags = ({ id, tag, ids, setIds }: any) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const [tagsDB] = await Promise.all([axiosInstance.get('/tags')]);
+      const [tagsDB] = await Promise.all([axiosInstance.get("/tags")]);
       setTags(tagsDB.data);
     };
     fetchData();
@@ -44,7 +44,7 @@ const Tags = ({ id, tag, ids, setIds }: any) => {
           has.map((tag, index) => (
             <li
               className={`${
-                ids && colors[(Number(ids[index]) % colors.length) + 1]
+                ids && colors[Number(ids[index]) % colors.length]
               } py-1 px-2 rounded-md opacity-80`}
               key={index}
             >
@@ -61,20 +61,23 @@ const Tags = ({ id, tag, ids, setIds }: any) => {
         </div>
       </ul>
       {show && (
-        <ul className="absolute z-20 top-6 gap-2 flex flex-col items-start bg-secondary rounded-md p-2">
-          {tags.map((tag, index) => (
-            <li
-              onClick={() => handleAdd(tag)}
-              className={`${
-                ids && colors[(Number(ids[index]) % colors.length) + 1]
-              } py-1 px-2 rounded-md cursor-pointer ${
-                has.find((t) => t === tag.name) && 'opacity-50 cursor-default'
-              }`}
-              key={tag.id}
-            >
-              {tag.name}
-            </li>
-          ))}
+        <ul className="absolute z-20 top-6 gap-2 flex flex-col items-start bg-secondary rounded-md p-2 min-w-[110px]">
+          {tags &&
+            tags.map((tag, index) => (
+              <li
+                onClick={() => handleAdd(tag)}
+                className={`${
+                  ids && colors[(index % colors.length) + 1]
+                } py-1 px-2 rounded-md  ${
+                  has.find((t) => t == tag.name)
+                    ? "opacity-50 cursor-default"
+                    : "cursor-pointer"
+                }`}
+                key={tag.id}
+              >
+                {tag.name}
+              </li>
+            ))}
         </ul>
       )}
     </div>

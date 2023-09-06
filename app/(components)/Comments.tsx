@@ -1,11 +1,11 @@
-import axiosInstance from '../(axios)/config';
-import { FormEvent, useState, useEffect } from 'react';
-import Image from 'next/image';
+import axiosInstance from "../(axios)/config";
+import { FormEvent, useState, useEffect } from "react";
+import Image from "next/image";
 
 const Comments = ({ id }: { id: string }) => {
   const [comments, setComments] = useState<string[]>([]);
-  const [message, setMessage] = useState('');
-  const idUser = localStorage.getItem('id');
+  const [message, setMessage] = useState("");
+  const idUser = localStorage.getItem("id");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -22,12 +22,12 @@ const Comments = ({ id }: { id: string }) => {
       .post(`/tasks/${id}/comments`, { message, idUser })
       .then((response) => {
         setComments([...comments, response.data]);
-        setMessage('');
+        setMessage("");
       });
   }
 
   function handleEnter(e: KeyboardEvent) {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSubmit();
     }
@@ -40,9 +40,9 @@ const Comments = ({ id }: { id: string }) => {
           value={message}
           onChange={({ target }) => setMessage(target.value)}
           onKeyDown={(e: any) => handleEnter(e)}
-          className="w-full bg-primary border-2 border-[#3d3d49] rounded-md outline-none p-2 h-16"
+          className="w-full bg-primary border-2 border-[#3d3d49] rounded-md outline-none p-2 h-16 resize-none"
         ></textarea>
-        <button className="bg-base w-20 text-2xl rounded-md">{'>'}</button>
+        <button className="bg-base w-20 text-2xl rounded-md">{">"}</button>
       </form>
       <ul className="p-2 flex flex-col gap-2 overflow-auto">
         {loading

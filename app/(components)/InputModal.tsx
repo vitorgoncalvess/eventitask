@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const InputModal = ({
   label,
@@ -12,13 +12,13 @@ const InputModal = ({
   return (
     <div className="flex flex-col text-sm relative">
       <label htmlFor={label}>{label}</label>
-      {type === 'textarea' ? (
+      {type === "textarea" ? (
         <textarea
           id={label}
           name={label}
           value={value}
           onChange={({ target }) => setValue(target.value)}
-          className="bg-transparent border-[1px] border-[#353541] rounded-md outline-none h-44 p-4"
+          className="bg-transparent border-[1px] border-[#353541] rounded-md outline-none h-18 px-4 py-2 resize-none"
           placeholder={placeholder}
         />
       ) : (

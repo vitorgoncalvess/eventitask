@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { useQuery } from 'react-query';
-import axiosInstance from '../(axios)/config';
-import Image from 'next/image';
+import React, { useState } from "react";
+import { useQuery } from "react-query";
+import axiosInstance from "../(axios)/config";
+import Image from "next/image";
 
 interface User {
   id: string;
@@ -25,10 +25,10 @@ const ModalResponsaveis = ({
 }) => {
   const [responsaveis, setResponsaveis] = useState<User[]>([]);
   useQuery(
-    'resp',
+    "resp",
     async () => {
       setLoading(true);
-      return await axiosInstance.get('/usuarios');
+      return await axiosInstance.get("/usuarios");
     },
     {
       onSuccess(response) {
@@ -55,7 +55,7 @@ const ModalResponsaveis = ({
         <li
           onClick={() => handleResp(resp)}
           data-already={respo?.some((user: any) => user.id == resp.id)}
-          className={`w-64 justify-center cursor-pointer flex items-center gap-2 border-b-[1px] border-primary p-2 data-[already=true]:opacity-50 data-[already=true]:cursor-default`}
+          className={`w-64 justify-start cursor-pointer flex items-center gap-2 border-b-[1px] border-primary p-2 data-[already=true]:opacity-50 data-[already=true]:cursor-default`}
           key={resp.id}
         >
           <Image

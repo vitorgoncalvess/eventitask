@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../(axios)/config";
+import drop from "@/public/drop-down-arrow.png";
+import Image from "next/image";
 
 const Select = ({ id, status }: { id: string; status: number }) => {
   const options = [
@@ -26,15 +28,15 @@ const Select = ({ id, status }: { id: string; status: number }) => {
     <div className="flex items-center cursor-pointer relative">
       <div
         onClick={() => setShow(!show)}
-        className={`py-1.5 px-4 ${options[state].color} text-black font-medium rounded-l-md`}
+        className={`h-9 px-4 ${options[state].color} text-black font-medium rounded-l-md flex items-center`}
       >
         <span className="opacity-60">{options[state].value}</span>
       </div>
       <span
         onClick={() => setShow(!show)}
-        className={`py-1.5 px-4 ${options[state].color} text-black font-medium rounded-r-md border-l-2 border-[rgb(0,0,0,0.3)]`}
+        className={`h-9 px-4 ${options[state].color} text-black font-medium rounded-r-md border-l-2 border-[rgb(0,0,0,0.3)] flex items-center`}
       >
-        <span className="opacity-60">V</span>
+        <Image className="h-4 w-4 opacity-60" src={drop} alt="Estado" />
       </span>
       {show && (
         <div className="absolute z-50 top-10 right-0 flex flex-col text-xs w-44">

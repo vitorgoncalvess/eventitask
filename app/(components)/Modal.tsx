@@ -1,9 +1,10 @@
-import React, { FormEvent, useState, useContext } from 'react';
-import InputModal from './InputModal';
-import Button from './Button';
-import axiosInstance from '../(axios)/config';
-import { BoardContext } from '../home/[[...board]]/page';
-import { revalidateTag } from 'next/cache';
+import React, { FormEvent, useState, useContext } from "react";
+import InputModal from "./InputModal";
+import Button from "./Button";
+import axiosInstance from "../(axios)/config";
+import { BoardContext } from "../home/[[...board]]/page";
+import { revalidateTag } from "next/cache";
+import colors from "../(utils)/colors";
 
 interface Section {
   id: string;
@@ -24,11 +25,11 @@ const Modal = ({
   task?: any;
   setId?: Function;
 }) => {
-  const [title, setTitle] = useState('');
-  const [desc, setDesc] = useState('');
-  const [status, setStatus] = useState('');
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
+  const [status, setStatus] = useState("");
   const [subtarefas, setSubtarefas] = useState<string[]>([]);
-  const [tarefa, setTarefa] = useState('');
+  const [tarefa, setTarefa] = useState("");
 
   const { refetch }: any = useContext(BoardContext);
 
@@ -40,8 +41,8 @@ const Modal = ({
 
   function handleSub(e: FormEvent) {
     e.preventDefault();
-    setSubtarefas([...subtarefas, tarefa]);
-    setTarefa('');
+    if (tarefa) setSubtarefas([...subtarefas, tarefa]);
+    setTarefa("");
   }
 
   function handleSubmit(e: FormEvent) {
@@ -64,7 +65,7 @@ const Modal = ({
     } else {
       if (secs[0]) body = { title, desc, status, subtarefas };
       else body = { title, desc, status: secs.id, subtarefas };
-      axiosInstance.post('/tasks', body).then((response) => {
+      axiosInstance.post("/tasks", body).then((response) => {
         if (response.status === 201) {
           refetch();
           setShow(false);
@@ -73,10 +74,12 @@ const Modal = ({
     }
   }
 
+  function handleDelete(task) {}
+
   return (
     <div
       onClick={handleOut}
-      className="absolute min-h-[130vh] top-0 bottom-0 left-0 right-0 flex flex-col items-center py-20 bg-[rgb(0,0,0,0.3)] z-10"
+      className="absolute min-h-[100vh] top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center bg-[rgb(0,0,0,0.3)] z-10"
     >
       <div className="bg-primary p-6 w-[420px] rounded-md flex flex-col items-start gap-4">
         <h1 className="text-lg font-semibold">Adicionar Nova Tarefa</h1>
@@ -96,29 +99,33 @@ const Modal = ({
           />
           {!task && (
             <>
-              <label htmlFor="">Subtarefas</label>
-              {subtarefas.length > 0 ? (
-                <>
-                  {subtarefas.map((item, index) => (
-                    <InputModal
-                      key={index}
-                      setSubtarefas={setSubtarefas}
-                      defaultValue={item}
-                    />
-                  ))}
-                  <InputModal
-                    placeholder="e.g Colocar 3 colheres de açucar"
-                    value={tarefa}
-                    setValue={setTarefa}
-                  />
-                </>
-              ) : (
-                <InputModal
-                  placeholder="e.g Colocar 3 colheres de açucar"
-                  value={tarefa}
-                  setValue={setTarefa}
-                />
-              )}
+              <div>
+                <label htmlFor="">Subtarefas</label>
+                {subtarefas.length > 0 && (
+                  <ul className="overflow-auto flex items-center gap-2 mt-1">
+                    {subtarefas.map((task, index) => (
+                      <li
+                        onClick={() =>
+                          setSubtarefas((tarefas) =>
+                            tarefas.filter((tarefa) => tarefa !== task),
+                          )
+                        }
+                        className={`${
+                          colors[index % colors.length]
+                        } text-[rgb(0,0,0,0.5)] px-2 py-0.5 rounded mt-1 mb-2 cursor-pointer`}
+                        key={index}
+                      >
+                        {task}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+              <InputModal
+                placeholder="e.g Colocar 3 colheres de açucar"
+                value={tarefa}
+                setValue={setTarefa}
+              />
               <Button
                 onClick={handleSub}
                 size="p"

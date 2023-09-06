@@ -62,7 +62,7 @@ const Comments = ({ id }: { id: string }) => {
                   height={100}
                   width={100}
                   src={comment.img}
-                  alt={comment.name}
+                  alt="user"
                 />
                 <div className="relative w-[89%]">
                   <h1 className="text-sm opacity-50">{comment.name}</h1>

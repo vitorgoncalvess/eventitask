@@ -8,6 +8,8 @@ sudo apt-get install docker.io -y
 sudo docker stop eventitask-app || true
 sudo docker rm eventitask-app || true
 
+rm -fr eventitask/
+
 # Clonar o repositório e construir a imagem Docker
 git clone https://github.com/vitorgoncalvess/eventitask.git
 cd eventitask/

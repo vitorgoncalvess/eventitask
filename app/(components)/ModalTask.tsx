@@ -13,7 +13,7 @@ import pause from "@/public/video-pause-button.png";
 import play from "@/public/play-button-arrowhead.png";
 import ModalDeletar from "./ModalDeletar";
 import Tags from "./Tags";
-import Button from "./Button";
+import { Button } from "@nextui-org/react";
 import Modal from "./Modal";
 
 const ModalTask = ({
@@ -67,7 +67,7 @@ const ModalTask = ({
     state: number,
     name: string,
     arr: any[],
-    setState: Function,
+    setState: Function
   ) {
     if (state === arr.length - 1) {
       setState(0);
@@ -119,7 +119,7 @@ const ModalTask = ({
   return (
     <div
       onClick={handleOut}
-      className="min-h-screen bg-[rgb(0,0,0,0.3)] fixed top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center p-10 z-10"
+      className="min-h-screen bg-[rgb(0,0,0,0.3)] fixed top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center p-10 z-50"
     >
       <div className="relative bg-primary w-full rounded-md flex flex-col">
         <ModalHeader
@@ -205,16 +205,17 @@ const ModalTask = ({
             <Tasks key={id} setAt={setAt} task={at} />
             <div className="mt-6">
               {modal && <Modal setShow={setModal} task={at.id} setId={setId} />}
-              <Button onClick={() => setModal(true)} background="base" size="p">
+              <Button
+                className="bg-base text-white"
+                onClick={() => setModal(true)}
+              >
                 Adicionar Tarefa
               </Button>
             </div>
             <h1 className="text-lg opacity-90 mt-8">Configurações</h1>
             <div className="flex items-center gap-2 text-sm opacity-80 mt-4">
               <span>Mudar o nome da tarefa?</span>
-              <button className="py-1 px-2 bg-zinc-400 text-white rounded-md">
-                Mudar
-              </button>
+              <Button size="sm">Mudar</Button>
             </div>
             {del && (
               <ModalDeletar
@@ -226,12 +227,13 @@ const ModalTask = ({
             )}
             <div className="flex items-center gap-2 text-sm opacity-80 mt-4">
               <span>Deletar a tarefa?</span>
-              <button
+              <Button
                 onClick={() => setDel(true)}
-                className="py-1 px-2 bg-red-500 text-white rounded-md"
+                size="sm"
+                className="bg-red-400 text-white"
               >
                 Deletar
-              </button>
+              </Button>
             </div>
           </div>
           <Comments id={at.id} />

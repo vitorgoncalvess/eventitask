@@ -1,10 +1,6 @@
-"use client";
-
 import "./globals.css";
 import { Poppins } from "next/font/google";
-import { QueryClient, QueryClientProvider } from "react-query";
-
-const queryClient = new QueryClient();
+import { Providers } from "./providers";
 
 const inter = Poppins({
   weight: ["400", "500", "600", "700"],
@@ -18,9 +14,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <QueryClientProvider client={queryClient}>
-        <body className={inter.className}>{children}</body>
-      </QueryClientProvider>
+      <body className={inter.className}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

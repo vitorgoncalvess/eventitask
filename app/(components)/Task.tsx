@@ -5,6 +5,7 @@ import calendar from "@/public/calendar_month.png";
 import { Task } from "@/app/(utils)/interfaces";
 import CircleGraph from "./CircleGraph";
 import colors from "../(utils)/colors";
+import { Avatar, AvatarGroup } from "@nextui-org/react";
 
 const Task = ({ task, sec }: { task: Task; sec: any }) => {
   const [show, setShow] = useState(false);
@@ -63,21 +64,21 @@ const Task = ({ task, sec }: { task: Task; sec: any }) => {
         <h2 className="text-sm"></h2>
         <div className="flex items-center justify-between">
           <ul className="flex items-center justify-end gap-1">
-            {task?.responsaveis?.length > 0
-              ? task.responsaveis
-                  ?.filter((_, index) => index < 4)
-                  .map((user: any) => (
+            <AvatarGroup
+              size="sm"
+              max={3}
+              renderCount={(count) => (
+                <p className="text-xs ml-1">+{count} resp</p>
+              )}
+            >
+              {task?.responsaveis?.length > 0
+                ? task.responsaveis.map((user: any) => (
                     <li key={user.id}>
-                      <Image
-                        width={100}
-                        height={100}
-                        className="h-6 w-6 rounded-full object-cover"
-                        src={user.img}
-                        alt="usuario"
-                      />
+                      <Avatar size="sm" src={user.img} name={user.name} />
                     </li>
                   ))
-              : "..."}
+                : "..."}
+            </AvatarGroup>
           </ul>
           <div className="flex items--center gap-1">
             <Image src={calendar} alt="Data Estimada" />

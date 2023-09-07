@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useQuery } from "react-query";
 import axiosInstance from "../(axios)/config";
 import Image from "next/image";
+import { Avatar } from "@nextui-org/react";
 
 interface User {
   id: string;
@@ -35,7 +36,7 @@ const ModalResponsaveis = ({
         setLoading(false);
         setResponsaveis(response.data);
       },
-    },
+    }
   );
 
   function handleResp(resp: User) {
@@ -58,13 +59,7 @@ const ModalResponsaveis = ({
           className={`w-64 justify-start cursor-pointer flex items-center gap-2 border-b-[1px] border-primary p-2 data-[already=true]:opacity-50 data-[already=true]:cursor-default`}
           key={resp.id}
         >
-          <Image
-            className="h-9 w-9 rounded-full"
-            height={100}
-            width={100}
-            src={resp.img}
-            alt="User"
-          />
+          <Avatar className="h-9 w-9 rounded-full" src={resp.img} />
           <span>{resp.name}</span>
         </li>
       ))}

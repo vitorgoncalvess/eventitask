@@ -6,6 +6,7 @@ import cross from "@/public/cross.png";
 import Loading from "./Loading";
 import axiosInstance from "../(axios)/config";
 import { BoardContext } from "../home/[[...board]]/page";
+import { Avatar } from "@nextui-org/react";
 
 interface User {
   id: string;
@@ -38,16 +39,10 @@ const Responsaveis = ({
       <div className="flex items-center gap-2">
         {respo.map((user: any) => (
           <div key={user.id} className="relative group">
-            <Image
-              className="h-10 w-10 rounded-full object-cover cursor-pointer"
-              width={100}
-              height={100}
-              src={user.img}
-              alt="User"
-            />
+            <Avatar src={user.img} name={user.name} />
             <Image
               onClick={() => handleExclude(user.id)}
-              className="hidden h-4 w-4 group-hover:block absolute top-0 right-0 cursor-pointer"
+              className="hidden h-4 w-4 group-hover:block absolute top-0 right-0 cursor-pointer z-10"
               src={cross}
               alt="excluir"
             />

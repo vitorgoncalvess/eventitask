@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Button from "./Button";
+import { Button } from "@nextui-org/react";
 import menu from "@/public/menu_dots.png";
 import Image from "next/image";
 import Modal from "./Modal";
@@ -17,9 +17,9 @@ const Header = ({ name, secs }: any) => {
           <div className="flex items-center gap-2">
             <Button
               onClick={() => setShow(true)}
-              size="p"
-              background="base"
-              rounded="full"
+              size="md"
+              className="bg-base text-white"
+              radius="full"
             >
               + Adicionar Tarefa
             </Button>

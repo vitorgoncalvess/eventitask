@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Task from "./Task";
 import Modal from "./Modal";
+import { Button } from "@nextui-org/react";
 const colors = [
   "bg-red-400",
   "bg-emerald-400",
@@ -32,19 +33,20 @@ const Section = ({ sec }: { sec: Section }) => {
           {sec?.name?.toUpperCase()} ({sec?.tasks?.length || 0})
         </h1>
       </div>
+      <Button
+        onClick={() => setShow(true)}
+        radius="sm"
+        className="mt-4 bg-primary text-text"
+        fullWidth={true}
+      >
+        + Adicionar Tarefa
+      </Button>
       <ul className="mt-4 flex flex-col gap-4">
         {sec.tasks
           ?.filter((task) => task.status !== 2)
           .map((task) => (
             <Task key={task.id} task={task} sec={sec} />
           ))}
-        <div
-          onClick={() => setShow(true)}
-          className="flex items-center justify-center
-         w-64 bg-primary opacity-50 hover:opacity-70 rounded-md p-4 text-text cursor-pointer gap-2"
-        >
-          + Adicionar Tarefa
-        </div>
         <div
           onClick={() => setComplete(!complete)}
           className="flex items-center justify-center

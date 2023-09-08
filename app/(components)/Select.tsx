@@ -12,12 +12,23 @@ import {
 
 const Select = ({ id, status }: { id: string; status: number }) => {
   const options = [
-    { value: "Pendente", color: "bg-yellow-400" },
-    { value: "Em Desenvolvimento", color: "bg-blue-400" },
-    { value: "Concluido", color: "bg-emerald-400" },
+    {
+      value: "Pendente",
+      color: "bg-yellow-400 hover:bg-yellow-400",
+      info: "Atividade está ociosa",
+    },
+    {
+      value: "Em Desenvolvimento",
+      color: "bg-blue-400 hover:bg-blue-400",
+      info: "Atividade está sendo feita",
+    },
+    {
+      value: "Concluido",
+      color: "bg-emerald-400 hover:bg-emerald-400",
+      info: "Atividade foi finalizada",
+    },
   ];
   const [state, setState] = useState(0);
-  const [show, setShow] = useState(false);
 
   useEffect(() => {
     setState(status);
@@ -25,7 +36,6 @@ const Select = ({ id, status }: { id: string; status: number }) => {
 
   function handleClick(status: number) {
     setState(status);
-    setShow(false);
     axiosInstance.patch(`/tasks/${id}/status`, { status }).catch(() => {
       setState((state) => state);
     });
@@ -42,17 +52,32 @@ const Select = ({ id, status }: { id: string; status: number }) => {
       <DropdownMenu
         //@ts-ignore
         color=""
+        itemClasses={{
+          base: [
+            "w-full",
+            "flex",
+            "items-center",
+            "justify-between",
+            "data-[hover=true]:bg-opacity-50",
+          ],
+        }}
         disabledKeys={[options[state].value]}
         selectedKeys={options[state].value}
         selectionMode="single"
       >
         {options.map((opt, index) => (
           <DropdownItem
+            className={`hover:${opt.color}`}
+            endContent={
+              <span className={`${opt.color} h-10 w-1 rounded `}></span>
+            }
             onClick={() => handleClick(index)}
-            className={`${options[index].color}`}
             key={opt.value}
           >
-            {opt.value}
+            <div className="flex flex-col">
+              <span className="font-medium text-md">{opt.value}</span>
+              <span className="opacity-50 text-[12px]">{opt.info}</span>
+            </div>
           </DropdownItem>
         ))}
       </DropdownMenu>

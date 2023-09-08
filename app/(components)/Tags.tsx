@@ -4,7 +4,14 @@ import tagIcon from "@/public/tag.png";
 import add from "@/public/add_circle.png";
 import axiosInstance from "../(axios)/config";
 import colors from "../(utils)/colors";
-import { Chip } from "@nextui-org/react";
+import {
+  Chip,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from "@nextui-org/react";
+import tagWhite from "@/public/tag_white.png";
 
 interface Tag {
   id: string;
@@ -56,21 +63,46 @@ const Tags = ({ id, tag, ids, setIds }: any) => {
               classNames={{
                 base: `${
                   colors[Number(ids[index]) % colors.length]
-                } opacity-80 text-white`,
+                } opacity-70 text-white`,
               }}
               key={index}
             >
               {tag}
             </Chip>
           ))}
-        <div onClick={() => setShow(!show)} className="relative cursor-pointer">
-          <Image className="h-4 w-4" alt="tag" src={tagIcon} />
-          <Image
-            className="absolute h-3 w-3 -top-2 -right-2"
-            alt="tags"
-            src={add}
-          />
-        </div>
+        <Dropdown
+          classNames={{
+            base: "bg-primary",
+          }}
+        >
+          <DropdownTrigger>
+            <div className="relative">
+              <Image className="h-4 w-4" alt="tag" src={tagIcon} />
+              <Image
+                className="absolute h-3 w-3 -top-2 -right-2"
+                alt="tags"
+                src={add}
+              />
+            </div>
+          </DropdownTrigger>
+          {/*@ts-ignore*/}
+          <DropdownMenu color="">
+            {tags?.map((tag, index) => (
+              <DropdownItem
+                onClick={() => handleAdd(tag)}
+                className={`${colors[(index % colors.length) + 1]} ${
+                  has.find((t) => t === tag.name) && "opacity-30 cursor-default"
+                }`}
+                key={tag.id}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-medium">{tag.name}</span>
+                  <Image className="h-4 w-4" alt="tag" src={tagWhite} />
+                </div>
+              </DropdownItem>
+            ))}
+          </DropdownMenu>
+        </Dropdown>
       </ul>
       {show && (
         <ul className="absolute z-20 top-6 gap-2 flex flex-col items-start bg-secondary rounded-md p-2 min-w-[110px]">

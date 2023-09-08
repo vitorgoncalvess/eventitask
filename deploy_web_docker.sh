@@ -7,6 +7,7 @@ sudo apt-get install docker.io -y
 # Parar e remover contêineres anteriores
 sudo docker stop eventitask-app
 sudo docker remove eventitask-app
+sudo docker rmi eventitask-app
 
 rm -fr eventitask/
 

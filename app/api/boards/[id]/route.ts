@@ -1,5 +1,5 @@
-import { query } from '@/app/(lib)/db';
-import { NextResponse } from 'next/server';
+import { query } from "@/app/(lib)/db";
+import { NextResponse } from "next/server";
 
 interface Board {
   name: string;
@@ -14,8 +14,8 @@ interface Board {
 export async function GET(_: any, { params }: { params: { id: string } }) {
   try {
     const result: any[] = await query(
-      'SELECT * FROM vw_sections_task_resp WHERE id = ?',
-      [params.id],
+      "SELECT * FROM vw_sections_task_resp WHERE id = ?",
+      [params.id]
     );
 
     const _board: Board = {
@@ -24,8 +24,8 @@ export async function GET(_: any, { params }: { params: { id: string } }) {
     };
 
     result.forEach((sec) => {
-      const resp = sec.responsaveis?.split(',');
-      const ids = sec.responsaveis_id?.split(',');
+      const resp = sec.responsaveis?.split(",");
+      const ids = sec.responsaveis_id?.split(",");
       const has = _board.sections.findIndex((pred: any) => {
         return pred.id === sec.section_id;
       });
@@ -39,19 +39,19 @@ export async function GET(_: any, { params }: { params: { id: string } }) {
             fibonacci: sec.fibonacci,
             subtasks: sec.subtask_id,
             status: sec.status,
-            tags: sec.tags ? sec.tags.split(',') : [],
-            tags_id: sec.tags_id ? sec.tags_id.split(',') : [],
+            tags: sec.tags ? sec.tags.split(",") : [],
+            tags_id: sec.tags_id ? sec.tags_id.split(",") : [],
             subtasks_status: sec.subtasks_status
-              ? sec.subtasks_status.split(',')
+              ? sec.subtasks_status.split(",")
               : [],
             time: sec.time,
             data_estimada:
               sec.data_estimada &&
               sec.data_estimada
-                .toLocaleDateString('pt-br')
-                .split('/')
+                .toLocaleDateString("pt-br")
+                .split("/")
                 .reverse()
-                .join('-'),
+                .join("-"),
             responsaveis: resp?.map((item: string, index: number) => ({
               id: ids[index],
               img: item,
@@ -71,20 +71,20 @@ export async function GET(_: any, { params }: { params: { id: string } }) {
               priority: sec.priority,
               fibonacci: sec.fibonacci,
               subtasks: sec.subtask_id,
-              tags: sec.tags ? sec.tags.split(',') : [],
-              tags_id: sec.tags_id ? sec.tags_id.split(',') : [],
+              tags: sec.tags ? sec.tags.split(",") : [],
+              tags_id: sec.tags_id ? sec.tags_id.split(",") : [],
               subtasks_status: sec.subtasks_status
-                ? sec.subtasks_status.split(',')
+                ? sec.subtasks_status.split(",")
                 : [],
               status: sec.status,
               time: sec.time,
               data_estimada:
                 sec.data_estimada &&
                 sec.data_estimada
-                  .toLocaleDateString('pt-br')
-                  .split('/')
+                  .toLocaleDateString("pt-br")
+                  .split("/")
                   .reverse()
-                  .join('-'),
+                  .join("-"),
               responsaveis: resp?.map((item: string, index: number) => ({
                 id: ids[index],
                 img: item,

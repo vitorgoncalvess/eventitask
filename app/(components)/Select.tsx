@@ -2,6 +2,13 @@ import React, { useState, useEffect } from "react";
 import axiosInstance from "../(axios)/config";
 import drop from "@/public/drop-down-arrow.png";
 import Image from "next/image";
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+  Button,
+} from "@nextui-org/react";
 
 const Select = ({ id, status }: { id: string; status: number }) => {
   const options = [
@@ -25,38 +32,31 @@ const Select = ({ id, status }: { id: string; status: number }) => {
   }
 
   return (
-    <div className="flex items-center cursor-pointer relative">
-      <div
-        onClick={() => setShow(!show)}
-        className={`h-9 px-4 ${options[state].color} text-black font-medium rounded-l-md flex items-center`}
+    <Dropdown className="bg-primary">
+      <DropdownTrigger>
+        <Button className={`${options[state].color} text-[rgb(0,0,0,0.6)]`}>
+          <div>{options[state].value}</div>
+          <Image className="h-3 w-3 opacity-60" src={drop} alt="status" />
+        </Button>
+      </DropdownTrigger>
+      <DropdownMenu
+        //@ts-ignore
+        color=""
+        disabledKeys={[options[state].value]}
+        selectedKeys={options[state].value}
+        selectionMode="single"
       >
-        <span className="opacity-60">{options[state].value}</span>
-      </div>
-      <span
-        onClick={() => setShow(!show)}
-        className={`h-9 px-4 ${options[state].color} text-black font-medium rounded-r-md border-l-2 border-[rgb(0,0,0,0.3)] flex items-center`}
-      >
-        <Image className="h-4 w-4 opacity-60" src={drop} alt="Estado" />
-      </span>
-      {show && (
-        <div className="absolute z-50 top-10 right-0 flex flex-col text-xs w-44">
-          {options.map((opt, index) => {
-            if (index !== state)
-              return (
-                <div
-                  onClick={() => handleClick(index)}
-                  className="text-end py-2 bg-zinc-100 px-4 text-black border-d-2 flex items-center justify-end gap-2 border-b-2 border-zinc-500 last-of-type:border-0 hover:bg-zinc-200 first-of-type:rounded-t last-of-type:rounded-b"
-                >
-                  {opt.value}
-                  <span
-                    className={`h-2 w-2 mt-0.5 rounded-full ${opt.color}`}
-                  ></span>
-                </div>
-              );
-          })}
-        </div>
-      )}
-    </div>
+        {options.map((opt, index) => (
+          <DropdownItem
+            onClick={() => handleClick(index)}
+            className={`${options[index].color}`}
+            key={opt.value}
+          >
+            {opt.value}
+          </DropdownItem>
+        ))}
+      </DropdownMenu>
+    </Dropdown>
   );
 };
 

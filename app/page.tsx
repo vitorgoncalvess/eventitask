@@ -1,7 +1,7 @@
 "use client";
 
 import Input from "./(components)/Input";
-import Button from "./(components)/Button";
+import { Button } from "@nextui-org/react";
 import { FormEvent, useState } from "react";
 import axiosInstance from "./(axios)/config";
 import { useRouter } from "next/navigation";
@@ -15,7 +15,10 @@ export default function Home() {
 
   const router = useRouter();
 
-  function handleSubmit(e: FormEvent) {
+  function handleSubmit(e: any) {
+    if (e.key != "Enter") {
+      return;
+    }
     e.preventDefault();
     setLoading(true);
     axiosInstance
@@ -47,7 +50,10 @@ export default function Home() {
           <Logo size="base" />
         </div>
         <h1 className="text-2xl">Login</h1>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-8 w-full">
+        <form
+          onKeyDown={(e) => handleSubmit(e)}
+          className="flex flex-col gap-8 w-full"
+        >
           <Input value={email} setValue={setEmail} label="E-mail" />
           <Input
             type="password"
@@ -56,11 +62,14 @@ export default function Home() {
             label="Senha"
           />
           <div className="flex flex-row-reverse items-center justify-evenly">
-            <Button background="base" size="auto">
-              {loading ? <Loading color="white" /> : "Entrar"}
-            </Button>
-            <Button background="transparent" size="auto">
-              Cadastrar
+            <Button
+              onClick={handleSubmit}
+              isLoading={loading}
+              className="w-36"
+              variant="shadow"
+              color="warning"
+            >
+              Entrar
             </Button>
           </div>
         </form>

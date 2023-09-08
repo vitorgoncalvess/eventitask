@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import colors from '../(utils)/colors';
-import node from '@/public/node.png';
-import Image from 'next/image';
-import axiosInstance from '../(axios)/config';
+import React, { useEffect, useState } from "react";
+import colors from "../(utils)/colors";
+import node from "@/public/node.png";
+import Image from "next/image";
+import axiosInstance from "../(axios)/config";
 
 const TaskNodeTable = ({ task, setAt }: any) => {
   const [subtasks, setSubtasks] = useState([]);
   const [show, setShow] = useState(false);
   const [state, setState] = useState(task.status);
   const options = [
-    { value: 'Pendente', color: 'bg-yellow-400' },
-    { value: 'Em Desenvolvimento', color: 'bg-blue-400' },
-    { value: 'Concluido', color: 'bg-emerald-400' },
+    { value: "Pendente", color: "bg-yellow-400" },
+    { value: "Em Desenvolvimento", color: "bg-blue-400" },
+    { value: "Concluido", color: "bg-emerald-400" },
   ];
 
   function handleChange() {
@@ -58,7 +58,7 @@ const TaskNodeTable = ({ task, setAt }: any) => {
           />
         </span>
         <span>{task.name}</span>
-        <span>{new Date(task.data_estimada).toLocaleDateString('pt-br')}</span>
+        <span>{new Date(task.data_estimada).toLocaleDateString("pt-br")}</span>
         <div>
           <span
             className={`${options[state].color} w-auto text-[rgb(0,0,0,0.5)] rounded-md px-2 text-xs`}
@@ -72,13 +72,13 @@ const TaskNodeTable = ({ task, setAt }: any) => {
               index < 2 && (
                 <li
                   className={`${
-                    colors[(task.tags_id[index] % colors.length) + 1]
+                    colors[task.tags_id[index] % colors.length]
                   } rounded-md px-2 text-[rgb(0,0,0,0.5)]`}
                   key={tag}
                 >
                   {tag}
                 </li>
-              ),
+              )
           )}
         </ul>
         <div className="flex items-center justify-center">

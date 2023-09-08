@@ -4,6 +4,7 @@ import tagIcon from "@/public/tag.png";
 import add from "@/public/add_circle.png";
 import axiosInstance from "../(axios)/config";
 import colors from "../(utils)/colors";
+import { Chip } from "@nextui-org/react";
 
 interface Tag {
   id: string;
@@ -37,19 +38,30 @@ const Tags = ({ id, tag, ids, setIds }: any) => {
     }
   }
 
+  function handleDelete(tag, index) {
+    axiosInstance.put(`/tasks/${id}/tags`, { id: index }).then(() => {
+      setHas(has.filter((tg) => tg !== tag));
+      setIds(ids.filter((i) => i !== index));
+    });
+  }
+
   return (
     <div className="relative flex ">
       <ul className="flex items-center gap-2 text-xs font-medium">
         {has &&
           has.map((tag, index) => (
-            <li
-              className={`${
-                ids && colors[Number(ids[index]) % colors.length]
-              } py-1 px-2 rounded-md opacity-80`}
+            <Chip
+              radius="sm"
+              onClose={() => handleDelete(tag, ids[index])}
+              classNames={{
+                base: `${
+                  colors[Number(ids[index]) % colors.length]
+                } opacity-80 text-white`,
+              }}
               key={index}
             >
               {tag}
-            </li>
+            </Chip>
           ))}
         <div onClick={() => setShow(!show)} className="relative cursor-pointer">
           <Image className="h-4 w-4" alt="tag" src={tagIcon} />

@@ -58,7 +58,7 @@ const Select = ({ id, status }: { id: string; status: number }) => {
             "flex",
             "items-center",
             "justify-between",
-            "data-[hover=true]:bg-opacity-50",
+            "data-[hover=true]:bg-secondary",
           ],
         }}
         disabledKeys={[options[state].value]}
@@ -67,7 +67,6 @@ const Select = ({ id, status }: { id: string; status: number }) => {
       >
         {options.map((opt, index) => (
           <DropdownItem
-            className={`hover:${opt.color}`}
             endContent={
               <span className={`${opt.color} h-10 w-1 rounded `}></span>
             }

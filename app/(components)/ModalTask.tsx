@@ -217,23 +217,9 @@ const ModalTask = ({
               <span>Mudar o nome da tarefa?</span>
               <Button size="sm">Mudar</Button>
             </div>
-            {del && (
-              <ModalDeletar
-                setShow={setDel}
-                name={at.name}
-                id={at.id}
-                modal={setShow}
-              />
-            )}
             <div className="flex items-center gap-2 text-sm opacity-80 mt-4">
               <span>Deletar a tarefa?</span>
-              <Button
-                onClick={() => setDel(true)}
-                size="sm"
-                className="bg-red-400 text-white"
-              >
-                Deletar
-              </Button>
+              <ModalDeletar name={at.name} id={at.id} />
             </div>
           </div>
           <Comments id={at.id} />

@@ -24,15 +24,11 @@ const config: Config = {
       },
     },
   },
-  darkMode: "class",
   plugins: [
     nextui({
       themes: {
         light: {
           colors: {
-            secondary: {
-              DEFAULT: "#9353D3",
-            },
             warning: "#9353D3",
           },
         },

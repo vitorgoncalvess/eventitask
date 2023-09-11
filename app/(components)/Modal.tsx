@@ -1,6 +1,6 @@
 import React, { FormEvent, useState, useContext } from "react";
 import InputModal from "./InputModal";
-import { Button } from "@nextui-org/react";
+import { Button, Chip } from "@nextui-org/react";
 import axiosInstance from "../(axios)/config";
 import { BoardContext } from "../home/[[...board]]/page";
 import colors from "../(utils)/colors";
@@ -29,6 +29,7 @@ const Modal = ({
   const [status, setStatus] = useState("");
   const [subtarefas, setSubtarefas] = useState<string[]>([]);
   const [tarefa, setTarefa] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const { refetch }: any = useContext(BoardContext);
 
@@ -48,6 +49,7 @@ const Modal = ({
     e.preventDefault();
     let body: Object;
     if (task) {
+      setLoading(true);
       axiosInstance
         .post(`/tasks/${task}/subtasks`, {
           title,
@@ -64,6 +66,7 @@ const Modal = ({
     } else {
       if (secs[0]) body = { title, desc, status, subtarefas };
       else body = { title, desc, status: secs.id, subtarefas };
+      setLoading(true);
       axiosInstance.post("/tasks", body).then((response) => {
         if (response.status === 201) {
           refetch();
@@ -72,8 +75,6 @@ const Modal = ({
       });
     }
   }
-
-  function handleDelete(task) {}
 
   return (
     <div
@@ -103,19 +104,22 @@ const Modal = ({
                 {subtarefas.length > 0 && (
                   <ul className="overflow-auto flex items-center gap-2 mt-1">
                     {subtarefas.map((task, index) => (
-                      <li
-                        onClick={() =>
+                      <Chip
+                        classNames={{
+                          base: `${
+                            colors[index % colors.length]
+                          } text-[rgb(0,0,0,0.5)] px-2 h-7 mt-1 mb-2 cursor-pointer`,
+                        }}
+                        radius="full"
+                        onClose={() =>
                           setSubtarefas((tarefas) =>
                             tarefas.filter((tarefa) => tarefa !== task),
                           )
                         }
-                        className={`${
-                          colors[index % colors.length]
-                        } text-[rgb(0,0,0,0.5)] px-2 py-0.5 rounded mt-1 mb-2 cursor-pointer`}
                         key={index}
                       >
                         {task}
-                      </li>
+                      </Chip>
                     ))}
                   </ul>
                 )}
@@ -155,7 +159,12 @@ const Modal = ({
               )}
             </>
           )}
-          <Button color="warning" radius="full">
+          <Button
+            isLoading={loading}
+            onClick={handleSubmit}
+            color="warning"
+            radius="full"
+          >
             Criar Tarefa
           </Button>
         </form>

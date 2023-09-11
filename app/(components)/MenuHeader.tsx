@@ -12,7 +12,7 @@ import dash from "@/public/data-analytics.png";
 import trash from "@/public/delete.png";
 import ModalDeletarSecao from "./ModalDeletarSecao";
 
-const MenuHeader = () => {
+const MenuHeader = ({ name }: { name: string }) => {
   return (
     <Dropdown
       size="sm"
@@ -61,7 +61,7 @@ const MenuHeader = () => {
               <Image className="h-5 w-5" src={trash} alt="Deletar" />
             }
           >
-            <ModalDeletarSecao />
+            <ModalDeletarSecao name={name} />
           </DropdownItem>
         </DropdownSection>
       </DropdownMenu>

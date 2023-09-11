@@ -8,10 +8,18 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@nextui-org/react";
-import React from "react";
+import { usePathname } from "next/navigation";
+import React, { useState } from "react";
+import useAxios from "../(hooks)/useAxios";
 
-const ModalDeletarSecao = () => {
+const ModalDeletarSecao = ({ name }: { name: string }) => {
+  const [confirm, setConfirm] = useState("");
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const pathname = usePathname();
+  const id = pathname.split("/")[2];
+
+  const { isLoading, error, fetch } = useAxios("delete", `/boards/${id}`);
+
   return (
     <>
       <div onClick={onOpen}>
@@ -31,30 +39,45 @@ const ModalDeletarSecao = () => {
         onOpenChange={onOpenChange}
       >
         <ModalContent>
-          <ModalHeader>Deletar Seção</ModalHeader>
-          <ModalBody className="text-zinc-400">
-            <h1 className="text-sm">
-              Tem certeza que deseja deletar a seção? Ela e todas as suas
-              tarefas serão deletadas.
-            </h1>
-            <h2 className="text-sm">
-              Para proseguir, escreva o nome da seção para deleta-la.
-            </h2>
-            <Input
-              type="text"
-              classNames={{
-                inputWrapper: [
-                  "bg-secondary",
-                  "data-[hover=true]:bg-secondary",
-                  "group-data-[focus=true]:bg-secondary",
-                ],
-              }}
-            />
-          </ModalBody>
-          <ModalFooter className="flex items-center justify-between">
-            <Button>Cancelar</Button>
-            <Button>Deletar</Button>
-          </ModalFooter>
+          {(onClose) => (
+            <>
+              <ModalHeader>Deletar Seção</ModalHeader>
+              <ModalBody className="text-zinc-400">
+                <h1 className="text-sm">
+                  Tem certeza que deseja deletar a seção? Ela e todas as suas
+                  tarefas serão deletadas.
+                </h1>
+                <h2 className="text-sm">
+                  Para proseguir, escreva o nome da seção para deleta-la.
+                </h2>
+                <Input
+                  type="text"
+                  value={confirm}
+                  onChange={({ target }) => setConfirm(target.value)}
+                  placeholder={name}
+                  classNames={{
+                    inputWrapper: [
+                      "bg-secondary",
+                      "data-[hover=true]:bg-secondary",
+                      "group-data-[focus=true]:bg-secondary",
+                    ],
+                  }}
+                />
+              </ModalBody>
+              <ModalFooter className="flex items-center justify-between">
+                <Button
+                  onClick={onClose}
+                  className="text-white"
+                  variant="light"
+                >
+                  Cancelar
+                </Button>
+                <Button isLoading={isLoading} onClick={fetch} color="danger">
+                  Deletar
+                </Button>
+              </ModalFooter>
+            </>
+          )}
         </ModalContent>
       </Modal>
     </>

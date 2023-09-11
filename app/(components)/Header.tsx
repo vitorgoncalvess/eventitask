@@ -22,7 +22,7 @@ const Header = ({ name, secs }: any) => {
             >
               + Adicionar Tarefa
             </Button>
-            <MenuHeader />
+            <MenuHeader name={name} />
           </div>
         </div>
       </div>

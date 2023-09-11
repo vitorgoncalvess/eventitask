@@ -2,9 +2,8 @@
 
 import React, { useState } from "react";
 import { Button } from "@nextui-org/react";
-import menu from "@/public/menu_dots.png";
-import Image from "next/image";
 import Modal from "./Modal";
+import MenuHeader from "./MenuHeader";
 
 const Header = ({ name, secs }: any) => {
   const [show, setShow] = useState(false);
@@ -23,7 +22,7 @@ const Header = ({ name, secs }: any) => {
             >
               + Adicionar Tarefa
             </Button>
-            <Image className="h-6 w-6 cursor-pointer" src={menu} alt="Menu" />
+            <MenuHeader />
           </div>
         </div>
       </div>

@@ -62,17 +62,25 @@ const Modal = ({
             setShow(false);
             setId(Math.random());
           }
+        })
+        .finally(() => {
+          setLoading(false);
         });
     } else {
       if (secs[0]) body = { title, desc, status, subtarefas };
       else body = { title, desc, status: secs.id, subtarefas };
       setLoading(true);
-      axiosInstance.post("/tasks", body).then((response) => {
-        if (response.status === 201) {
-          refetch();
-          setShow(false);
-        }
-      });
+      axiosInstance
+        .post("/tasks", body)
+        .then((response) => {
+          if (response.status === 201) {
+            refetch();
+            setShow(false);
+          }
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     }
   }
 

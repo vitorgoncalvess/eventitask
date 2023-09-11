@@ -3,14 +3,14 @@ import axiosInstance from "../(axios)/config";
 
 type Method = "get" | "post" | "delete" | "patch" | "put";
 
-const useAxios = (method: Method, url: string, body?: any) => {
+const useAxios = (method: Method, url: string) => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetch = () => {
+  const fetch = async (body: any) => {
     setIsLoading(true);
-    axiosInstance[method](url, body)
+    return axiosInstance[method](url, body)
       .then((response) => {
         setData(response.data);
         setError(null);

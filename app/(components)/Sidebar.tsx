@@ -7,7 +7,7 @@ import axiosInstance from "../(axios)/config";
 import Image from "next/image";
 import boardIcon from "@/public/board.png";
 import boardIconWhite from "@/public/tablet_white.png";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import ModalNovaSecao from "./ModalNovaSecao";
 
 const Sidebar = () => {
@@ -24,6 +24,8 @@ const Sidebar = () => {
     },
   );
 
+  const pathname = usePathname();
+
   const router = useRouter();
 
   return (
@@ -39,7 +41,7 @@ const Sidebar = () => {
         <ul>
           {boards?.map((item: any) => (
             <li
-              data-selected={location.href.includes(item.id)}
+              data-selected={pathname.split("/")[2] == item.id}
               className="px-6 py-3 data-[selected=true]:bg-base data-[selected=false]:text-text w-11/12 rounded-r-full flex items-center gap-4 font-medium cursor-pointer"
               key={item.id}
               onClick={() => router.push(`/home/${item.id}`)}
@@ -47,7 +49,7 @@ const Sidebar = () => {
               <Image
                 className="h-4 w-4"
                 src={
-                  location.href.includes(item.id) ? boardIconWhite : boardIcon
+                  pathname.split("/")[2] == item.id ? boardIconWhite : boardIcon
                 }
                 alt="Board"
               />

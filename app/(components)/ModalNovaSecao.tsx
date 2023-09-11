@@ -19,28 +19,41 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import colors from "../(utils)/colors";
+import useAxios from "../(hooks)/useAxios";
+import { useRouter } from "next/navigation";
 
 const ModalNovaSecao = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [secoes, setSecoes] = useState([]);
   const [nome, setNome] = useState("");
   const [secao, setSecao] = useState("");
+  const { data, isLoading, error, fetch } = useAxios("post", "/boards");
+
+  const router = useRouter();
 
   function handleAdd() {
     if (secao) {
       setSecoes([
         ...secoes,
-        { name: secao, color: secoes.length % colors.length },
+        { name: secao, color: colors[secoes.length % colors.length] },
       ]);
       setSecao("");
     }
   }
 
-  function handleColor(index: number, col: number) {
-    const sections = secoes;
+  function handleColor(index: number, col: string) {
+    const sections = [...secoes];
     sections[index].color = col;
     setSecoes(sections);
   }
+
+  function handleDelete(sec) {
+    setSecoes(secoes.filter((secao) => secao !== sec));
+  }
+
+  useEffect(() => {
+    if (data) router.push(`/home/${data.id}`);
+  }, [data, router]);
 
   return (
     <>
@@ -102,31 +115,30 @@ const ModalNovaSecao = () => {
                     <Card
                       radius="sm"
                       classNames={{
-                        base: colors[secao.color + 1],
+                        base: secao.color,
                       }}
                       key={index}
                     >
                       <CardHeader className="text-white font-medium">
                         {secao.name}
                       </CardHeader>
-                      <CardFooter className="flex items-center justify-between bg-white">
+                      <CardFooter className="h-4 flex items-center justify-between bg-white">
                         <Popover
+                          placement="bottom"
                           classNames={{
                             base: "bg-primary py-2",
                           }}
                         >
                           <PopoverTrigger>
                             <div
-                              className={`ml-2 h-3 w-3 rounded-full cursor-pointer ${
-                                colors[(secao.color % colors.length) + 1]
-                              }`}
+                              className={`ml-2 h-3 w-3 rounded-full cursor-pointer transition ${secao.color}`}
                             ></div>
                           </PopoverTrigger>
                           <PopoverContent>
                             <section className="grid grid-cols-5 gap-2">
-                              {colors.map((col, ind) => (
+                              {colors.map((col) => (
                                 <div
-                                  onClick={() => handleColor(index, ind)}
+                                  onClick={() => handleColor(index, col)}
                                   key={col}
                                   className={`${col} h-4 w-4 rounded-full cursor-pointer`}
                                 ></div>
@@ -135,6 +147,7 @@ const ModalNovaSecao = () => {
                           </PopoverContent>
                         </Popover>
                         <Button
+                          onClick={() => handleDelete(secao)}
                           isIconOnly
                           variant="light"
                           color="danger"
@@ -159,7 +172,12 @@ const ModalNovaSecao = () => {
                 >
                   Voltar
                 </Button>
-                <Button variant="shadow" color="warning">
+                <Button
+                  isLoading={isLoading}
+                  onClick={() => fetch({ nome, secoes })}
+                  variant="shadow"
+                  color="warning"
+                >
                   Criar
                 </Button>
               </ModalFooter>

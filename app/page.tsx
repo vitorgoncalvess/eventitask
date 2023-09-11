@@ -16,7 +16,7 @@ export default function Home() {
   const router = useRouter();
 
   function handleSubmit(e: any) {
-    if (e.key != "Enter") {
+    if (e.key && e.key != "Enter") {
       return;
     }
     e.preventDefault();

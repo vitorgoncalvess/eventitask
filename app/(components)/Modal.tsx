@@ -1,9 +1,8 @@
 import React, { FormEvent, useState, useContext } from "react";
 import InputModal from "./InputModal";
-import Button from "./Button";
+import { Button } from "@nextui-org/react";
 import axiosInstance from "../(axios)/config";
 import { BoardContext } from "../home/[[...board]]/page";
-import { revalidateTag } from "next/cache";
 import colors from "../(utils)/colors";
 
 interface Section {
@@ -126,12 +125,7 @@ const Modal = ({
                 value={tarefa}
                 setValue={setTarefa}
               />
-              <Button
-                onClick={handleSub}
-                size="p"
-                background="base_inv"
-                rounded="full"
-              >
+              <Button onClick={handleSub} radius="full">
                 + Adicionar Mais Subtarefas
               </Button>
             </>
@@ -161,7 +155,7 @@ const Modal = ({
               )}
             </>
           )}
-          <Button size="p" background="base" rounded="full">
+          <Button color="warning" radius="full">
             Criar Tarefa
           </Button>
         </form>

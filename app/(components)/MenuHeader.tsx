@@ -11,8 +11,11 @@ import Image from "next/image";
 import dash from "@/public/data-analytics.png";
 import trash from "@/public/delete.png";
 import ModalDeletarSecao from "./ModalDeletarSecao";
+import { usePathname, useRouter } from "next/navigation";
 
 const MenuHeader = ({ name }: { name: string }) => {
+  const pathname = usePathname();
+  const router = useRouter();
   return (
     <Dropdown
       size="sm"
@@ -41,6 +44,7 @@ const MenuHeader = ({ name }: { name: string }) => {
           }}
         >
           <DropdownItem
+            onClick={() => router.push(`/dash/${pathname.split("/")[2]}`)}
             className="data-[hover=true]:text-white"
             startContent={
               <Image className="h-5 w-5" src={dash} alt="Dashboard" />

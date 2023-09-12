@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import axiosInstance from "@/app/(axios)/config";
-import Sidebar from "../../(components)/Sidebar";
-import { useState } from "react";
-import { useQuery } from "react-query";
-import Header from "@/app/(components)/Header";
-import Section from "@/app/(components)/Section";
-import { createContext } from "react";
-import ModalSection from "@/app/(components)/ModalSection";
-import Loading from "@/app/(components)/Loading";
+import axiosInstance from '@/app/(axios)/config';
+import Sidebar from '../../(components)/Sidebar';
+import { useState } from 'react';
+import { useQuery } from 'react-query';
+import Header from '@/app/(components)/Header';
+import Section from '@/app/(components)/Section';
+import { createContext } from 'react';
+import ModalSection from '@/app/(components)/ModalSection';
+import Loading from '@/app/(components)/Loading';
 
 interface Board {
   _id: string;
@@ -23,8 +23,8 @@ interface Board {
 }
 
 export const BoardContext = createContext<Board>({
-  _id: "",
-  name: "",
+  _id: '',
+  name: '',
   sections: [],
 });
 
@@ -33,7 +33,7 @@ const Page = ({ params }: { params: { board: string } }) => {
   const [show, setShow] = useState(false);
 
   const { isLoading, refetch } = useQuery(
-    "board",
+    'board',
     () => {
       return axiosInstance.get(`/boards/${params.board}`);
     },
@@ -43,7 +43,7 @@ const Page = ({ params }: { params: { board: string } }) => {
       },
       refetchOnMount: true,
       refetchOnWindowFocus: false,
-    }
+    },
   );
 
   return (
@@ -62,7 +62,7 @@ const Page = ({ params }: { params: { board: string } }) => {
             />
             <div className="pl-72">
               <section className="w-full h-[85vh] flex p-8 gap-4 overflow-auto">
-                {board?.sections.map((sec: any) => (
+                {board?.sections?.map((sec: any) => (
                   <Section key={sec.id} sec={sec} />
                 ))}
                 <div

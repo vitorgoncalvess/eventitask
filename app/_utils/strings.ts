@@ -1,19 +1,15 @@
-import home from "@/public/home.svg";
 import card from "@/public/card.svg";
 import clock from "@/public/clock.svg";
-import homeWhite from "@/public/homeWhite.svg";
+import people from "@/public/people.svg";
+import settings from "@/public/settings.svg";
 import cardWhite from "@/public/cardWhite.svg";
 import clockWhite from "@/public/clockWhite.svg";
+import peopleWhite from "@/public/peopleWhite.svg";
+import settingsWhite from "@/public/settingsWhite.svg";
 
 const strings = {
   TABLE: ["Feito", "Tarefa", "Prazo", "Status", "Tags"],
-  DASHSIDE: [
-    {
-      img: home,
-      label: "Home",
-      selected: homeWhite,
-      path: undefined,
-    },
+  DASHSIDEPURPLE: [
     {
       img: card,
       label: "Áreas",
@@ -25,6 +21,20 @@ const strings = {
       label: "Registro",
       selected: clockWhite,
       path: "/registros",
+    },
+    {
+      img: people,
+      label: "Responsaveis",
+      selected: peopleWhite,
+      path: "/responsaveis",
+    },
+  ],
+  DASHSIDERED: [
+    {
+      img: settings,
+      label: "Configuração",
+      selected: settingsWhite,
+      path: "/config",
     },
   ],
 };

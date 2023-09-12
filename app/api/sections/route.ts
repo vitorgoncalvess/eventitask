@@ -1,18 +1,18 @@
 import { NextResponse } from "next/server";
-import { query } from "@/app/(lib)/db";
+import { query } from "@/app/_lib/db";
 
 export async function POST(req: Request) {
   const { id, name, color, tarefas } = await req.json();
   try {
     const result = await query(
       "INSERT INTO section (board_id, name, color) VALUES (?,?,?)",
-      [id, name, color]
+      [id, name, color],
     );
 
     tarefas.forEach((task: string) => {
       query(
         "INSERT INTO task (section_id, name, description, priority, fibonacci, status, time) VALUES (?,?,'',0,0,0,0)",
-        [result.insertId, task]
+        [result.insertId, task],
       );
     });
 

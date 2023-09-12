@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import colors from "../(utils)/colors";
+import colors from "../_utils/colors";
 import node from "@/public/node.png";
 import Image from "next/image";
-import axiosInstance from "../(axios)/config";
+import axiosInstance from "../_axios/config";
 
 const TaskNodeTable = ({ task, setAt }: any) => {
   const [subtasks, setSubtasks] = useState([]);
@@ -78,7 +78,7 @@ const TaskNodeTable = ({ task, setAt }: any) => {
                 >
                   {tag}
                 </li>
-              )
+              ),
           )}
         </ul>
         <div className="flex items-center justify-center">

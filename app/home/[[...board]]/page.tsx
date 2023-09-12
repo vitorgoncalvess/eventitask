@@ -1,14 +1,14 @@
 "use client";
 
-import axiosInstance from "@/app/(axios)/config";
-import Sidebar from "../../(components)/Sidebar";
+import axiosInstance from "@/app/_axios/config";
+import Sidebar from "../../_components/Sidebar";
 import { useState } from "react";
 import { useQuery } from "react-query";
-import Header from "@/app/(components)/Header";
-import Section from "@/app/(components)/Section";
+import Header from "@/app/_components/Header";
+import Section from "@/app/_components/Section";
 import { createContext } from "react";
-import ModalSection from "@/app/(components)/ModalSection";
-import Loading from "@/app/(components)/Loading";
+import ModalSection from "@/app/_components/ModalSection";
+import Loading from "@/app/_components/Loading";
 
 interface Board {
   _id: string;

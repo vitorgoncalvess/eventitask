@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import TaskNodeTable from "./TaskNodeTable";
-import { Task } from "../(utils)/interfaces";
+import { Task } from "../_utils/interfaces";
 
 const TaskNode = ({
   task,

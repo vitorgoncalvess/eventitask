@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Logo from "./Logo";
 import { useQuery } from "react-query";
-import axiosInstance from "../(axios)/config";
+import axiosInstance from "../_axios/config";
 import Image from "next/image";
 import boardIcon from "@/public/board.png";
 import boardIconWhite from "@/public/tablet_white.png";

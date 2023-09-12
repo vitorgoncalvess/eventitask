@@ -1,7 +1,8 @@
 "use client";
 
-import SidebarDash from "@/app/(components)/SidebarDash";
-import React, { useState } from "react";
+import Loading from "@/app/_components/Loading";
+import SidebarDash from "@/app/_components/SidebarDash";
+import React, { Suspense, useState } from "react";
 
 const Page = ({ children }) => {
   const [side, setSide] = useState(true);
@@ -13,7 +14,7 @@ const Page = ({ children }) => {
           side ? "w-[calc(100vw-14rem)]" : "w-[calc(100vw-5rem)]"
         } transition-all ease-linear p-5`}
       >
-        {children}
+        <Suspense fallback={<Loading color="white" />}>{children}</Suspense>
       </section>
     </div>
   );

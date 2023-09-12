@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axiosInstance from "../(axios)/config";
+import axiosInstance from "../_axios/config";
 import drop from "@/public/drop-down-arrow.png";
 import Image from "next/image";
 import {

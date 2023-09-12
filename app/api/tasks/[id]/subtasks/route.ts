@@ -1,17 +1,17 @@
-import { query } from '@/app/(lib)/db';
-import { NextResponse } from 'next/server';
+import { query } from "@/app/_lib/db";
+import { NextResponse } from "next/server";
 
 export async function GET(_: any, { params }: { params: { id: string } }) {
   try {
     const subtasks = await query(
-      'SELECT t.*, GROUP_CONCAT(tg.name) as tags, GROUP_CONCAT(tg.id) as tags_id FROM task as t LEFT JOIN tag_task as tt on tt.task_id = t.id LEFT JOIN tag as tg on tg.id = tt.tag_id WHERE t.task_id = ? GROUP BY t.id',
+      "SELECT t.*, GROUP_CONCAT(tg.name) as tags, GROUP_CONCAT(tg.id) as tags_id FROM task as t LEFT JOIN tag_task as tt on tt.task_id = t.id LEFT JOIN tag as tg on tg.id = tt.tag_id WHERE t.task_id = ? GROUP BY t.id",
       [params.id],
     );
 
     const subs = subtasks.map((sub: any) => ({
       ...sub,
-      tags: sub.tags ? sub.tags.split(',') : [],
-      tags_id: sub.tags_id ? sub.tags_id.split(',') : [],
+      tags: sub.tags ? sub.tags.split(",") : [],
+      tags_id: sub.tags_id ? sub.tags_id.split(",") : [],
     }));
 
     return NextResponse.json(subs);
@@ -29,7 +29,7 @@ export async function POST(
   try {
     const date = new Date();
     await query(
-      'INSERT INTO task (task_id, name, priority, fibonacci, description, status, data_estimada) VALUES (?,?,1,1,?,0,?)',
+      "INSERT INTO task (task_id, name, priority, fibonacci, description, status, data_estimada) VALUES (?,?,1,1,?,0,?)",
       [task, title, desc, date],
     );
 

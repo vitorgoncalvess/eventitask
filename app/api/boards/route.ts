@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { query } from "@/app/(lib)/db";
+import { query } from "@/app/_lib/db";
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     const boards = await query("SELECT * FROM board");
 

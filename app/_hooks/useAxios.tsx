@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import axiosInstance from '../(axios)/config';
+import { useState } from "react";
+import axiosInstance from "../_axios/config";
 
-type Method = 'get' | 'post' | 'delete' | 'patch' | 'put';
+type Method = "get" | "post" | "delete" | "patch" | "put";
 
 const useAxios = (method: Method, url: string) => {
   const [data, setData] = useState(null);

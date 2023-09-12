@@ -6,7 +6,7 @@ import React from "react";
 const SideItem = ({ img, selected, label, path, side }: any) => {
   const pathname = usePathname();
   return (
-    <Link href={`/dash/${path}`}>
+    <Link href={path ? `${pathname}/${path}` : `${pathname}`}>
       <li
         data-selected={pathname.split("/")[3] === path}
         className="flex text-[#8392a6] items-center gap-2 font-medium data-[selected=true]:bg-base data-[selected=true]:text-white bg-opacity-50 rounded-full p-2 w-full overflow-hidden transition cursor-pointer"

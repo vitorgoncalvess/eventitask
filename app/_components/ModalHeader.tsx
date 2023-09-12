@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import axiosInstance from "../(axios)/config";
+import axiosInstance from "../_axios/config";
 import { BoardContext } from "../home/[[...board]]/page";
 
 interface Task {

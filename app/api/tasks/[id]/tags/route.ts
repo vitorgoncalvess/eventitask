@@ -1,11 +1,11 @@
-import { query } from "@/app/(lib)/db";
+import { query } from "@/app/_lib/db";
 import { NextResponse } from "next/server";
 
 export async function GET(_: any, { params }: { params: { id: string } }) {
   try {
     const tags = await query(
       "SELECT * FROM tag LEFT JOIN tag_task AS tt ON tt.tag_id = tag.id WHERE task_id = ?",
-      [params.id]
+      [params.id],
     );
     return NextResponse.json(tags);
     ("");
@@ -16,7 +16,7 @@ export async function GET(_: any, { params }: { params: { id: string } }) {
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   const { id } = await req.json();
   try {
@@ -29,7 +29,7 @@ export async function PATCH(
 
 export async function PUT(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   const { id } = await req.json();
   try {

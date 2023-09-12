@@ -1,9 +1,9 @@
-import { query } from "@/app/(lib)/db";
+import { query } from "@/app/_lib/db";
 import { NextResponse } from "next/server";
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   const { date } = await req.json();
   try {

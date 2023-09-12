@@ -7,18 +7,18 @@ import {
   ModalFooter,
   ModalHeader,
   useDisclosure,
-} from '@nextui-org/react';
-import { useRouter, usePathname } from 'next/navigation';
-import React, { useState } from 'react';
-import useAxios from '../(hooks)/useAxios';
+} from "@nextui-org/react";
+import { useRouter, usePathname } from "next/navigation";
+import React, { useState } from "react";
+import useAxios from "../_hooks/useAxios";
 
 const ModalDeletarSecao = ({ name }: { name: string }) => {
-  const [confirm, setConfirm] = useState('');
+  const [confirm, setConfirm] = useState("");
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const pathname = usePathname();
-  const id: string = pathname.split('/')[2];
+  const id: string = pathname.split("/")[2];
 
-  const { isLoading, error, fetch } = useAxios('delete', `/boards/${id}`);
+  const { isLoading, error, fetch } = useAxios("delete", `/boards/${id}`);
 
   const router = useRouter();
 
@@ -39,9 +39,9 @@ const ModalDeletarSecao = ({ name }: { name: string }) => {
       <Modal
         size="lg"
         classNames={{
-          backdrop: 'z-[10000000]',
-          wrapper: 'z-[100000001]',
-          base: 'bg-primary',
+          backdrop: "z-[10000000]",
+          wrapper: "z-[100000001]",
+          base: "bg-primary",
         }}
         isOpen={isOpen}
         onOpenChange={onOpenChange}
@@ -65,9 +65,9 @@ const ModalDeletarSecao = ({ name }: { name: string }) => {
                   placeholder={name}
                   classNames={{
                     inputWrapper: [
-                      'bg-secondary',
-                      'data-[hover=true]:bg-secondary',
-                      'group-data-[focus=true]:bg-secondary',
+                      "bg-secondary",
+                      "data-[hover=true]:bg-secondary",
+                      "group-data-[focus=true]:bg-secondary",
                     ],
                   }}
                 />

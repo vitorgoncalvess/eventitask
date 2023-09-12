@@ -1,9 +1,9 @@
 import React, { FormEvent, useState, useContext } from "react";
 import InputModal from "./InputModal";
 import { Button, Chip } from "@nextui-org/react";
-import axiosInstance from "../(axios)/config";
+import axiosInstance from "../_axios/config";
 import { BoardContext } from "../home/[[...board]]/page";
-import colors from "../(utils)/colors";
+import colors from "../_utils/colors";
 
 interface Section {
   id: string;

@@ -1,11 +1,11 @@
-import { query } from "@/app/(lib)/db";
+import { query } from "@/app/_lib/db";
 import { NextResponse } from "next/server";
 
 export async function GET(_: any, { params }: { params: { id: string } }) {
   try {
     const result = await query(
       "SELECT * FROM vw_message_user WHERE task_id = ?",
-      [params.id]
+      [params.id],
     );
 
     result.forEach((res: any) => {
@@ -20,14 +20,14 @@ export async function GET(_: any, { params }: { params: { id: string } }) {
 
 export async function POST(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   const { message, idUser } = await req.json();
   try {
     const time = new Date();
     const res = await query(
       "INSERT INTO comment (task_id, user_id, message, time) VALUES (?,?,?,?)",
-      [params.id, idUser, message, time]
+      [params.id, idUser, message, time],
     );
 
     const user = await query("SELECT name, img FROM usuario WHERE id = ?", [

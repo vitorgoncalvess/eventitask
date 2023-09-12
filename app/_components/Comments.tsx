@@ -1,4 +1,4 @@
-import axiosInstance from "../(axios)/config";
+import axiosInstance from "../_axios/config";
 import { FormEvent, useState, useEffect } from "react";
 import Image from "next/image";
 

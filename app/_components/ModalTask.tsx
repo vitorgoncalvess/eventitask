@@ -5,9 +5,9 @@ import Image from "next/image";
 import relogio from "@/public/clock.png";
 import Tasks from "./Tasks";
 import Responsaveis from "./Responsaveis";
-import axiosInstance from "../(axios)/config";
+import axiosInstance from "../_axios/config";
 import Select from "./Select";
-import { Task } from "../(utils)/interfaces";
+import { Task } from "../_utils/interfaces";
 import Comments from "./Comments";
 import pause from "@/public/video-pause-button.png";
 import play from "@/public/play-button-arrowhead.png";
@@ -67,7 +67,7 @@ const ModalTask = ({
     state: number,
     name: string,
     arr: any[],
-    setState: Function
+    setState: Function,
   ) {
     if (state === arr.length - 1) {
       setState(0);

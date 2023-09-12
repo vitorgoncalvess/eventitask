@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
-import { query } from "@/app/(lib)/db";
+import { query } from "@/app/_lib/db";
 
 const key = process.env.SECRET_KEY || "chave-secreta";
 
@@ -24,7 +24,7 @@ export async function POST(req: Request) {
     if (!result[0]) {
       return NextResponse.json(
         { message: "Usuario inexistente" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -34,7 +34,7 @@ export async function POST(req: Request) {
     } else {
       return NextResponse.json(
         { message: "E-mail ou senha invalidos" },
-        { status: 400 }
+        { status: 400 },
       );
     }
   } catch (err) {

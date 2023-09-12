@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import TaskNode from './TaskNode';
-import strings from '../(utils)/strings';
-import { Task } from '../(utils)/interfaces';
-import Image from 'next/image';
-import tableIcon from '@/public/tablet_white.png';
-import node from '@/public/node.png';
+import React, { useState } from "react";
+import TaskNode from "./TaskNode";
+import strings from "../_utils/strings";
+import { Task } from "../_utils/interfaces";
+import Image from "next/image";
+import tableIcon from "@/public/tablet_white.png";
+import node from "@/public/node.png";
 
 const Tasks = ({ task, setAt }: { task: Task; setAt: Function }) => {
   const [table, setTable] = useState(true);
@@ -15,7 +15,7 @@ const Tasks = ({ task, setAt }: { task: Task; setAt: Function }) => {
         <ul className="relative mt-8 bg-secondary grid grid-cols-[70px_1fr_1fr_1fr_1fr_90px] py-2 px-4 rounded-t-md">
           {TABLE.map((tab, index) => (
             <li
-              className={index === 0 ? 'flex items-center justify-center' : ''}
+              className={index === 0 ? "flex items-center justify-center" : ""}
               key={tab}
             >
               {tab}

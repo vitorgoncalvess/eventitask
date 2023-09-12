@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
-import clientPromise from "@/app/(lib)/mongodb";
 import { mongo } from "mongoose";
-import { query } from "@/app/(lib)/db";
+import { query } from "@/app/_lib/db";
 
 export async function POST(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   const { state, value } = await req.json();
   try {

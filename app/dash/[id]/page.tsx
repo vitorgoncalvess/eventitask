@@ -2,7 +2,9 @@ import React from "react";
 
 const getDash = async (id: string) => {
   const [nameFetch] = await Promise.all([
-    await fetch(`http://localhost:3000/api/boards/${id}/name`),
+    await fetch(`http://localhost:3000/api/boards/${id}/name`, {
+      cache: "no-cache",
+    }),
   ]);
   const name = await nameFetch.json();
   return { name: name.name };

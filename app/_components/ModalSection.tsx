@@ -1,7 +1,7 @@
 import React, { FormEvent, useContext, useState } from "react";
 import InputModal from "./InputModal";
 import Button from "./Button";
-import axiosInstance from "../(axios)/config";
+import axiosInstance from "../_axios/config";
 import { BoardContext } from "../home/[[...board]]/page";
 import Loading from "./Loading";
 const colors = [

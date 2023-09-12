@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import ModalTask from "./ModalTask";
 import Image from "next/image";
 import calendar from "@/public/calendar_month.png";
-import { Task } from "@/app/(utils)/interfaces";
+import { Task } from "@/app/_utils/interfaces";
 import CircleGraph from "./CircleGraph";
-import colors from "../(utils)/colors";
+import colors from "../_utils/colors";
 import { Avatar, AvatarGroup } from "@nextui-org/react";
 
 const Task = ({ task, sec }: { task: Task; sec: any }) => {

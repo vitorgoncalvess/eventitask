@@ -2,8 +2,8 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import tagIcon from "@/public/tag.png";
 import add from "@/public/add_circle.png";
-import axiosInstance from "../(axios)/config";
-import colors from "../(utils)/colors";
+import axiosInstance from "../_axios/config";
+import colors from "../_utils/colors";
 import {
   Chip,
   Dropdown,

@@ -1,12 +1,12 @@
 "use client";
 
-import Input from "./(components)/Input";
+import Input from "./_components/Input";
 import { Button } from "@nextui-org/react";
 import { FormEvent, useState } from "react";
-import axiosInstance from "./(axios)/config";
+import axiosInstance from "./_axios/config";
 import { useRouter } from "next/navigation";
-import Logo from "./(components)/Logo";
-import Loading from "./(components)/Loading";
+import Logo from "./_components/Logo";
+import Loading from "./_components/Loading";
 
 export default function Home() {
   const [email, setEmail] = useState("");

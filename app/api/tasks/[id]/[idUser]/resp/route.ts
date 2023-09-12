@@ -1,9 +1,9 @@
-import { query } from "@/app/(lib)/db";
+import { query } from "@/app/_lib/db";
 import { NextResponse } from "next/server";
 
 export async function POST(
   _: any,
-  { params }: { params: { id: string; idUser: string } }
+  { params }: { params: { id: string; idUser: string } },
 ) {
   try {
     await query("INSERT INTO user_task VALUES (?,?)", [
@@ -19,7 +19,7 @@ export async function POST(
 
 export async function DELETE(
   _: any,
-  { params }: { params: { id: string; idUser: string } }
+  { params }: { params: { id: string; idUser: string } },
 ) {
   try {
     await query("DELETE FROM user_task WHERE user_id = ? AND task_id = ?", [

@@ -18,8 +18,8 @@ import {
   PopoverTrigger,
   useDisclosure,
 } from "@nextui-org/react";
-import colors from "../(utils)/colors";
-import useAxios from "../(hooks)/useAxios";
+import colors from "../_utils/colors";
+import useAxios from "../_hooks/useAxios";
 import { useRouter } from "next/navigation";
 
 const ModalNovaSecao = () => {

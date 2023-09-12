@@ -2,7 +2,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import add from "@/public/add_circle.png";
 import cross from "@/public/cross.png";
-import axiosInstance from "../(axios)/config";
+import axiosInstance from "../_axios/config";
 import {
   Avatar,
   Button,

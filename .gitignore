@@ -34,4 +34,4 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-app/(lib)/db.js
+app/_lib/db.js

@@ -12,7 +12,7 @@ const strings = {
   DASHSIDEPURPLE: [
     {
       img: card,
-      label: "Áreas",
+      label: "Seções",
       selected: cardWhite,
       path: "/areas",
     },

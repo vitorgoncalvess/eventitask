@@ -1,36 +1,36 @@
-"use client";
+'use client';
 
-import Input from "./_components/Input";
-import { Button } from "@nextui-org/react";
-import { FormEvent, useState } from "react";
-import axiosInstance from "./_axios/config";
-import { useRouter } from "next/navigation";
-import Logo from "./_components/Logo";
-import Loading from "./_components/Loading";
+import Input from './_components/Input';
+import { Button } from '@nextui-org/react';
+import { FormEvent, useState } from 'react';
+import axiosInstance from './_axios/config';
+import { useRouter } from 'next/navigation';
+import Logo from './_components/Logo';
+import Loading from './_components/Loading';
 
 export default function Home() {
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
   function handleSubmit(e: any) {
-    if (e.key && e.key != "Enter") {
+    if (e.key && e.key != 'Enter') {
       return;
     }
     e.preventDefault();
     setLoading(true);
     axiosInstance
-      .post("/usuarios", { email, senha })
+      .post('/usuarios', { email, senha })
       .then((response) => {
         if (response.status === 200) {
-          localStorage.setItem("token", response.data.token);
-          localStorage.setItem("id", response.data.id);
-          axiosInstance.get("/boards").then((response: any) => {
+          localStorage.setItem('token', response.data.token);
+          localStorage.setItem('id', response.data.id);
+          axiosInstance.get('/boards').then((response: any) => {
             const { boards } = response.data;
             if (boards.length === 0) {
-              router.push("/home");
+              router.push('/home');
             } else {
               router.push(`/home/${boards[0].id}`);
             }

@@ -7,6 +7,7 @@ type Dash = {
   name: string;
   kpis: {
     title: string;
+    subtitle: string;
     value: number;
   }[];
 };
@@ -32,10 +33,16 @@ const Page = async ({ params }: { params: { id: string } }) => {
         <Image src={rebase} alt="github" />
         <span className="opacity-30 text-sm">Associar repositorio...</span>
       </div>
-      <section className="grid grid-cols-[70%_30%] grid-rows-3 min-h-[90vh] gap-5 mt-12">
-        <div className="grid grid-cols-3 gap-2">
+      <section className="grid grid-cols-[70%_30%] grid-rows-3 min-h-[95vh] gap-5 mt-12">
+        <div className="grid grid-cols-3 gap-4">
           {kpis.map((kpi, index) => (
-            <Kpi key={index} kpi={kpi.value} title={kpi.title} />
+            <Kpi
+              key={index}
+              kpi={kpi.value}
+              title={kpi.title}
+              subtitle={kpi.subtitle}
+              information={kpi.info}
+            />
           ))}
         </div>
       </section>

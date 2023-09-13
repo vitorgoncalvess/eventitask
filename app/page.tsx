@@ -49,7 +49,7 @@ export default function Home() {
         <div className="flex items-center absolute left-4 top-4 select-none">
           <Logo size="base" />
         </div>
-        <h1 className="text-2xl">Foi Mesmo</h1>
+        <h1 className="text-2xl">Login</h1>
         <form
           onKeyDown={(e) => handleSubmit(e)}
           className="flex flex-col gap-8 w-full"

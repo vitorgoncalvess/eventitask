@@ -16,3 +16,20 @@ export interface Task {
   resp: [];
   responsaveis: [];
 }
+
+export type Dash = {
+  name?: string;
+  kpis?: {
+    title: string;
+    subtitle: string;
+    value: number;
+    info: string;
+  }[];
+  sections?: {
+    board_id: number;
+    id: number;
+    name: string;
+    tarefas_concluidas: number;
+    total_tarefas: number;
+  }[];
+};

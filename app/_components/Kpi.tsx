@@ -42,9 +42,11 @@ const Kpi = ({ kpi, title, subtitle, information }: any) => {
         body: 'py-0',
       }}
     >
-      <CardHeader className="relative font-medium flex flex-col items-start">
+      <CardHeader className="font-medium flex flex-col items-start">
         <h1>{title}</h1>
         <h2 className="font-normal text-xs opacity-50">{subtitle}</h2>
+      </CardHeader>
+      <CardBody className="relative">
         <Tooltip
           classNames={{
             base: 'w-56 bg-primary py-2',
@@ -52,13 +54,11 @@ const Kpi = ({ kpi, title, subtitle, information }: any) => {
           content={<span className="opacity-80">{information}</span>}
         >
           <Image
-            className="absolute top-2 right-2 opacity-30"
+            className="absolute bottom-2 right-2 opacity-30"
             src={info}
             alt="informação adicional"
           />
         </Tooltip>
-      </CardHeader>
-      <CardBody>
         {kpi.names ? (
           <div className="w-full h-5/6 flex justify-between overflow-hidden items-end">
             <ul className="flex flex-col-reverse text-sm font-medium gap-1 h-24">

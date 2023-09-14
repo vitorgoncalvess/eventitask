@@ -31,5 +31,6 @@ export type Dash = {
     name: string;
     tarefas_concluidas: number;
     total_tarefas: number;
+    color: string;
   }[];
 };

@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import Loading from '@/app/_components/Loading';
-import SidebarDash from '@/app/_components/SidebarDash';
-import React, { Suspense, useState } from 'react';
+import Loading from "@/app/_components/Loading";
+import SidebarDash from "@/app/_components/SidebarDash";
+import React, { Suspense, useState } from "react";
 
 const Page = ({ children }) => {
   const [side, setSide] = useState(true);
@@ -11,10 +11,10 @@ const Page = ({ children }) => {
       <SidebarDash side={side} setSide={setSide} />
       <section
         className={`self-end min-h-screen ${
-          side ? 'w-[calc(100vw-14rem)]' : 'w-[calc(100vw-5rem)]'
+          side ? "w-[calc(100vw-14rem)]" : "w-[calc(100vw-5rem)]"
         } transition-all ease-linear p-5 px-10`}
       >
-        <Suspense fallback={<Loading color="white" />}>{children}</Suspense>
+        {children}
       </section>
     </div>
   );

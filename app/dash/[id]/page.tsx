@@ -8,6 +8,8 @@ import { Dash } from "@/app/_utils/interfaces";
 import axiosInstance from "@/app/_axios/config";
 import Loading from "@/app/_components/Loading";
 import GitLink from "@/app/_components/GitLink";
+import History from "@/app/_components/History";
+import TableTasks from "@/app/_components/TableTasks";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const [dash, setDash] = useState<Dash>();
@@ -36,7 +38,7 @@ const Page = ({ params }: { params: { id: string } }) => {
         <div className="flex items-center gap-2">
           <GitLink />
         </div>
-        <section className="grid grid-cols-[70%_30%] grid-rows-3 min-h-[80vh] gap-5 mt-12">
+        <section className="grid grid-cols-[70%_30%] grid-rows-4 min-h-[85vh] gap-5 mt-4">
           <div className="grid grid-cols-3 gap-4">
             {dash?.kpis?.map((kpi, index) => (
               <Kpi
@@ -53,6 +55,8 @@ const Page = ({ params }: { params: { id: string } }) => {
             <h1 className="text-lg font-medium">Seções</h1>
             <Sections sections={dash?.sections} />
           </div>
+          <History />
+          <TableTasks />
         </section>
       </div>
     );

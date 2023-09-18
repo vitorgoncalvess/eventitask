@@ -16,7 +16,13 @@ const GitLink = () => {
         <Image src={rebase} alt="github" />
         <span className="opacity-30 text-sm">Associar repositorio...</span>
       </span>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal
+        classNames={{
+          base: "bg-primary",
+        }}
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      >
         <ModalContent>
           {(onClose) => (
             <>

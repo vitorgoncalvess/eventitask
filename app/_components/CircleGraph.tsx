@@ -10,7 +10,6 @@ const CircleGraph = ({
   single: boolean;
 }) => {
   const [graus, setGraus] = useState(0);
-  console.log(data, max);
 
   const circleStyle = {
     clipPath: `polygon(100% 0, 100% 100%, 0 100%, 0 0)`,

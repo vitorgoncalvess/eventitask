@@ -3,16 +3,24 @@ import { NextResponse } from "next/server";
 
 export async function GET(_: any, { params }: { params: { id: string } }) {
   try {
-    // const result = await query("SELECT * FROM vw_board_dash_kpi");
-    const temp = [
+    const dist = await query(
+      "SELECT * FROM vw_kpi_distribution_tasks WHERE id = ?",
+      [params.id]
+    );
+    const kpis = [
       {
         title: "Distribuição de tarefas",
         subtitle: "As 10 tarefas estão distribuidas assim.",
         info: "Aqui mostra como as tarefas estão distruibuidas entre os responsaveis da área.",
-        value: {
-          names: ["Vitor", "Leonardo", "Victor"],
-          values: [5, 2, 3],
-        },
+        value: dist.reduce(
+          (acc: any, val: any) => {
+            return {
+              names: [...acc.names, val.user],
+              values: [...acc.values, val.qtd_tasks],
+            };
+          },
+          { names: [], values: [] }
+        ),
       },
       {
         title: "Tempo médio na tarefa",
@@ -27,8 +35,9 @@ export async function GET(_: any, { params }: { params: { id: string } }) {
         value: "18/09/23",
       },
     ];
-    return NextResponse.json(temp);
+    return NextResponse.json(kpis);
   } catch (err) {
+    console.log(err);
     return NextResponse.json(err);
   }
 }

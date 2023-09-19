@@ -15,7 +15,7 @@ const Page = ({ params }: { params: { id: string } }) => {
   const [dash, setDash] = useState<Dash>();
   useEffect(() => {
     const fetchData = async () => {
-      const [name, kpis, sections] = await Promise.all([
+      const [name, kpis, sections, tasks] = await Promise.all([
         axiosInstance
           .get(`/boards/${params.id}/dash-name`)
           .then((response) => response.data),
@@ -25,8 +25,11 @@ const Page = ({ params }: { params: { id: string } }) => {
         axiosInstance
           .get(`/boards/${params.id}/dash-sections`)
           .then((response) => response.data),
+        axiosInstance
+          .get(`/boards/${params.id}/dash-tasks`)
+          .then((response) => response.data),
       ]);
-      setDash((dash) => ({ ...dash, name: name.name, kpis, sections }));
+      setDash((dash) => ({ ...dash, name: name.name, kpis, sections, tasks }));
     };
     fetchData();
   }, [params.id]);
@@ -38,7 +41,7 @@ const Page = ({ params }: { params: { id: string } }) => {
         <div className="flex items-center gap-2">
           <GitLink />
         </div>
-        <section className="grid grid-cols-[70%_30%] grid-rows-4 min-h-[85vh] gap-5 mt-4">
+        <section className="grid grid-cols-[70%_30%] grid-rows-3 min-h-[100vh] gap-5 mt-4">
           <div className="grid grid-cols-3 gap-4">
             {dash?.kpis?.map((kpi, index) => (
               <Kpi
@@ -56,8 +59,8 @@ const Page = ({ params }: { params: { id: string } }) => {
             <Sections sections={dash?.sections} />
           </div>
           <History />
-          <TableTasks />
         </section>
+        <TableTasks id={params.id} />
       </div>
     );
   else return <Loading color="white" />;

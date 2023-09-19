@@ -33,4 +33,13 @@ export type Dash = {
     total_tarefas: number;
     color: string;
   }[];
+  tasks?: {
+    id: string;
+    nome: string;
+    status: number;
+    dataDeEntrega: Date;
+    tempoDeTarefa: number;
+    tempoEstimado: number;
+    responsaveis: any[];
+  }[];
 };

@@ -12,7 +12,7 @@ import {
 } from "@nextui-org/react";
 import colors from "../_utils/colors";
 
-const Sections = ({ sections }: Dash) => {
+const Sections = ({ sections }: any) => {
   return (
     <ScrollShadow
       orientation="horizontal"
@@ -23,6 +23,7 @@ const Sections = ({ sections }: Dash) => {
         {sections.length &&
           sections?.map((sec) => (
             <Card
+              isPressable
               classNames={{
                 base: `${sec.color} text-white w-[175px]`,
               }}
@@ -31,13 +32,12 @@ const Sections = ({ sections }: Dash) => {
               <CardBody className="flex items-center justify-center pb-1">
                 <CircularProgress
                   classNames={{
-                    svg: "w-16 h-16",
+                    svg: "w-20 h-20",
                     indicator: "stroke-[rgb(255,255,255,0.7)]",
                     value: "text-lg font-medium",
                   }}
                   showValueLabel
-                  value={sec.tarefas_concluidas}
-                  maxValue={sec.total_tarefas || 1}
+                  value={sec.completion_percentage}
                 />
               </CardBody>
               <CardFooter className="flex items-center justify-center pt-0">
@@ -47,7 +47,7 @@ const Sections = ({ sections }: Dash) => {
                   }}
                   variant="bordered"
                 >
-                  <span className="font-semibold">{sec.name}</span>
+                  <span className="font-semibold">{sec.section_name}</span>
                 </Chip>
               </CardFooter>
             </Card>

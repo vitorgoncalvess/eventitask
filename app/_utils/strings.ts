@@ -37,6 +37,23 @@ const strings = {
       path: "/config",
     },
   ],
+  OPTIONS: [
+    {
+      value: "Pendente",
+      color: "bg-yellow-400 hover:bg-yellow-400",
+      info: "Atividade está ociosa",
+    },
+    {
+      value: "Em Desenvolvimento",
+      color: "bg-blue-400 hover:bg-blue-400",
+      info: "Atividade está sendo feita",
+    },
+    {
+      value: "Concluido",
+      color: "bg-emerald-400 hover:bg-emerald-400",
+      info: "Atividade foi finalizada",
+    },
+  ],
 };
 
 export default strings;

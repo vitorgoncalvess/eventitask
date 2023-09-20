@@ -15,7 +15,7 @@ export async function GET(_: any, { params }: { params: { id: string } }) {
   try {
     const result: any[] = await query(
       "SELECT * FROM vw_sections_task_resp WHERE id = ?",
-      [params.id],
+      [params.id]
     );
 
     const _board: Board = {
@@ -95,7 +95,13 @@ export async function GET(_: any, { params }: { params: { id: string } }) {
       }
     });
 
-    return NextResponse.json(_board);
+    console.log(_board);
+
+    return NextResponse.json(_board, {
+      headers: {
+        "Content-Encoding": "gzip, deflate, br",
+      },
+    });
   } catch (err) {
     console.log(err);
     return NextResponse.json({ err });

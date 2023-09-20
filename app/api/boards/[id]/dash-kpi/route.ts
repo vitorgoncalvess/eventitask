@@ -4,7 +4,15 @@ import { NextResponse } from "next/server";
 export async function GET(_: any, { params }: { params: { id: string } }) {
   try {
     const dist = await query(
-      "SELECT * FROM vw_kpi_distribution_tasks WHERE id = ?",
+      "SELECT * FROM vw_kpi_distribution_tasks WHERE board_id = ?",
+      [params.id]
+    );
+    const date = await query(
+      "SELECT data_estimada FROM vw_expected_time_to_conclusion_board WHERE board_id = ?",
+      [params.id]
+    );
+    const time = await query(
+      "SELECT media_tempo FROM vw_avg_board_by_board WHERE board_id = ?",
       [params.id]
     );
     const kpis = [
@@ -26,13 +34,13 @@ export async function GET(_: any, { params }: { params: { id: string } }) {
         title: "Tempo médio na tarefa",
         subtitle: "Média de tempo gasto em cada tarefa",
         info: "Baseado nas contagem de horas nas tarefas, aqui está uma media de quanto tempo leva para se concluir uma tarefa nesta área.",
-        value: "2 Horas",
+        value: time.media_tempo,
       },
       {
         title: "Data de conclusão",
         subtitle: "Data estimada para conclusão da área",
         info: "Levando em consideração o tempo medio gasto por tarefa, quanto tempo cada responsavel tem por semana, e mais um pequena penalidade, esta é a data prevista para o termino da área.",
-        value: "18/09/23",
+        value: date.data_estimada,
       },
     ];
     return NextResponse.json(kpis);

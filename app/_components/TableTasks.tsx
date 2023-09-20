@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { ReactNode, useMemo, useState } from "react";
 import table from "../_utils/table";
 import {
   Avatar,
@@ -95,6 +95,27 @@ const TableTasks = ({ id }: { id: string }) => {
             {OPTIONS[task.task_status].value}
           </Chip>
         );
+      case "task_fibonacci":
+        const color = {
+          3: "bg-orange-300",
+          5: "bg-orange-400",
+          8: "bg-amber-400",
+          13: "bg-red-400",
+          21: "bg-red-500",
+        }[task.task_fibonacci];
+        return (
+          <div className="flex items-center justify-center mr-4">
+            <Chip
+              radius="sm"
+              classNames={{
+                base: color + "",
+                content: "font-medium opacity-50",
+              }}
+            >
+              {task.task_fibonacci}
+            </Chip>
+          </div>
+        );
       case "task_time":
         return (
           <span className="flex items-center">{task.task_time} Horas</span>
@@ -129,9 +150,48 @@ const TableTasks = ({ id }: { id: string }) => {
     }
   }, []); //eslint-disable-line
 
+  const bottomContent = useMemo(() => {
+    return (
+      <div className="flex items-center justify-between">
+        <div className="w-40"></div>
+        <Pagination
+          classNames={{
+            item: "bg-primary text-white data-[hover=true]:bg-secondary",
+            cursor: "bg-base",
+          }}
+          page={page}
+          total={pages}
+          onChange={(page) => setPage(page)}
+        />
+        <div className="flex items-center justify-between w-40">
+          <Button
+            variant={page === 1 ? "ghost" : "solid"}
+            color="primary"
+            size="sm"
+            disabled={page === 1}
+            onClick={() => setPage(page - 1)}
+          >
+            Anterior
+          </Button>
+          <Button
+            variant={page === pages ? "ghost" : "solid"}
+            color="primary"
+            size="sm"
+            disabled={page === pages}
+            onClick={() => setPage(page + 1)}
+          >
+            Proximo
+          </Button>
+        </div>
+      </div>
+    );
+  }, [page, pages]);
+
   return (
     <div className="col-start-1 col-end-3 flex flex-col items-center gap-4 mt-6 overflow-hidden">
       <Table
+        bottomContentPlacement="outside"
+        bottomContent={bottomContent}
         sortDescriptor={list.sortDescriptor}
         onSortChange={list.sort}
         classNames={{
@@ -156,15 +216,6 @@ const TableTasks = ({ id }: { id: string }) => {
           ))}
         </TableBody>
       </Table>
-      <Pagination
-        classNames={{
-          item: "bg-primary text-white data-[hover=true]:bg-secondary",
-          cursor: "bg-base",
-        }}
-        page={page}
-        total={pages}
-        onChange={(page) => setPage(page)}
-      />
     </div>
   );
 };

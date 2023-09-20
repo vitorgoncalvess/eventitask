@@ -16,13 +16,13 @@ const table = {
       sort: true,
     },
     {
-      key: "task_time",
-      label: "Tempo de Tarefa",
+      key: "task_fibonacci",
+      label: "Complexidade",
       sort: true,
     },
     {
-      key: "task_time_estimado",
-      label: "Tempo Estimado",
+      key: "task_time",
+      label: "Tempo de Tarefa",
       sort: true,
     },
     {

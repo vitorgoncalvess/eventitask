@@ -34,13 +34,13 @@ export async function GET(_: any, { params }: { params: { id: string } }) {
         title: "Tempo médio na tarefa",
         subtitle: "Média de tempo gasto em cada tarefa",
         info: "Baseado nas contagem de horas nas tarefas, aqui está uma media de quanto tempo leva para se concluir uma tarefa nesta área.",
-        value: time.media_tempo,
+        value: time[0].media_tempo + " horas",
       },
       {
         title: "Data de conclusão",
         subtitle: "Data estimada para conclusão da área",
         info: "Levando em consideração o tempo medio gasto por tarefa, quanto tempo cada responsavel tem por semana, e mais um pequena penalidade, esta é a data prevista para o termino da área.",
-        value: date.data_estimada,
+        value: new Date(date[0].data_estimada).toLocaleDateString("pt-bt"),
       },
     ];
     return NextResponse.json(kpis);

@@ -1,7 +1,7 @@
 import mysql from "mysql2";
 
 const aws = {
-  host: "52.45.208.66",
+  host: "10.0.0.24",
   port: "3306",
   database: "eventitask",
   user: "root",

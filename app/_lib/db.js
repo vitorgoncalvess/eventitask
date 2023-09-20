@@ -16,7 +16,7 @@ const local = {
   password: "1991",
 };
 
-const db = mysql.createPool(local);
+const db = mysql.createPool(aws);
 
 export const query = (sql, params) => {
   return new Promise((resolve, reject) => {

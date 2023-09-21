@@ -95,13 +95,7 @@ export async function GET(_: any, { params }: { params: { id: string } }) {
       }
     });
 
-    console.log(_board);
-
-    return NextResponse.json(_board, {
-      headers: {
-        "Content-Encoding": "gzip, deflate, br",
-      },
-    });
+    return NextResponse.json(_board);
   } catch (err) {
     console.log(err);
     return NextResponse.json({ err });

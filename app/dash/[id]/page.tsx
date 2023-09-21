@@ -58,7 +58,7 @@ const Page = ({ params }: { params: { id: string } }) => {
             <h1 className="text-lg font-medium">Seções</h1>
             <Sections sections={dash?.sections} />
           </div>
-          <History />
+          <History id={params.id} />
         </section>
         <TableTasks id={params.id} />
       </div>

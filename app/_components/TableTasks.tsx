@@ -6,16 +6,16 @@ import {
   Button,
   Chip,
   Pagination,
+  Spinner,
   Table,
   TableBody,
   TableCell,
   TableColumn,
   TableHeader,
   TableRow,
-  Tooltip,
+  Tooltip
 } from "@nextui-org/react";
 import strings from "../_utils/strings";
-import { Dash } from "../_utils/interfaces";
 import { useAsyncList } from "@react-stately/data";
 
 const TableTasks = ({ id }: { id: string }) => {
@@ -26,13 +26,13 @@ const TableTasks = ({ id }: { id: string }) => {
   let list = useAsyncList({
     async load({ signal }) {
       let res = await fetch(`/api/boards/${id}/dash-tasks`, {
-        signal,
+        signal
       });
       let json = await res.json();
       setIsLoading(false);
 
       return {
-        items: json,
+        items: json
       };
     },
     async sort({ items, sortDescriptor }) {
@@ -48,9 +48,9 @@ const TableTasks = ({ id }: { id: string }) => {
           }
 
           return cmp;
-        }),
+        })
       };
-    },
+    }
   }) as any;
 
   const pages = Math.ceil(list.items.length / 5);
@@ -73,7 +73,7 @@ const TableTasks = ({ id }: { id: string }) => {
           <Tooltip
             delay={500}
             classNames={{
-              base: "bg-primary",
+              base: "bg-primary"
             }}
             content={task.task_name}
           >
@@ -89,7 +89,7 @@ const TableTasks = ({ id }: { id: string }) => {
           <Chip
             radius="sm"
             classNames={{
-              base: OPTIONS[task.task_status].color + " text-opacity-80",
+              base: OPTIONS[task.task_status].color + " text-opacity-80"
             }}
           >
             {OPTIONS[task.task_status].value}
@@ -101,7 +101,7 @@ const TableTasks = ({ id }: { id: string }) => {
           5: "bg-orange-400",
           8: "bg-amber-400",
           13: "bg-red-400",
-          21: "bg-red-500",
+          21: "bg-red-500"
         }[task.task_fibonacci];
         return (
           <div className="flex items-center justify-center mr-4">
@@ -109,7 +109,7 @@ const TableTasks = ({ id }: { id: string }) => {
               radius="sm"
               classNames={{
                 base: color + "",
-                content: "font-medium opacity-50",
+                content: "font-medium opacity-50"
               }}
             >
               {task.task_fibonacci}
@@ -151,41 +151,43 @@ const TableTasks = ({ id }: { id: string }) => {
   }, []); //eslint-disable-line
 
   const bottomContent = useMemo(() => {
-    return (
-      <div className="flex items-center justify-between">
-        <div className="w-40"></div>
-        <Pagination
-          classNames={{
-            item: "bg-primary text-white data-[hover=true]:bg-secondary",
-            cursor: "bg-base",
-          }}
-          page={page}
-          total={pages}
-          onChange={(page) => setPage(page)}
-        />
-        <div className="flex items-center justify-between w-40">
-          <Button
-            variant={page === 1 ? "ghost" : "solid"}
-            color="primary"
-            size="sm"
-            disabled={page === 1}
-            onClick={() => setPage(page - 1)}
-          >
-            Anterior
-          </Button>
-          <Button
-            variant={page === pages ? "ghost" : "solid"}
-            color="primary"
-            size="sm"
-            disabled={page === pages}
-            onClick={() => setPage(page + 1)}
-          >
-            Proximo
-          </Button>
+    if (isLoading) return null;
+    else
+      return (
+        <div className="flex items-center justify-between">
+          <div className="w-40"></div>
+          <Pagination
+            classNames={{
+              item: "bg-primary text-white data-[hover=true]:bg-secondary",
+              cursor: "bg-base"
+            }}
+            page={page}
+            total={pages}
+            onChange={(page) => setPage(page)}
+          />
+          <div className="flex items-center justify-between w-40">
+            <Button
+              variant={page === 1 ? "ghost" : "solid"}
+              color="primary"
+              size="sm"
+              disabled={page === 1}
+              onClick={() => setPage(page - 1)}
+            >
+              Anterior
+            </Button>
+            <Button
+              variant={page === pages ? "ghost" : "solid"}
+              color="primary"
+              size="sm"
+              disabled={page === pages}
+              onClick={() => setPage(page + 1)}
+            >
+              Proximo
+            </Button>
+          </div>
         </div>
-      </div>
-    );
-  }, [page, pages]);
+      );
+  }, [page, pages, isLoading]);
 
   return (
     <div className="col-start-1 col-end-3 flex flex-col items-center gap-4 mt-6 overflow-hidden">
@@ -195,8 +197,8 @@ const TableTasks = ({ id }: { id: string }) => {
         sortDescriptor={list.sortDescriptor}
         onSortChange={list.sort}
         classNames={{
-          wrapper: "bg-secondary",
-          th: "bg-primary",
+          wrapper: "bg-secondary min-h-[320px]",
+          th: "bg-primary"
         }}
       >
         <TableHeader columns={TABLETASK}>
@@ -206,7 +208,16 @@ const TableTasks = ({ id }: { id: string }) => {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody isLoading={isLoading}>
+        <TableBody
+          isLoading={isLoading}
+          loadingContent={
+            <Spinner
+              color="warning"
+              labelColor="warning"
+              label="Carregando..."
+            />
+          }
+        >
           {items.map((item) => (
             <TableRow key={item.id}>
               {(columnKey) => (

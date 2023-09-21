@@ -5,7 +5,7 @@ const aws = {
   port: "3306",
   database: "eventitask",
   user: "root",
-  password: "1991",
+  password: "1991"
 };
 
 const local = {
@@ -13,10 +13,10 @@ const local = {
   port: "3306",
   database: "eventitask",
   user: "root",
-  password: "1991",
+  password: "1991"
 };
 
-const db = mysql.createPool(local);
+const db = mysql.createPool(aws);
 
 export const query = (sql, params) => {
   return new Promise((resolve, reject) => {

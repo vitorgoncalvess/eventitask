@@ -27,7 +27,7 @@ const Page = ({ params }: { params: { id: string } }) => {
           .then((response) => response.data),
         axiosInstance
           .get(`/boards/${params.id}/dash-tasks`)
-          .then((response) => response.data),
+          .then((response) => response.data)
       ]);
       setDash((dash) => ({ ...dash, name: name.name, kpis, sections, tasks }));
     };

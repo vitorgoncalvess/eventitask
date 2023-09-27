@@ -2,11 +2,10 @@
 
 import Input from './_components/Input';
 import { Button } from '@nextui-org/react';
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
 import axiosInstance from './_axios/config';
 import { useRouter } from 'next/navigation';
 import Logo from './_components/Logo';
-import Loading from './_components/Loading';
 
 export default function Home() {
   const [email, setEmail] = useState('');

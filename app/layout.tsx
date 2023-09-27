@@ -4,11 +4,11 @@ import { Providers } from "./providers";
 
 const inter = Poppins({
   weight: ["400", "500", "600", "700"],
-  subsets: ["latin"],
+  subsets: ["latin"]
 });
 
 export default function RootLayout({
-  children,
+  children
 }: {
   children: React.ReactNode;
 }) {
